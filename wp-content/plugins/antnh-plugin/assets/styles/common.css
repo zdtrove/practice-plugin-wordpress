@@ -1,0 +1,24 @@
+:root {
+  --primary: #2271B1;
+  --secondary: #E91E63;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.required::before {
+  display: inline-block;
+  margin-right: 4px;
+  color: var(--secondary);
+  font-size: 16px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: "*";
+}
