@@ -105,12 +105,6 @@
   padding: unset;
 }
 
-.table-actions .delete {
-  font-weight: bold;
-  color: var(--secondary);
-  border: 1px solid var(--secondary);
-}
-
 /*------------------------------ Modal ------------------------------*/
 .overlay {
   position: fixed;
@@ -225,6 +219,7 @@
   border-radius: 50%;
   width: 30px;
   height: 30px;
+  min-height: unset;
   font-size: 16px;
   display: flex;
   justify-content: center;
@@ -257,7 +252,12 @@
 }
 
 .step-content-content {
+  padding-top: 30px;
   padding-bottom: 30px;
+}
+
+#image-wrapper img {
+  max-width: 100%;
 }
 
 .modal-actions {
