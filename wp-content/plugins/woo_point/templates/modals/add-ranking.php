@@ -2,7 +2,7 @@
   <div class="modal-wrapper">
     <p id="modal-close" class="close">✕</p>
     <div class="modal-header">
-      <p>Chỉnh sửa</p>
+      <p>Thêm xếp hạng</p>
     </div>
     <form action="" method="POST">
       <div class="modal-content">
@@ -82,12 +82,12 @@
               <tbody>
                 <tr>
                   <td class="flex-center">
-                    <button id="aw_upload_image_button" class="aw_upload_image_button button flex-center">
+                    <button id="upload-image-button" class="button flex-center">
                       <span class="dashicons dashicons-admin-media"></span>
                       <span>Tải lên</span>
                     </button>
-                    <input type="text" id="aw_custom_image" hidden name="imageurl" />
-                    <div id="image-wrapper" style="width: 50px; height: auto;"></div>
+                    <input type="text" id="image-url" hidden name="imageurl" />
+                    <div class="image-wrapper" id="image-wrapper" style="width: 50px; height: auto;"></div>
                   </td>
                   <td>
                     <p class="required">Rank</p>
@@ -98,7 +98,7 @@
                     <input type="number" name="minimum_spending" placeholder="Vui lòng nhập Chi tiêu tối thiểu" />
                   </td>
                   <td>
-                    <span class="button delete">✕</span>
+                    <span disabled class="button delete">✕</span>
                   </td>
                 </tr>
               </tbody>
@@ -133,11 +133,11 @@
                     <td>
                       <input type="checkbox" class="is-limit-input" name="is_limit" />
                     </td>
-                    <td class="is-limit-td">
+                    <td>
                       <p>Không giới hạn số tiền</p>
                       <div class="is-limit-content d-none">
                         <p class="required">Số tiền khuyến mãi tối đa cho một đơn hàng</p>
-                        <input type="number" name="price_sale_off_max" placeholder="Vui lòng nhập Số tiền khuyến mãi tối đa cho một đơn hàng" />
+                        <input class="price-sale-off-max" type="number" name="price_sale_off_max" placeholder="Vui lòng nhập Số tiền khuyến mãi tối đa cho một đơn hàng" />
                       </div>
                     </td>
                   </tr>
@@ -159,7 +159,6 @@
                     <th>Xếp hạng</th>
                     <th>Chi tiêu tối thiểu</th>
                     <th>Khuyến mãi</th>
-                    <th>Giới hạn khuyến mãi</th>
                     <th>Số tiền khuyến mãi tối đa cho một đơn hàng</th>
                   </tr>
                 </thead>
@@ -167,19 +166,19 @@
                   <tr>
                     <td>
                       <span class="dashicons dashicons-plus-alt"></span>
-                      <span class="show-rank">Chưa làm, cứ submit vẫn tạo được record</span>
+                      <span class="show-rank-final"></span>
                     </td>
                     <td>
-                      Chưa làm, cứ submit vẫn tạo được record
+                      <span class="show-minimum-spending-final"></span>
                     </td>
                     <td>
-                      Chưa làm, cứ submit vẫn tạo được record
+                      <span class="show-price-sale-off-final"></span>
                     </td>
                     <td>
-                      Chưa làm, cứ submit vẫn tạo được record
-                    </td>
-                    <td class="is-limit-td">
-                      Chưa làm, cứ submit vẫn tạo được record
+                      <span>Không giới hạn số tiền</span>
+                      <div class="is-limit-content-final d-none">
+                        <span class="show-price-sale-off-max-final"></span>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -190,7 +189,7 @@
       <div class="modal-actions">
         <button type="button" id="modal-prev" class="button">Quay lại</button>
         <button type="button" id="modal-next" class="button button-primary">Tiếp theo</button>
-        <button type="submit" id="modal-update" class="button button-primary" name="add_ranking">Cập nhật</button>
+        <button type="submit" id="modal-update" class="button button-primary" name="addRanking">Tạo</button>
       </div>
     </form>
   </div>

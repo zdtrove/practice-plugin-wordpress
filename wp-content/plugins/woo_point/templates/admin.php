@@ -1,7 +1,10 @@
 <?php
   global $wpdb;
-  $message = '';
-  if (isset($_POST['add_ranking'])) {
+  $successMessage = '';
+  $errorMessage = '';
+  $table = $wpdb->prefix . 'woo_rank';
+
+  if (isset($_POST['addRanking'])) {
     $arrayInsert = array(
       'imageurl' => $_POST['imageurl'],
       'name' => $_POST['name'],
@@ -14,10 +17,40 @@
       $arrayInsert = array_merge($arrayInsert, array('is_limit' => $_POST['is_limit'] ? 1 : 0));
     }
 
-    $result = $wpdb->insert($wpdb->prefix . 'woo_rank', $arrayInsert);
+    $add = $wpdb->insert($table, $arrayInsert);
 
-    if ($result) {
-      $message = 'Thêm hạng thành viên thành công';
+    if ($add) {
+      $successMessage = 'Thêm hạng thành viên thành công';
+    }
+  }
+
+  if (isset($_POST['deleteRanking'])) {
+    $delete = $wpdb->delete($table, array('id' => $_POST['rankId']));
+
+    if ($delete) {
+      $successMessage = 'Xóa hạng thành viên thành công';
+    }
+  }
+
+  if (isset($_POST['editRanking'])) {
+    $arrayUpdate = array(
+      'imageurl' => $_POST['imageurl'],
+      'name' => $_POST['name'],
+      'minimum_spending' => $_POST['minimum_spending'],
+      'price_sale_off' => $_POST['price_sale_off'],
+      'price_sale_off_max' => $_POST['price_sale_off_max'],
+    );
+
+    if (isset($_POST['is_limit'])) {
+      $arrayUpdate = array_merge($arrayUpdate, array('is_limit' => $_POST['is_limit'] ? 1 : 0));
+    } else {
+      $arrayUpdate = array_merge($arrayUpdate, array('is_limit' => 0));
+    }
+
+    $update = $wpdb->update($table, $arrayUpdate, array('id' => $_POST['rankId']));
+
+    if ($update) {
+      $successMessage = 'Chỉnh sửa hạng thành viên thành công';
     }
   }
 ?>
@@ -25,9 +58,9 @@
 <div class="wrap">
   <h1>Tích điểm</h1>
   <br />
-  <?php if ($message) { ?>
+  <?php if ($successMessage) { ?>
     <div id="message" class="success-message">
-      <p><?php echo $message; ?></p>
+      <p><?php echo $successMessage; ?></p>
       <button id="remove-message" onclick="removeMessage()" type="button"></button>
     </div>
   <?php } ?>
@@ -40,6 +73,12 @@
       <span class="dashicons dashicons-edit-page"></span>
       <span>Chỉnh sửa tất cả</span>
     </button>
+    <div id="button-delete-wrapper" class="d-none">
+      <button id="modal-delete-btn" class="button delete">
+        <b>✕</b>
+        <span>Xóa</span>
+      </button>
+    </div>
   </div>
   <form method="post">
     <ul class="nav-tabs">
@@ -61,4 +100,23 @@
     <div id="overlay" class="overlay d-none"></div>
     <?php require_once(dirname(__FILE__) . '/modals/add-ranking.php'); ?>
   </form>
+  <div id="modal-delete-all-ranking" class="modal modal-delete d-none">
+    <div class="modal-wrapper">
+      <p onclick="hideModal('modal-delete-all-ranking')" class="close">✕</p>
+      <div class="modal-header">
+        <p>Xóa xếp hạng</p>
+      </div>
+      <div class="modal-content" style="padding-bottom: 0">
+        <p style="font-size: 20px; margin: unset">
+          Bạn muốn xóa những xếp hạng này: ?
+        </p>
+        <form action="" method="POST">
+          <div class="flex-center" style="justify-content: flex-end; margin-top: 20px;">
+            <button type="button" class="button">Không</button>
+            <button type="button" class="button delete" name="deleteAllRanking">Có</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

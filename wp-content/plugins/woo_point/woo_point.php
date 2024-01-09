@@ -363,3 +363,15 @@ register_activation_hook( __FILE__, 'pluginprefix_activate' );
 // 	__FILE__,
 // 	'pluginprefix_deactivate'
 // );
+
+function my_custom_update_wc_order_status_function($order_id, $order, $status) {
+    
+    
+    // Check if the order type is 'shop_order'
+    if ($order->get_type() === 'shop_order') {
+        // Your custom code to update something based on the WooCommerce order status change
+
+    }
+}
+
+add_action('woocommerce_order_status_completed', 'my_custom_update_wc_order_status_function', 10, 4);
