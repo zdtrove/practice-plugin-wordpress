@@ -5,23 +5,23 @@
   $table = $wpdb->prefix . 'woo_rank';
 
   if (isset($_POST['addRanking'])) {
-    $arrayInsert = array(
-      'imageurl' => $_POST['imageurl'],
-      'name' => $_POST['name'],
-      'minimum_spending' => $_POST['minimum_spending'],
-      'price_sale_off' => $_POST['price_sale_off'],
-      'price_sale_off_max' => $_POST['price_sale_off_max'],
-    );
-
-    if (isset($_POST['is_limit'])) {
-      $arrayInsert = array_merge($arrayInsert, array('is_limit' => $_POST['is_limit'] ? 1 : 0));
+    for ($i = 0; $i < count($_POST['name']); $i++) {
+      $arrayInsert = array(
+        'imageurl' => $_POST['imageurl'][$i],
+        'name' => $_POST['name'][$i],
+        'minimum_spending' => $_POST['minimum_spending'][$i],
+        'price_sale_off' => $_POST['price_sale_off'][$i],
+        'price_sale_off_max' => $_POST['price_sale_off_max'][$i],
+      );
+  
+      if (isset($_POST['is_limit'][$i])) {
+        $arrayInsert = array_merge($arrayInsert, array('is_limit' => $_POST['is_limit'][$i] ? 1 : 0));
+      }
+  
+      $wpdb->insert($table, $arrayInsert);
     }
 
-    $add = $wpdb->insert($table, $arrayInsert);
-
-    if ($add) {
-      $successMessage = 'Thêm hạng thành viên thành công';
-    }
+    $successMessage = 'Thêm hạng thành viên thành công';
   }
 
   if (isset($_POST['deleteRanking'])) {
@@ -33,25 +33,31 @@
   }
 
   if (isset($_POST['editRanking'])) {
-    $arrayUpdate = array(
-      'imageurl' => $_POST['imageurl'],
-      'name' => $_POST['name'],
-      'minimum_spending' => $_POST['minimum_spending'],
-      'price_sale_off' => $_POST['price_sale_off'],
-      'price_sale_off_max' => $_POST['price_sale_off_max'],
-    );
+    for ($i = 0; $i < count($_POST['name']); $i++) {
+      $arrayUpdate = array(
+        'imageurl' => $_POST['imageurl'][$i],
+        'name' => $_POST['name'][$i],
+        'minimum_spending' => $_POST['minimum_spending'][$i],
+        'price_sale_off' => $_POST['price_sale_off'][$i],
+        'price_sale_off_max' => $_POST['price_sale_off_max'][$i],
+      );
 
-    if (isset($_POST['is_limit'])) {
-      $arrayUpdate = array_merge($arrayUpdate, array('is_limit' => $_POST['is_limit'] ? 1 : 0));
-    } else {
-      $arrayUpdate = array_merge($arrayUpdate, array('is_limit' => 0));
+      if (isset($_POST['is_limit'][$i])) {
+        $arrayUpdate = array_merge($arrayUpdate, array('is_limit' => $_POST['is_limit'][$i] ? 1 : 0));
+      } else {
+        $arrayUpdate = array_merge($arrayUpdate, array('is_limit' => 0));
+      }
+
+      $update = $wpdb->update($table, $arrayUpdate, array('id' => $_POST['rankId']));
     }
+    $successMessage = 'Chỉnh sửa hạng thành viên thành công';
+  }
 
-    $update = $wpdb->update($table, $arrayUpdate, array('id' => $_POST['rankId']));
-
-    if ($update) {
-      $successMessage = 'Chỉnh sửa hạng thành viên thành công';
+  if (isset($_POST['deleteAllRanking'])) {
+    foreach ($_POST['id-delete'] as $key => $value) {
+      $wpdb->delete($table, array('id' => $value));
     }
+    $successMessage = 'Xóa hạng thành viên thành công';
   }
 ?>
 
@@ -61,7 +67,7 @@
   <?php if ($successMessage) { ?>
     <div id="message" class="success-message">
       <p><?php echo $successMessage; ?></p>
-      <button id="remove-message" onclick="removeMessage()" type="button"></button>
+      <button id="remove-message" type="button"></button>
     </div>
   <?php } ?>
   <div class="actions">
@@ -106,14 +112,15 @@
       <div class="modal-header">
         <p>Xóa xếp hạng</p>
       </div>
-      <div class="modal-content" style="padding-bottom: 0">
-        <p style="font-size: 20px; margin: unset">
-          Bạn muốn xóa những xếp hạng này: ?
-        </p>
+      <div class="modal-content">
         <form action="" method="POST">
+          <p style="font-size: 20px; margin: unset">
+            Bạn muốn xóa những xếp hạng dưới đây:
+          </p>
+          <div id="deleteList"></div>
           <div class="flex-center" style="justify-content: flex-end; margin-top: 20px;">
-            <button type="button" class="button">Không</button>
-            <button type="button" class="button delete" name="deleteAllRanking">Có</button>
+            <button onclick="hideModal('modal-delete-all-ranking')" type="button" class="button">Không</button>
+            <button type="submit" class="button delete" name="deleteAllRanking">Có</button>
           </div>
         </form>
       </div>

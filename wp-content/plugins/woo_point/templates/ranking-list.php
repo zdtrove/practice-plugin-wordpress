@@ -1,5 +1,6 @@
 <?php
-  $users = $wpdb->get_results( 'SELECT * FROM wp_woo_rank ORDER BY id ASC', ARRAY_A );
+  $table = $wpdb->prefix . 'woo_rank';
+  $users = $wpdb->get_results( 'SELECT * FROM ' . $table . ' ORDER BY id ASC', ARRAY_A );
   $currentPage = ! empty( $_GET['paged'] ) ? (int) $_GET['paged'] : 1;
   $total = count( $users );
   $perPage = 10;
@@ -28,7 +29,7 @@
     <?php foreach ( $users as $key => $value ) { ?>
       <tr>
         <th class="check-column">
-          <input type="checkbox" value="<?php echo $value['id']; ?>" name="checkRank" />
+          <input type="checkbox" value="<?php echo $value['id'] . '-' . $value['name']; ?>" name="checkRank" />
         </th>
         <td style="max-width: 50px;">
           <img src="<?php echo $value['imageurl'] ?>" alt="" width="50px"/>
@@ -115,7 +116,7 @@
               <p class="step-title">Kiểm tra lại</p>
             </li>
           </ul>
-          <div id="content-step-1-edit-<?php echo $value['id']; ?>" class="step-content">
+          <div class="step-content content-step-1-edit">
             <div class="step-content-header">
               <h2>Thiết lập giá trị tích điểm</h2>
               <p>Xác định số điểm sẽ được cộng cho khách hàng khi hoàn thành đơn hàng và giá trị quy đổi điểm thành tiền khi thanh toán</p>
@@ -150,7 +151,7 @@
               </div>
             </div>
           </div>
-          <div id="content-step-2-edit-<?php echo $value['id']; ?>" class="step-content">
+          <div class="step-content content-step-2-edit">
             <div class="step-content-header">
               <h2>Thiết lập xếp hạng thành viên</h2>
               <p>Tạo mới hạng thành viên và điều kiện đạt hạng</p>
@@ -169,11 +170,11 @@
                 <tbody>
                   <tr>
                     <td class="flex-center">
-                      <button id="upload-image-button-edit-<?php echo $value['id']; ?>" class="button flex-center">
+                      <button type="button" id="upload-image-button-edit-<?php echo $value['id']; ?>" class="button flex-center">
                         <span class="dashicons dashicons-admin-media"></span>
                         <span>Đổi hình</span>
                       </button>
-                      <input type="text" id="image-url-edit-<?php echo $value['id']; ?>" hidden name="imageurl" value="<?php echo $value['imageurl']; ?>" />
+                      <input type="text" id="image-url-edit-<?php echo $value['id']; ?>" hidden name="imageurl[]" value="<?php echo $value['imageurl']; ?>" />
                       <div class="image-wrapper" id="image-wrapper-edit-<?php echo $value['id']; ?>" style="width: 50px; height: auto;">
                         <?php
                           if ($value['imageurl']) {
@@ -184,11 +185,13 @@
                     </td>
                     <td>
                       <p class="required">Rank</p>
-                      <input class="rank-name" type="text" name="name" placeholder="Vui lòng nhập Rank" value="<?php echo $value['name']; ?>" />
+                      <input class="rank-name require-field" type="text" name="name[]" placeholder="Vui lòng nhập Rank" value="<?php echo $value['name']; ?>" />
+                      <p class="form-error-text d-none">Đây là trường bắt buộc</p>
                     </td>
                     <td>
                       <p class="required">Chi tiêu tối thiểu</p>
-                      <input type="number" name="minimum_spending" placeholder="Vui lòng nhập Chi tiêu tối thiểu" value="<?php echo $value['minimum_spending']; ?>" />
+                      <input class="require-field" type="number" name="minimum_spending[]" placeholder="Vui lòng nhập Chi tiêu tối thiểu" value="<?php echo $value['minimum_spending']; ?>" />
+                      <p class="form-error-text d-none">Đây là trường bắt buộc</p>
                     </td>
                     <td>
                       <span disabled class="button delete">✕</span>
@@ -198,7 +201,7 @@
               </table>
             </div>
           </div>
-          <div id="content-step-3-edit-<?php echo $value['id']; ?>" class="step-content">
+          <div class="step-content content-step-3-edit">
             <div class="step-content-header">
               <h2>Thiết lập ưu đãi hạng thành viên</h2>
               <p>Tạo ưu đãi thành viên để hấp dẫn khách hàng mua hàng</p>
@@ -221,22 +224,25 @@
                         <span class="show-rank"><?php echo $value['name']; ?></span>
                       </td>
                       <td>
-                        <input type="number" value="<?php echo $value['price_sale_off']; ?>" name="price_sale_off" placeholder="Vui lòng nhập Khuyến mãi" />
+                        <p class="required">Khuyến mãi</p>
+                        <input class="require-field" type="number" value="<?php echo $value['price_sale_off']; ?>" name="price_sale_off[]" placeholder="Vui lòng nhập Khuyến mãi" />
+                        <p class="form-error-text d-none">Đây là trường bắt buộc</p>
                       </td>
                       <td>
-                        <input type="checkbox"  class="is-limit-input" name="is_limit" <?php echo ($value['is_limit'] == 1 ? 'checked' : '');?> />
+                        <input type="checkbox"  class="is-limit-input" name="is_limit[]" <?php echo ($value['is_limit'] == 1 ? 'checked' : '');?> />
                       </td>
                       <td>
                         <p class="<?php echo ($value['is_limit'] == 1 ? 'd-none' : ''); ?>">Không giới hạn số tiền</p>
                         <div class="is-limit-content <?php echo ($value['is_limit'] == 1 ? '' : 'd-none'); ?>">
                           <p class="required">Số tiền khuyến mãi tối đa cho một đơn hàng</p>
                           <input
-                            class="price-sale-off-max"
+                            class="price-sale-off-max require-field"
                             type="number"
-                            name="price_sale_off_max"
+                            name="price_sale_off_max[]"
                             placeholder="Vui lòng nhập Số tiền khuyến mãi tối đa cho một đơn hàng"
                             value="<?php echo $value['price_sale_off_max']; ?>"
                           />
+                          <p class="form-error-text d-none">Đây là trường bắt buộc</p>
                         </div>
                       </td>
                     </tr>
@@ -244,7 +250,7 @@
               </table>
             </div>
           </div>
-          <div id="content-step-4-edit-<?php echo $value['id']; ?>" class="step-content">
+          <div class="step-content content-step-4-edit">
             <div class="step-content-header">
               <h2>Hãy kiểm tra lại thông tin trước khi bấm tạo nhé!</h2>
               <p>Quy tắc tích điểm: <b>Chi tiêu 10,000đ = 1 Điểm</b></p>
@@ -274,8 +280,8 @@
                         <span class="show-price-sale-off-final"><?php echo $value['price_sale_off']; ?></span>
                       </td>
                       <td>
-                        <span>Không giới hạn số tiền</span>
-                        <div class="is-limit-content-final d-none">
+                        <span class="<?php echo $value['is_limit'] ? 'd-none' : '' ?>">Không giới hạn số tiền</span>
+                        <div class="is-limit-content-final <?php echo $value['is_limit'] ? '' : 'd-none'; ?>">
                           <span class="show-price-sale-off-max-final"><?php echo $value['price_sale_off_max']; ?></span>
                         </div>
                       </td>
@@ -288,7 +294,8 @@
         <input type="text" name="rankId" hidden value="<?php echo $value['id']; ?>" />
         <div class="modal-actions">
           <button type="button" id="modal-prev-edit-<?php echo $value['id']; ?>" class="button">Quay lại</button>
-          <button type="button" id="modal-next-edit-<?php echo $value['id']; ?>" class="button button-primary">Tiếp theo</button>
+          <button type="button" id="modal-next-edit-step-2-<?php echo $value['id']; ?>" class="button button-primary">Tiếp theo (step 2)</button>
+          <button type="button" id="modal-next-edit-step-3-<?php echo $value['id']; ?>" class="button button-primary">Tiếp theo (step 3)</button>
           <button type="submit" id="modal-update-edit-<?php echo $value['id']; ?>" class="button button-primary" name="editRanking">Cập nhật</button>
         </div>
       </form>

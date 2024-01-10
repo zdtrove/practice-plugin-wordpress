@@ -73,3 +73,8 @@
   color: var(--secondary) !important;
   border-color: 1px solid var(--secondary) !important;
 }
+
+.form-error-text {
+  font-weight: bold;
+  color: var(--secondary) !important;
+}

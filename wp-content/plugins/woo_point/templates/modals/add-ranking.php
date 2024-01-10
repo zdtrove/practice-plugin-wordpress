@@ -28,7 +28,7 @@
             <p class="step-title">Kiểm tra lại</p>
           </li>
         </ul>
-        <div id="content-step-1" class="step-content">
+        <div class="step-content content-step-1">
           <div class="step-content-header">
             <h2>Thiết lập giá trị tích điểm</h2>
             <p>Xác định số điểm sẽ được cộng cho khách hàng khi hoàn thành đơn hàng và giá trị quy đổi điểm thành tiền khi thanh toán</p>
@@ -63,14 +63,17 @@
             </div>
           </div>
         </div>
-        <div id="content-step-2" class="step-content">
+        <div class="step-content content-step-2">
           <div class="step-content-header">
             <h2>Thiết lập xếp hạng thành viên</h2>
             <p>Tạo mới hạng thành viên và điều kiện đạt hạng</p>
           </div>
           <hr />
           <div class="step-content-content" style="overflow-x:auto;">
-            <table class="wp-list-table widefat striped table-view-list">
+            <button id="add-more-record" type="button" class="button flex-center" style="margin-bottom: 20px;">
+              <span class="dashicons dashicons-insert"></span>Thêm
+            </button>
+            <table id="table-step-2" class="wp-list-table widefat striped table-view-list">
               <thead>
                 <tr>
                   <th>Hình ảnh</th>
@@ -80,22 +83,24 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr id="record-step-2-add-1">
                   <td class="flex-center">
-                    <button id="upload-image-button" class="button flex-center">
+                    <button type="button" class="upload-image-button button flex-center">
                       <span class="dashicons dashicons-admin-media"></span>
                       <span>Tải lên</span>
                     </button>
-                    <input type="text" id="image-url" hidden name="imageurl" />
-                    <div class="image-wrapper" id="image-wrapper" style="width: 50px; height: auto;"></div>
+                    <input type="text" class="image-url" hidden name="imageurl[]" />
+                    <div class="image-wrapper" style="width: 50px; height: auto;"></div>
                   </td>
                   <td>
                     <p class="required">Rank</p>
-                    <input class="rank-name" type="text" name="name" placeholder="Vui lòng nhập Rank" />
+                    <input class="rank-name require-field" type="text" name="name[]" placeholder="Vui lòng nhập Rank" />
+                    <p class="form-error-text d-none">Đây là trường bắt buộc</p>
                   </td>
                   <td>
                     <p class="required">Chi tiêu tối thiểu</p>
-                    <input type="number" name="minimum_spending" placeholder="Vui lòng nhập Chi tiêu tối thiểu" />
+                    <input class="require-field" type="number" name="minimum_spending[]" placeholder="Vui lòng nhập Chi tiêu tối thiểu" />
+                    <p class="form-error-text d-none">Đây là trường bắt buộc</p>
                   </td>
                   <td>
                     <span disabled class="button delete">✕</span>
@@ -105,14 +110,14 @@
             </table>
           </div>
         </div>
-        <div id="content-step-3" class="step-content">
+        <div class="step-content content-step-3">
           <div class="step-content-header">
             <h2>Thiết lập ưu đãi hạng thành viên</h2>
             <p>Tạo ưu đãi thành viên để hấp dẫn khách hàng mua hàng</p>
           </div>
           <hr />
           <div class="step-content-content" style="overflow-x:auto;">
-            <table class="wp-list-table widefat striped table-view-list">
+            <table id="table-step-3" class="wp-list-table widefat striped table-view-list">
                 <thead>
                   <tr>
                     <th>Xếp hạng</th>
@@ -122,22 +127,25 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr id="record-step-3-add-1">
                     <td>
                       <span class="dashicons dashicons-plus-alt"></span>
                       <span class="show-rank"></span>
                     </td>
                     <td>
-                      <input type="number" name="price_sale_off" placeholder="Vui lòng nhập Khuyến mãi" />
+                      <p class="required">Khuyến mãi</p>
+                      <input class="require-field" type="number" name="price_sale_off[]" placeholder="Vui lòng nhập Khuyến mãi" />
+                      <p class="form-error-text d-none">Đây là trường bắt buộc</p>
                     </td>
                     <td>
-                      <input type="checkbox" class="is-limit-input" name="is_limit" />
+                      <input type="checkbox" class="is-limit-input" name="is_limit[]" />
                     </td>
                     <td>
                       <p>Không giới hạn số tiền</p>
                       <div class="is-limit-content d-none">
                         <p class="required">Số tiền khuyến mãi tối đa cho một đơn hàng</p>
-                        <input class="price-sale-off-max" type="number" name="price_sale_off_max" placeholder="Vui lòng nhập Số tiền khuyến mãi tối đa cho một đơn hàng" />
+                        <input class="price-sale-off-max require-field" type="number" name="price_sale_off_max[]" placeholder="Vui lòng nhập Số tiền khuyến mãi tối đa cho một đơn hàng" />
+                        <p class="form-error-text d-none">Đây là trường bắt buộc</p>
                       </div>
                     </td>
                   </tr>
@@ -145,7 +153,7 @@
             </table>
           </div>
         </div>
-        <div id="content-step-4" class="step-content">
+        <div class="step-content content-step-4">
           <div class="step-content-header">
             <h2>Hãy kiểm tra lại thông tin trước khi bấm tạo nhé!</h2>
             <p>Quy tắc tích điểm: <b>Chi tiêu 10,000đ = 1 Điểm</b></p>
@@ -153,7 +161,7 @@
           </div>
           <hr />
           <div class="step-content-content" style="overflow-x:auto;">
-            <table class="wp-list-table widefat striped table-view-list">
+            <table id="table-step-4" class="wp-list-table widefat striped table-view-list">
                 <thead>
                   <tr>
                     <th>Xếp hạng</th>
@@ -163,7 +171,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr id="record-step-4-add-1">
                     <td>
                       <span class="dashicons dashicons-plus-alt"></span>
                       <span class="show-rank-final"></span>
@@ -188,7 +196,8 @@
       </div>
       <div class="modal-actions">
         <button type="button" id="modal-prev" class="button">Quay lại</button>
-        <button type="button" id="modal-next" class="button button-primary">Tiếp theo</button>
+        <button type="button" id="modal-next-step-2" class="button button-primary">Tiếp theo (step 2)</button>
+        <button type="button" id="modal-next-step-3" class="button button-primary">Tiếp theo (step 3)</button>
         <button type="submit" id="modal-update" class="button button-primary" name="addRanking">Tạo</button>
       </div>
     </form>
