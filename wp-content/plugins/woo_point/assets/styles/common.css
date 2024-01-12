@@ -75,6 +75,11 @@
 }
 
 .form-error-text {
+  margin-top: 2px;
   font-weight: bold;
   color: var(--secondary) !important;
+}
+
+span[disabled] {
+  pointer-events: none;
 }

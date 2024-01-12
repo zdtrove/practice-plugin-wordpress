@@ -71,213 +71,9 @@ class Paulund_Wp_List_Table
      *
      * @return Void
      */
-    public function list_table_page()
-    {
-        ?>
-        <div class="wrap">
-                <div id="icon-users" class="icon32"></div>
-                <h2>Push Log</h2>
-                <form method="get">
-                <p class="search-box">
-                    <label class="screen-reader-text" for="search"><?php echo (isset($_GET['s']))?$_GET['s']:""; ?>:</label>
-                    <input type="hidden" name="page" value="example-list-table.php">
-                    <input type="search" id="<?php echo esc_attr( 'search' ); ?>" name="s" value="<?php _admin_search_query(); ?>" />
-                        <?php submit_button( "Save Changes", '', '', false, array( 'id' => 'search-submit' ) ); ?>
-                </p>
-                </form>
-                <?php $exampleListTable->display(); ?>
-            </div>
-        <?php
-    }
-}
-
-class Example_List_Table extends WP_List_Table
-{
    
-    // public function curlApiGet($url="",$perPage,$page,$order,$string)
-    // {
-     
-    //     $ch = curl_init();
-    //     curl_setopt($ch, CURLOPT_URL, $url);
-    //     curl_setopt( $ch, CURLOPT_HTTPHEADER,  array( "Origin: ".get_option('siteurl')));
-
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     curl_setopt($ch,CURLOPT_POST, 1);
-    //     curl_setopt($ch, CURLOPT_POSTFIELDS, "page=$page&perPage=$perPage&order=$order&s=$string");
-    //     $response = curl_exec($ch);
-        
-        
-    //     curl_close ($ch);
-
-    //     // do anything you want with your response
-    //     return json_decode($response);
-    // }
-    // public function prepare_items()
-    // {
-    //     $columns = $this->get_columns();
-        
-    //     $hidden = $this->get_hidden_columns();
-    //     $sortable = $this->get_sortable_columns();
-
-    //     $data = $this->table_data();
-    // 	$url = get_option( 'url_notification', '' ).'/get_chart_queue';
-    //     $perPage = 10;
-    //     $currentPage = $this->get_pagenum();
-    //     $order = (isset($_GET['order']))?$_GET['order']:"DESC";
-    //     $string = (isset($_GET['s']))?$_GET['s']:"";
-    //     $results = $this->curlApiGet($url,$perPage,$currentPage,$order,$string);
-      
-    //     if(!$results){
-    
-    //     die;
-    //     }
-    //     $data = $results->data;
-    //     foreach($data as $key => $val){
-    //         $data[$key] = (array) $val;
-            
-    //         $data[$key]['percent_clicked'] = $val->percent_clicked ." (".round($val->percent_clicked *100 / ($val->percent_success * $val->total / 100),1)."%)";
-    //         $data[$key]['created_at'] = date("Y/m/d H:i", strtotime($val->created_at) + 60*60*9);
-    //         $data[$key]['percent_success'] = $val->percent_success * $val->total / 100 . " (".round($val->percent_success,1)."%)";
-    //         $data[$key]['percent_error'] = $val->percent_error * $val->total / 100 . " (".round($val->percent_error,1)."%)";
-    //     }
-     
-
-    //     usort( $data, array( &$this, 'sort_data' ) );
-        
-    //     $totalItems = (isset($results->page))?$results->page->total:count($data);
-
-    //     $this->set_pagination_args( array(
-    //         'total_items' => $totalItems,
-    //         'per_page'    => $perPage
-    //     ) );
-      
-    //     $this->_column_headers = array($columns, $hidden, $sortable);
-    //     $this->items = $data;
-    // }
-
-    // /**
-    //  * Override the parent columns method. Defines the columns to use in your listing table
-    //  *
-    //  * @return Array
-    //  */
-    // public function get_columns()
-    // {
-    //     $columns = array(
-    //         'title'          => 'Post title',
-    //         'created_at'       => '送信日',
-    //         'total' => '総送信数',
-    //         'percent_success'        => '送信成功',
-    //         'percent_error'    => '送信失敗',
-    //         'percent_clicked' => 'Tapされた数'
-    //     );
-
-    //     return $columns;
-    // }
-
-    // /**
-    //  * Define which columns are hidden
-    //  *
-    //  * @return Array
-    //  */
-    // public function get_hidden_columns()
-    // {
-    //     return array();
-    // }
-
-    // /**
-    //  * Define the sortable columns
-    //  *
-    //  * @return Array
-    //  */
-    // public function get_sortable_columns()
-    // {
-    //     return array('created_at' => array('created_at', false));
-    // }
-
-    // /**
-    //  * Get the table data
-    //  *
-    //  * @return Array
-    //  */
-    // // private function table_data()
-    // // {
-
-    // //     $data = array();
-
-    // //     $data[] = array(
-    // //                 'id'          => 1,
-    // //                 'title'       => 'The Shawshank Redemption',
-    // //                 'description' => 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
-    // //                 'year'        => '1994',
-    // //                 'director'    => 'Frank Darabont',
-    // //                 'rating'      => '9.3'
-    // //                 );
-
-        
-
-    // //     return $data;
-    // // }
-
-    // /**
-    //  * Define what data to show on each column of the table
-    //  *
-    //  * @param  Array $item        Data
-    //  * @param  String $column_name - Current column name
-    //  *
-    //  * @return Mixed
-    //  */
-    // public function column_default( $item, $column_name )
-    // {
-  
-    //     switch( $column_name ) {
-    //         case 'id':
-    //         case 'title':
-    //         case 'created_at':
-    //         case 'total':
-    //         case 'percent_success':
-    //         case 'percent_error':
-    //         case 'percent_clicked':
-    //             return $item[ $column_name ];
-
-    //         default:
-    //             return print_r( $item, true ) ;
-    //     }
-    // }
-
-    // /**
-    //  * Allows you to sort the data by the variables set in the $_GET
-    //  *
-    //  * @return Mixed
-    //  */
-    // private function sort_data( $a, $b )
-    // {
-    //     // Set defaults
-    //     $orderby = 'title';
-    //     $order = 'asc';
-
-    //     // If orderby is set, use this as the sort column
-    //     if(!empty($_GET['orderby']))
-    //     {
-    //         $orderby = $_GET['orderby'];
-    //     }
-
-    //     // If order is set use this as the order
-    //     if(!empty($_GET['order']))
-    //     {
-    //         $order = $_GET['order'];
-    //     }
-
-
-    //     $result = strcmp( $a[$orderby], $b[$orderby] );
-
-    //     if($order === 'asc')
-    //     {
-    //         return $result;
-    //     }
-
-    //     return -$result;
-    // }
 }
+
 
 
 
@@ -319,7 +115,7 @@ function pluginprefix_setup_db(){
         if ($wpdb->get_var("SHOW TABLES LIKE '". $ptbd_table_name ."'"  ) != $ptbd_table_name ) {
 
             $sql  = 'CREATE TABLE '.$ptbd_table_name.'(
-            id INT AUTO_INCREMENT,
+            id BIGINT AUTO_INCREMENT,
             user_id INT NOT NULL,
             total_order INT NOT NULL,
             order_id INT NULL,
@@ -364,14 +160,54 @@ register_activation_hook( __FILE__, 'pluginprefix_activate' );
 // 	'pluginprefix_deactivate'
 // );
 
-function my_custom_update_wc_order_status_function($order_id, $order, $status) {
-    
-    
+function my_custom_update_wc_order_status_function($order_id, $order) {
     // Check if the order type is 'shop_order'
+ 
     if ($order->get_type() === 'shop_order') {
+        global $wpdb;
+        $prefix = $wpdb->prefix;
+        $history = $wpdb->get_results("SELECT * FROM ".$prefix."woo_history_user_point WHERE (order_id = '".$order_id."' AND status = '3')");
+        if($history){
+            $id= $history[0]->id;
+            $userId  = $order->data['customer_id'];
+            
+            
+            $totalOrder = $wpdb->get_results("SELECT SUM(total_order) as total FROM ".$prefix."woo_history_user_point WHERE (user_id = '".$userId."' AND status = '1')")[0]->total;
+            $totalOrder = ($totalOrder)?$totalOrder :0;
+            $checkRankBefore = $wpdb->get_results("SELECT * FROM ".$prefix."woo_rank WHERE (minimum_spending <= '".$totalOrder."') ORDER BY minimum_spending DESC LIMIT 1");
+
+            $wpdb->query($wpdb->prepare("UPDATE ".$prefix."woo_history_user_point SET status=1 WHERE id=$id"));
+            $totalOrder = $wpdb->get_results("SELECT SUM(total_order) as total FROM ".$prefix."woo_history_user_point WHERE (user_id = '".$userId."' AND status = '1')")[0]->total;
+            $totalOrder = ($totalOrder)?$totalOrder :0;
+            $checkRankAfter = $wpdb->get_results("SELECT * FROM ".$prefix."woo_rank WHERE (minimum_spending <= '".$totalOrder."') ORDER BY minimum_spending DESC LIMIT 1");
+            if($checkRankBefore && $checkRankAfter && $checkRankBefore[0]->id != $checkRankAfter[0]->id){
+                $date = date('Y-m-d H:i:s');
+                $code = generateRandomString(8);
+                $priceSaleOff = $checkRankAfter[0]->price_sale_off;
+                $text = 'Voucher cho '.$checkRankAfter[0]->name.'. Ưu đãi '.$priceSaleOff;
+                $addVoucher = $wpdb->query($wpdb->prepare("INSERT INTO ".$prefix."posts (`post_author`, `post_date`, `post_date_gmt`, `post_title`, `post_excerpt`, `post_status`, `comment_status`, `ping_status`, `post_name`, `post_modified`, `post_modified_gmt`, `post_parent`, `post_type`) VALUES ('$userId','$date','$date','$code','$text','publish','closed','closed','$code','$date','$date','0','shop_coupon')"));
+                $PostIdVoucher = $wpdb->insert_id;
+                
+                $arrayEmail = serialize([$order->data['billing']['email']]);
+                $sqlAddMeta = "INSERT INTO ".$prefix."postmeta ( `post_id`, `meta_key`, `meta_value` ) VALUES ('$PostIdVoucher', 'discount_type', 'fixed_cart'), ('$PostIdVoucher', 'coupon_amount', '$priceSaleOff'), ('$PostIdVoucher', 'usage_limit', '1'), ('$PostIdVoucher', 'usage_limit_per_user', '1'), ('$PostIdVoucher', 'limit_usage_to_x_items', '0'), ('$PostIdVoucher', 'usage_count', '0'), ('$PostIdVoucher', 'customer_email', '$arrayEmail'), ('$PostIdVoucher', 'customer_user', '$userId')";
+                $addMeta = $wpdb->query($wpdb->prepare($sqlAddMeta));
+            }
+            
+            
+        }
         // Your custom code to update something based on the WooCommerce order status change
 
     }
 }
-
 add_action('woocommerce_order_status_completed', 'my_custom_update_wc_order_status_function', 10, 4);
+
+// add_action('woocommerce_order_status_processing', 'my_custom_update_wc_order_status_function', 10, 3);
+function generateRandomString($length = 10) {
+    $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[random_int(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}

@@ -69,11 +69,11 @@
             <p>Tạo mới hạng thành viên và điều kiện đạt hạng</p>
           </div>
           <hr />
-          <div class="step-content-content" style="overflow-x:auto;">
+          <div class="step-content-content">
             <button id="add-more-record" type="button" class="button flex-center" style="margin-bottom: 20px;">
               <span class="dashicons dashicons-insert"></span>Thêm
             </button>
-            <table id="table-step-2" class="wp-list-table widefat striped table-view-list">
+            <table class="wp-list-table widefat striped table-view-list">
               <thead>
                 <tr>
                   <th>Hình ảnh</th>
@@ -82,7 +82,7 @@
                   <th>Hành động</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="table-step-2">
                 <tr id="record-step-2-add-1">
                   <td class="flex-center">
                     <button type="button" class="upload-image-button button flex-center">
@@ -103,7 +103,7 @@
                     <p class="form-error-text d-none">Đây là trường bắt buộc</p>
                   </td>
                   <td>
-                    <span disabled class="button delete">✕</span>
+                    <span disabled class="button delete delete-add-record">✕</span>
                   </td>
                 </tr>
               </tbody>
@@ -117,7 +117,7 @@
           </div>
           <hr />
           <div class="step-content-content" style="overflow-x:auto;">
-            <table id="table-step-3" class="wp-list-table widefat striped table-view-list">
+            <table class="wp-list-table widefat striped table-view-list">
                 <thead>
                   <tr>
                     <th>Xếp hạng</th>
@@ -126,7 +126,7 @@
                     <th>Số tiền khuyến mãi tối đa cho một đơn hàng</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-step-3">
                   <tr id="record-step-3-add-1">
                     <td>
                       <span class="dashicons dashicons-plus-alt"></span>
@@ -144,7 +144,7 @@
                       <p>Không giới hạn số tiền</p>
                       <div class="is-limit-content d-none">
                         <p class="required">Số tiền khuyến mãi tối đa cho một đơn hàng</p>
-                        <input class="price-sale-off-max require-field" type="number" name="price_sale_off_max[]" placeholder="Vui lòng nhập Số tiền khuyến mãi tối đa cho một đơn hàng" />
+                        <input class="price-sale-off-max require-field require-field-limit" type="number" name="price_sale_off_max[]" placeholder="Vui lòng nhập Số tiền khuyến mãi tối đa cho một đơn hàng" />
                         <p class="form-error-text d-none">Đây là trường bắt buộc</p>
                       </div>
                     </td>
@@ -161,7 +161,7 @@
           </div>
           <hr />
           <div class="step-content-content" style="overflow-x:auto;">
-            <table id="table-step-4" class="wp-list-table widefat striped table-view-list">
+            <table class="wp-list-table widefat striped table-view-list">
                 <thead>
                   <tr>
                     <th>Xếp hạng</th>
@@ -170,7 +170,7 @@
                     <th>Số tiền khuyến mãi tối đa cho một đơn hàng</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-step-4">
                   <tr id="record-step-4-add-1">
                     <td>
                       <span class="dashicons dashicons-plus-alt"></span>
@@ -196,8 +196,8 @@
       </div>
       <div class="modal-actions">
         <button type="button" id="modal-prev" class="button">Quay lại</button>
-        <button type="button" id="modal-next-step-2" class="button button-primary">Tiếp theo (step 2)</button>
-        <button type="button" id="modal-next-step-3" class="button button-primary">Tiếp theo (step 3)</button>
+        <button type="button" id="modal-next-step-2" class="button button-primary">Tiếp theo</button>
+        <button type="button" id="modal-next-step-3" class="button button-primary">Tiếp theo</button>
         <button type="submit" id="modal-update" class="button button-primary" name="addRanking">Tạo</button>
       </div>
     </form>

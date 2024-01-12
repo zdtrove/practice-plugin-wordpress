@@ -3,6 +3,7 @@
   $successMessage = '';
   $errorMessage = '';
   $table = $wpdb->prefix . 'woo_rank';
+  $tableSetting = $wpdb->prefix . 'woo_setting';
 
   if (isset($_POST['addRanking'])) {
     for ($i = 0; $i < count($_POST['name']); $i++) {
@@ -53,6 +54,35 @@
     $successMessage = 'Chỉnh sửa hạng thành viên thành công';
   }
 
+  if (isset($_POST['editAllRanking'])) {
+    for ($i = 0; $i < count($_POST['name']); $i++) {
+      $arrayUpdate = array(
+        'imageurl' => $_POST['imageurl'][$i],
+        'name' => $_POST['name'][$i],
+        'minimum_spending' => $_POST['minimum_spending'][$i],
+        'price_sale_off' => $_POST['price_sale_off'][$i],
+        'price_sale_off_max' => $_POST['price_sale_off_max'][$i],
+      );
+
+      if (isset($_POST['is_limit'][$i])) {
+        $arrayUpdate = array_merge($arrayUpdate, array('is_limit' => $_POST['is_limit'][$i] ? 1 : 0));
+      } else {
+        $arrayUpdate = array_merge($arrayUpdate, array('is_limit' => 0));
+      }
+
+      $update = $wpdb->update($table, $arrayUpdate, array('id' => $_POST['rankId'][$i]));
+    }
+
+    $settings = $wpdb->get_results( 'SELECT * FROM ' . $tableSetting . ' ORDER BY id ASC', ARRAY_A );
+    if (count($settings) === 0) {
+      $wpdb->insert($tableSetting, array('points_converted_to_money' => $_POST['points_converted_to_money'], 'amount_spent' => $_POST['amount_spent']));
+    } else {
+      $wpdb->update($tableSetting, array('points_converted_to_money' => $_POST['points_converted_to_money'], 'amount_spent' => $_POST['amount_spent']), array('id' => $settings[0]['id']));
+    }    
+    
+    $successMessage = 'Chỉnh sửa hạng thành viên thành công';
+  }
+
   if (isset($_POST['deleteAllRanking'])) {
     foreach ($_POST['id-delete'] as $key => $value) {
       $wpdb->delete($table, array('id' => $value));
@@ -71,11 +101,11 @@
     </div>
   <?php } ?>
   <div class="actions">
-    <button id="modal-add-btn" class="button">
+    <button id="button-open-modal-add" class="button">
       <span class="dashicons dashicons-plus-alt2"></span>
       <span>Thêm</span>
     </button>
-    <button id="modal-edit-btn" class="button">
+    <button id="button-open-modal-edit-all" onclick="openEditAllModal()" class="button">
       <span class="dashicons dashicons-edit-page"></span>
       <span>Chỉnh sửa tất cả</span>
     </button>
@@ -88,10 +118,10 @@
   </div>
   <form method="post">
     <ul class="nav-tabs">
-      <li class="active">
+      <li onclick="showEditAll()" class="active">
         <a href="#tab-1">Danh sách xếp hạng</a>
       </li>
-      <li>
+      <li onclick="hideEditAll()">
         <a href="#tab-2">Danh sách thành viên</a>
       </li>
     </ul>
@@ -101,6 +131,7 @@
       </div>
       <div id="tab-2" class="tab-pane">
         <h3>Danh sách thành viên</h3>
+        <?php require_once(dirname(__FILE__) . '/user-list.php'); ?>
       </div>
     </div>
     <div id="overlay" class="overlay d-none"></div>
