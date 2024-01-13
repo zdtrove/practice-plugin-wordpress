@@ -1,9 +1,5 @@
 <?php
-  $table = $wpdb->prefix . 'woo_rank';
-  $tableSetting = $wpdb->prefix . 'woo_setting';
-  $ranks = $wpdb->get_results( 'SELECT * FROM ' . $table . ' ORDER BY id ASC', ARRAY_A );
-  $settings = $wpdb->get_results( 'SELECT * FROM ' . $tableSetting . ' ORDER BY id ASC', ARRAY_A );
-  $currentPage = ! empty( $_GET['paged'] ) ? (int) $_GET['paged'] : 1;
+  $currentPage = (! empty( $_GET['paged'] )) && ($_GET['tab'] == 'dsxh') ? (int) $_GET['paged'] : 1;
   $total = count( $ranks );
   $perPage = 10;
   $totalPages = ceil($total/ $perPage);
@@ -49,20 +45,20 @@
 </table>
 <ul class="pagination">
   <?php
-    if ( !empty( $_GET['paged'] ) ) $pg = $_GET['paged'];
+    if ( (! empty( $_GET['paged'] )) && ($_GET['tab'] == 'dsxh') ) $pg = $_GET['paged'];
 
     if ( isset( $pg ) && $pg > 1 ) {
-      echo '<li><a class="button" href="'.site_url().'/wp-admin/admin.php?page=tich-diem&paged=' . ( $pg - 1 ) . '">«</a></li>';
+      echo '<li><a class="button" href="'.site_url().'/wp-admin/admin.php?page=tich-diem&paged=' . ( $pg - 1 ) . '&tab=dsxh">«</a></li>';
     }
 
     for ( $i = 1; $i <= $totalPages; $i++ ) {
       if ( isset( $pg ) && $pg == $i )  $active = 'active';
       else $active = '';
-      echo '<li><a href="'.site_url().'/wp-admin/admin.php?page=tich-diem&paged=' . $i . '" class="button ' . $active . '">' . $i . '</a></li>';
+      echo '<li><a href="'.site_url().'/wp-admin/admin.php?page=tich-diem&paged=' . $i . '&tab=dsxh" class="button ' . $active . '">' . $i . '</a></li>';
     }
 
     if ( isset( $pg ) && $pg < $totalPages ) {
-      echo '<li><a class="button" href="'.site_url().'/wp-admin/admin.php?page=tich-diem&paged=' . ( $pg + 1 ). '">»</a></li>';
+      echo '<li><a class="button" href="'.site_url().'/wp-admin/admin.php?page=tich-diem&paged=' . ( $pg + 1 ). '&tab=dsxh">»</a></li>';
     }
   ?>
 </ul>
@@ -345,7 +341,7 @@
               <div class="group-input" style="display: flex; gap: 15px;">
                 <div>
                   <p class="required">Số tiền chi tiêu quy đổi ra 1 điểm</p>
-                  <input type="number" class="require-field" onkeyup="handleConverMoney(this)" name="points_converted_to_money" value="<?php echo count($settings) > 0 ? $settings[0]['points_converted_to_money'] : ''; ?>">
+                  <input type="number" class="require-field" onkeyup="handleConvertMoney(this)" name="points_converted_to_money" value="<?php echo count($settings) > 0 ? $settings[0]['points_converted_to_money'] : ''; ?>">
                   <p class="form-error-text d-none">Đây là trường bắt buộc</p>
                 </div>
                 <div>
@@ -441,7 +437,7 @@
                   <th>Số tiền khuyến mãi tối đa cho một đơn hàng</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="table-step-3-edit">
                 <?php foreach ($ranks as $key => $value) { ?>
                   <tr id="record-step-3-edit-all-<?php echo $value['id']; ?>">
                     <td>
@@ -461,7 +457,7 @@
                       <div class="is-limit-content <?php echo ($value['is_limit'] == 1 ? '' : 'd-none'); ?>">
                         <p class="required">Số tiền khuyến mãi tối đa cho một đơn hàng</p>
                         <input
-                          class="price-sale-off-max require-field"
+                          class="price-sale-off-max require-field-limit"
                           type="number"
                           name="price_sale_off_max[]"
                           placeholder="Vui lòng nhập Số tiền khuyến mãi tối đa cho một đơn hàng"

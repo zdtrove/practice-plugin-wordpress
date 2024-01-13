@@ -1,11 +1,12 @@
 const hiddenClass = 'd-none';
+const activeClass = 'active';
 let isEditAll = false;
 let step = 1;
 let stepEditAll = 1;
 let ids = [];
 let triggerEditAll = 0;
 
-function handleConverMoney(e) {
+function handleConvertMoney(e) {
   const span = document.getElementById('points_converted_to_money_span');
   span.innerHTML = e.value;
 
@@ -23,12 +24,16 @@ function handleAmountSpent(e) {
 
 function showEditAll() {
   document.getElementById('button-open-modal-edit-all').style.cssText = 'display: flex';
+  document.getElementById('button-open-modal-edit-all').classList.remove(hiddenClass);
   document.getElementById('button-open-modal-add').style.cssText = 'display: flex';
+  document.getElementById('button-open-modal-add').classList.remove(hiddenClass);
+  document.getElementById('modal-delete-btn').classList.remove(hiddenClass);
 }
 
 function hideEditAll() {
   document.getElementById('button-open-modal-edit-all').style.cssText = 'display: none !important';
   document.getElementById('button-open-modal-add').style.cssText = 'display: none !important';
+  document.getElementById('modal-delete-btn').classList.add(hiddenClass);
 }
 
 function showModal(id) {
@@ -197,7 +202,7 @@ function openEditModal(id) {
       const limitInput = contentStep3.querySelector('.is-limit-input');
       
       requireInputStep3.forEach((input) => {
-        if (input.value === '') {
+        if (input.value === '' || input.value == 0) {
           input.nextElementSibling.classList.remove(hiddenClass);
         } else {
           checkPassStep3++;
@@ -296,6 +301,7 @@ function openEditAllModal() {
   modalEditAll.classList.remove(hiddenClass);
   modalPrevEditAll.classList.add(hiddenClass);
   modalUpdate.classList.add(hiddenClass);
+  modalNextStep1.classList.remove(hiddenClass);
   modalNextStep2.classList.add(hiddenClass);
   modalNextStep3.classList.add(hiddenClass);
 
@@ -356,23 +362,41 @@ function openEditAllModal() {
 
   triggerEditAll <= 1 && modalNextStep3.addEventListener('click', function() {
     let checkPassStep3 = 0;
-    if (stepEditAll === 3) {
-      const contentStep3 = document.querySelector('.content-step-3-edit-all');
-      const requireInputStep3 = contentStep3.querySelectorAll('.require-field');
-      const limitInput = contentStep3.querySelector('.is-limit-input');
-      
-      requireInputStep3.forEach((input) => {
-        if (input.value === '') {
-          input.nextElementSibling.classList.remove(hiddenClass);
-        } else {
-          checkPassStep3++;
-          input.nextElementSibling.classList.add(hiddenClass);
-        }
-      });
+    const tableStep3 = document.querySelector('#table-step-3-edit');
+    const trStep3 = tableStep3.querySelectorAll('tr');
+    trStep3.forEach((tr) => {
+      let checkStep3 = 0;
+      const requireInputStep3 = tr.querySelector('.require-field');
+      const requireInputLimitStep3 = tr.querySelector('.require-field-limit');
+      const limitInput = tr.querySelector('.is-limit-input');
 
-      if (checkPassStep3 === requireInputStep3.length || (checkPassStep3 === 1 && limitInput.checked === false)) {
-        nextStep();
+      if (requireInputStep3.value === '') {
+        requireInputStep3.nextElementSibling.classList.remove(hiddenClass);
+      } else {
+        requireInputStep3.nextElementSibling.classList.add(hiddenClass);
+        checkStep3++;
       }
+
+      if (limitInput.checked) {
+        if (requireInputLimitStep3.value === '' || requireInputLimitStep3.value == 0) {
+          requireInputLimitStep3.nextElementSibling.classList.remove(hiddenClass);
+        } else {
+          requireInputLimitStep3.nextElementSibling.classList.add(hiddenClass);
+          checkStep3++;
+        }
+
+        if (checkStep3 === 2) {
+          checkPassStep3++;
+        }
+      } else {
+        if (checkStep3 === 1) {
+          checkPassStep3++;
+        }
+      }
+    });
+
+    if (checkPassStep3 === trStep3.length) {
+      nextStep();
     }
   });
 
@@ -486,6 +510,30 @@ window.addEventListener('load', function() {
   });
 
   /* Tabs */
+  sPageURL = window.location.search.substring(1);
+  const params = sPageURL.split('&');
+  
+  const tabRank = document.getElementById('tabRank');
+  const tabUser = document.getElementById('tabUser');
+  const tab1 = document.getElementById('tab-1');
+  const tab2 = document.getElementById('tab-2');
+  const buttonAdd = document.getElementById('button-open-modal-add');
+  const buttonEditAll = document.getElementById('button-open-modal-edit-all');
+
+  if (params.length === 1 || params[2].split('=')[1] === 'dsxh') {
+    tabRank.classList.add(activeClass);
+    tabUser.classList.remove(activeClass);
+    tab1.classList.add(activeClass);
+    tab2.classList.remove(activeClass);
+  } else if (params[2].split('=')[1] === 'dstv') {
+    tabRank.classList.remove(activeClass);
+    tabUser.classList.add(activeClass);
+    tab1.classList.remove(activeClass);
+    tab2.classList.add(activeClass);
+    buttonAdd.classList.add(hiddenClass);
+    buttonEditAll.classList.add(hiddenClass);
+  }
+
   const tabs = document.querySelectorAll('ul.nav-tabs > li');
   for (i = 0; i < tabs.length; i++) {
     tabs[i].addEventListener('click', switchTab);
@@ -493,13 +541,13 @@ window.addEventListener('load', function() {
 
   function switchTab(event) {
     event.preventDefault();
-    document.querySelector('ul.nav-tabs li.active').classList.remove('active');
-    document.querySelector('.tab-pane.active').classList.remove('active');
+    document.querySelector('ul.nav-tabs li.active').classList.remove(activeClass);
+    document.querySelector('.tab-pane.active').classList.remove(activeClass);
     const clickedTab = event.currentTarget;
     const anchor = event.target;
     const activePaneID = anchor.getAttribute('href');
-    clickedTab.classList.add('active');
-    document.querySelector(activePaneID).classList.add('active');
+    clickedTab.classList.add(activeClass);
+    document.querySelector(activePaneID).classList.add(activeClass);
   }
 
   /* Modal */
@@ -765,7 +813,7 @@ window.addEventListener('load', function() {
         }
 
         if (limitInput.checked) {
-          if (requireInputLimitStep3.value === '') {
+          if (requireInputLimitStep3.value === '' || requireInputLimitStep3.value == 0) {
             requireInputLimitStep3.nextElementSibling.classList.remove(hiddenClass);
           } else {
             requireInputLimitStep3.nextElementSibling.classList.add(hiddenClass);
@@ -795,7 +843,7 @@ window.addEventListener('load', function() {
     document.getElementById(`step-${step}`).classList.add('current');
 
     for (let i = step - 1; i > 0; i--) {
-      document.getElementById(`step-${i}`).classList.add('active');
+      document.getElementById(`step-${i}`).classList.add(activeClass);
     }
 
     if (step === 3) {
@@ -813,7 +861,7 @@ window.addEventListener('load', function() {
   modalPrev.addEventListener('click', function() {
     document.getElementById(`step-${step}`).classList.remove('current');
     step--;
-    document.getElementById(`step-${step}`).classList.remove('active');
+    document.getElementById(`step-${step}`).classList.remove(activeClass);
 
     if (step === 1 || (step === 2 && isEditAll === false)) {
       modalPrev.classList.add(hiddenClass);
@@ -843,13 +891,13 @@ window.addEventListener('load', function() {
 
     for (let i = 1; i <= 4; i++) {
       document.getElementById(`step-${i}`).classList.remove('current');
-      document.getElementById(`step-${i}`).classList.remove('active');
+      document.getElementById(`step-${i}`).classList.remove(activeClass);
     }
 
     document.getElementById(`step-${step}`).classList.add('current');
 
     for (let i = step - 1; i > 0; i--) {
-      document.getElementById(`step-${i}`).classList.add('active');
+      document.getElementById(`step-${i}`).classList.add(activeClass);
     }
 
     changeModalContent();

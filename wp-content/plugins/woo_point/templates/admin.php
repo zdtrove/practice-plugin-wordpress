@@ -2,8 +2,15 @@
   global $wpdb;
   $successMessage = '';
   $errorMessage = '';
-  $table = $wpdb->prefix . 'woo_rank';
+  $tableUser = $wpdb->prefix . 'users';
+  $tableRank = $wpdb->prefix . 'woo_rank';
   $tableSetting = $wpdb->prefix . 'woo_setting';
+  $tableHistory = $wpdb->prefix . 'woo_history_user_point';
+
+  $users = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' ORDER BY id ASC', ARRAY_A );
+  $ranks = $wpdb->get_results( 'SELECT * FROM ' . $tableRank . ' ORDER BY id ASC', ARRAY_A );
+  $settings = $wpdb->get_results( 'SELECT * FROM ' . $tableSetting . ' ORDER BY id ASC', ARRAY_A );
+  $userHistoryPoint = $wpdb->get_results( 'SELECT * FROM ' . $tableHistory . ' ORDER BY id ASC', ARRAY_A);
 
   if (isset($_POST['addRanking'])) {
     for ($i = 0; $i < count($_POST['name']); $i++) {
@@ -13,20 +20,17 @@
         'minimum_spending' => $_POST['minimum_spending'][$i],
         'price_sale_off' => $_POST['price_sale_off'][$i],
         'price_sale_off_max' => $_POST['price_sale_off_max'][$i],
+        'is_limit' => $_POST['price_sale_off_max'][$i] ? 1 : 0
       );
   
-      if (isset($_POST['is_limit'][$i])) {
-        $arrayInsert = array_merge($arrayInsert, array('is_limit' => $_POST['is_limit'][$i] ? 1 : 0));
-      }
-  
-      $wpdb->insert($table, $arrayInsert);
+      $wpdb->insert($tableRank, $arrayInsert);
     }
 
     $successMessage = 'Thêm hạng thành viên thành công';
   }
 
   if (isset($_POST['deleteRanking'])) {
-    $delete = $wpdb->delete($table, array('id' => $_POST['rankId']));
+    $delete = $wpdb->delete($tableRank, array('id' => $_POST['rankId']));
 
     if ($delete) {
       $successMessage = 'Xóa hạng thành viên thành công';
@@ -49,7 +53,7 @@
         $arrayUpdate = array_merge($arrayUpdate, array('is_limit' => 0));
       }
 
-      $update = $wpdb->update($table, $arrayUpdate, array('id' => $_POST['rankId']));
+      $update = $wpdb->update($tableRank, $arrayUpdate, array('id' => $_POST['rankId']));
     }
     $successMessage = 'Chỉnh sửa hạng thành viên thành công';
   }
@@ -62,18 +66,12 @@
         'minimum_spending' => $_POST['minimum_spending'][$i],
         'price_sale_off' => $_POST['price_sale_off'][$i],
         'price_sale_off_max' => $_POST['price_sale_off_max'][$i],
+        'is_limit' => $_POST['price_sale_off_max'][$i] ? 1 : 0
       );
 
-      if (isset($_POST['is_limit'][$i])) {
-        $arrayUpdate = array_merge($arrayUpdate, array('is_limit' => $_POST['is_limit'][$i] ? 1 : 0));
-      } else {
-        $arrayUpdate = array_merge($arrayUpdate, array('is_limit' => 0));
-      }
-
-      $update = $wpdb->update($table, $arrayUpdate, array('id' => $_POST['rankId'][$i]));
+      $update = $wpdb->update($tableRank, $arrayUpdate, array('id' => $_POST['rankId'][$i]));
     }
 
-    $settings = $wpdb->get_results( 'SELECT * FROM ' . $tableSetting . ' ORDER BY id ASC', ARRAY_A );
     if (count($settings) === 0) {
       $wpdb->insert($tableSetting, array('points_converted_to_money' => $_POST['points_converted_to_money'], 'amount_spent' => $_POST['amount_spent']));
     } else {
@@ -85,7 +83,7 @@
 
   if (isset($_POST['deleteAllRanking'])) {
     foreach ($_POST['id-delete'] as $key => $value) {
-      $wpdb->delete($table, array('id' => $value));
+      $wpdb->delete($tableRank, array('id' => $value));
     }
     $successMessage = 'Xóa hạng thành viên thành công';
   }
@@ -118,10 +116,10 @@
   </div>
   <form method="post">
     <ul class="nav-tabs">
-      <li onclick="showEditAll()" class="active">
+      <li id="tabRank" onclick="showEditAll()" class="active">
         <a href="#tab-1">Danh sách xếp hạng</a>
       </li>
-      <li onclick="hideEditAll()">
+      <li id="tabUser" onclick="hideEditAll()">
         <a href="#tab-2">Danh sách thành viên</a>
       </li>
     </ul>

@@ -156,8 +156,8 @@
         <div class="step-content content-step-4">
           <div class="step-content-header">
             <h2>Hãy kiểm tra lại thông tin trước khi bấm tạo nhé!</h2>
-            <p>Quy tắc tích điểm: <b>Chi tiêu 10,000đ = 1 Điểm</b></p>
-            <p>Quy tắc đổi điểm: <b>1 điểm = 3,000đ</b></p>
+            <p>Quy tắc tích điểm: <b>Chi tiêu <span id="points_converted_to_money_span_edit_all"><?php echo count($settings) > 0 ? $settings[0]['points_converted_to_money'] : ''; ?>đ = 1 Điểm</b></p>
+            <p>Quy tắc đổi điểm: <b>1 điểm = <span id="amount_spent_span_edit_all"><?php echo count($settings) > 0 ? $settings[0]['points_converted_to_money'] : ''; ?>đ</b></p>
           </div>
           <hr />
           <div class="step-content-content" style="overflow-x:auto;">

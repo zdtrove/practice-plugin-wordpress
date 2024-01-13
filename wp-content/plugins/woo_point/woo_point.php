@@ -91,7 +91,7 @@ function pluginprefix_setup_db(){
             $sql  = 'CREATE TABLE '.$ptbd_table_name.'(
             id INT AUTO_INCREMENT,
             imageurl VARCHAR(255)  NULL,
-            name VARCHAR(255) NOT NULL ,
+            name VARCHAR(255) CHARACTER SET utf8mb4  NOT NULL,
             minimum_spending INT NOT NULL,
             price_sale_off INT NOT NULL,
             is_limit INT DEFAULT 0,
@@ -116,13 +116,12 @@ function pluginprefix_setup_db(){
 
             $sql  = 'CREATE TABLE '.$ptbd_table_name.'(
             id BIGINT AUTO_INCREMENT,
-            user_id INT NOT NULL,
+            user_id BIGINT NOT NULL,
             total_order INT NOT NULL,
             order_id INT NULL,
             point INT NOT NULL,
             minimum_spending INT  NULL,
-            price_sale_off INT  NULL,
-            price_sale_off_max INT  NULL,
+            points_converted_to_money INT  NULL,
             status INT DEFAULT 1, 
             create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP  ,
 
@@ -170,8 +169,6 @@ function my_custom_update_wc_order_status_function($order_id, $order) {
         if($history){
             $id= $history[0]->id;
             $userId  = $order->data['customer_id'];
-            
-            
             $totalOrder = $wpdb->get_results("SELECT SUM(total_order) as total FROM ".$prefix."woo_history_user_point WHERE (user_id = '".$userId."' AND status = '1')")[0]->total;
             $totalOrder = ($totalOrder)?$totalOrder :0;
             $checkRankBefore = $wpdb->get_results("SELECT * FROM ".$prefix."woo_rank WHERE (minimum_spending <= '".$totalOrder."') ORDER BY minimum_spending DESC LIMIT 1");
@@ -187,13 +184,10 @@ function my_custom_update_wc_order_status_function($order_id, $order) {
                 $text = 'Voucher cho '.$checkRankAfter[0]->name.'. Ưu đãi '.$priceSaleOff;
                 $addVoucher = $wpdb->query($wpdb->prepare("INSERT INTO ".$prefix."posts (`post_author`, `post_date`, `post_date_gmt`, `post_title`, `post_excerpt`, `post_status`, `comment_status`, `ping_status`, `post_name`, `post_modified`, `post_modified_gmt`, `post_parent`, `post_type`) VALUES ('$userId','$date','$date','$code','$text','publish','closed','closed','$code','$date','$date','0','shop_coupon')"));
                 $PostIdVoucher = $wpdb->insert_id;
-                
                 $arrayEmail = serialize([$order->data['billing']['email']]);
                 $sqlAddMeta = "INSERT INTO ".$prefix."postmeta ( `post_id`, `meta_key`, `meta_value` ) VALUES ('$PostIdVoucher', 'discount_type', 'fixed_cart'), ('$PostIdVoucher', 'coupon_amount', '$priceSaleOff'), ('$PostIdVoucher', 'usage_limit', '1'), ('$PostIdVoucher', 'usage_limit_per_user', '1'), ('$PostIdVoucher', 'limit_usage_to_x_items', '0'), ('$PostIdVoucher', 'usage_count', '0'), ('$PostIdVoucher', 'customer_email', '$arrayEmail'), ('$PostIdVoucher', 'customer_user', '$userId')";
                 $addMeta = $wpdb->query($wpdb->prepare($sqlAddMeta));
             }
-            
-            
         }
         // Your custom code to update something based on the WooCommerce order status change
 

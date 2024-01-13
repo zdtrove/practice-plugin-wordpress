@@ -42,6 +42,11 @@
   float: left;
   width: 100%;
   display: none;
+  overflow: auto;
+}
+
+.tab-content > .tab-pane > table {
+  min-width: 600px;
 }
 
 .tab-content > .tab-pane.active {
