@@ -1,11 +1,47 @@
 const _hiddenClass = 'd-none';
 const _activeClass = 'active';
 
+function openLowerModal(id) {
+  const modalOverlay = document.querySelector('.overlay');
+  const modalLowerLevel = document.querySelector(`.modal-lower-level-${id}`);
+
+  modalOverlay.classList.remove(_hiddenClass);
+  modalLowerLevel.classList.remove(_hiddenClass);
+}
+
+function closeLowerModal(id) {
+  const modalOverlay = document.querySelector('.overlay');
+  const modalLowerLevel = document.querySelector(`.modal-lower-level-${id}`);
+
+  modalOverlay.classList.add(_hiddenClass);
+  modalLowerLevel.classList.add(_hiddenClass);
+}
+
+function openIncomeModal(id) {
+  const modalOverlay = document.querySelector('.overlay');
+  const modalLowerLevel = document.querySelector(`.modal-income-${id}`);
+
+  modalOverlay.classList.remove(_hiddenClass);
+  modalLowerLevel.classList.remove(_hiddenClass);
+}
+
+function closeIncomeModal(id) {
+  const modalOverlay = document.querySelector('.overlay');
+  const modalLowerLevel = document.querySelector(`.modal-income-${id}`);
+
+  modalOverlay.classList.add(_hiddenClass);
+  modalLowerLevel.classList.add(_hiddenClass);
+}
+
 window.addEventListener('load', function() {
+  /* Common */
+  const removeMessageBtn = document.getElementById('remove-message');
+  removeMessageBtn && removeMessageBtn.addEventListener('click', function() {
+    document.getElementById('message').classList.add(hiddenClass);
+  });
   /* Tabs */
   const _sPageURL = window.location.search.substring(1);
   const _params = _sPageURL.split('&');
-  console.log(_params);
   
   const tabSetting1 = document.getElementById('tabSetting1');
   const tabSetting2 = document.getElementById('tabSetting2');
