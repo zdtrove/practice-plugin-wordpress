@@ -98,49 +98,51 @@ function handleChangeValue(tags, classes) {
 }
 
 function handleInputChange(modal) {
-  /* Handle rank name */
-  const rankNames = modal.querySelectorAll('input[name="name[]"]');
-  const showRanks = modal.querySelectorAll('.show-rank');
-  const showRanksFinal = modal.querySelectorAll('.show-rank-final');
-  handleChangeValue(rankNames, showRanks);
-  handleChangeValue(rankNames, showRanksFinal);
+  if (modal) {
+    /* Handle rank name */
+    const rankNames = modal.querySelectorAll('input[name="name[]"]');
+    const showRanks = modal.querySelectorAll('.show-rank');
+    const showRanksFinal = modal.querySelectorAll('.show-rank-final');
+    handleChangeValue(rankNames, showRanks);
+    handleChangeValue(rankNames, showRanksFinal);
 
-  /* Handle minimum spending */
-  const minimumSpending = modal.querySelectorAll('input[name="minimum_spending[]"]');
-  const showMinimumSpendingFinal = modal.querySelectorAll('.show-minimum-spending-final');
-  handleChangeValue(minimumSpending, showMinimumSpendingFinal);
+    /* Handle minimum spending */
+    const minimumSpending = modal.querySelectorAll('input[name="minimum_spending[]"]');
+    const showMinimumSpendingFinal = modal.querySelectorAll('.show-minimum-spending-final');
+    handleChangeValue(minimumSpending, showMinimumSpendingFinal);
 
-  /* Handle price sale off */
-  const priceSaleOff = modal.querySelectorAll('input[name="price_sale_off[]"]');
-  const showPriceSaleOffFinal = modal.querySelectorAll('.show-price-sale-off-final');
-  handleChangeValue(priceSaleOff, showPriceSaleOffFinal);
+    /* Handle price sale off */
+    const priceSaleOff = modal.querySelectorAll('input[name="price_sale_off[]"]');
+    const showPriceSaleOffFinal = modal.querySelectorAll('.show-price-sale-off-final');
+    handleChangeValue(priceSaleOff, showPriceSaleOffFinal);
 
-  /* Handle price sale off max */
-  const priceSaleOffMax = modal.querySelectorAll('input[name="price_sale_off_max[]"]');
-  const showPriceSaleOffMaxFinal = modal.querySelectorAll('.show-price-sale-off-max-final');
-  handleChangeValue(priceSaleOffMax, showPriceSaleOffMaxFinal);
+    /* Handle price sale off max */
+    const priceSaleOffMax = modal.querySelectorAll('input[name="price_sale_off_max[]"]');
+    const showPriceSaleOffMaxFinal = modal.querySelectorAll('.show-price-sale-off-max-final');
+    handleChangeValue(priceSaleOffMax, showPriceSaleOffMaxFinal);
 
-  /* Handle limit input */
-  const inputs = modal.querySelectorAll('input[name="is_limit[]"]');
-  const div = modal.querySelectorAll('.is-limit-content');
-  const divFinal = modal.querySelectorAll('.is-limit-content-final');
-  const priceSaleOffMaxByClass = modal.querySelectorAll('.price-sale-off-max');
-  inputs.forEach((input, index) => {
-    input.addEventListener('click', function() {
-      if (input.checked) {
-        div[index].classList.remove(hiddenClass);
-        div[index].previousElementSibling.classList.add(hiddenClass);
-        divFinal[index].classList.remove(hiddenClass);
-        divFinal[index].previousElementSibling.classList.add(hiddenClass);
-      } else {
-        priceSaleOffMaxByClass[index].value = '';
-        div[index].classList.add(hiddenClass);
-        div[index].previousElementSibling.classList.remove(hiddenClass);
-        divFinal[index].classList.add(hiddenClass);
-        divFinal[index].previousElementSibling.classList.remove(hiddenClass);
-      }
+    /* Handle limit input */
+    const inputs = modal.querySelectorAll('input[name="is_limit[]"]');
+    const div = modal.querySelectorAll('.is-limit-content');
+    const divFinal = modal.querySelectorAll('.is-limit-content-final');
+    const priceSaleOffMaxByClass = modal.querySelectorAll('.price-sale-off-max');
+    inputs.forEach((input, index) => {
+      input.addEventListener('click', function() {
+        if (input.checked) {
+          div[index].classList.remove(hiddenClass);
+          div[index].previousElementSibling.classList.add(hiddenClass);
+          divFinal[index].classList.remove(hiddenClass);
+          divFinal[index].previousElementSibling.classList.add(hiddenClass);
+        } else {
+          priceSaleOffMaxByClass[index].value = '';
+          div[index].classList.add(hiddenClass);
+          div[index].previousElementSibling.classList.remove(hiddenClass);
+          divFinal[index].classList.add(hiddenClass);
+          divFinal[index].previousElementSibling.classList.remove(hiddenClass);
+        }
+      });
     });
-  });
+  }
 }
 
 function openEditModal(id) {
@@ -510,7 +512,7 @@ window.addEventListener('load', function() {
   });
 
   /* Tabs */
-  sPageURL = window.location.search.substring(1);
+  const sPageURL = window.location.search.substring(1);
   const params = sPageURL.split('&');
   
   const tabRank = document.getElementById('tabRank');
@@ -520,18 +522,20 @@ window.addEventListener('load', function() {
   const buttonAdd = document.getElementById('button-open-modal-add');
   const buttonEditAll = document.getElementById('button-open-modal-edit-all');
 
-  if (params.length === 1 || params[2].split('=')[1] === 'dsxh') {
-    tabRank.classList.add(activeClass);
-    tabUser.classList.remove(activeClass);
-    tab1.classList.add(activeClass);
-    tab2.classList.remove(activeClass);
-  } else if (params[2].split('=')[1] === 'dstv') {
-    tabRank.classList.remove(activeClass);
-    tabUser.classList.add(activeClass);
-    tab1.classList.remove(activeClass);
-    tab2.classList.add(activeClass);
-    buttonAdd.classList.add(hiddenClass);
-    buttonEditAll.classList.add(hiddenClass);
+  if (tabRank) {
+    if (params.length === 1 || params[2].split('=')[1] === 'dsxh') {
+      tabRank.classList.add(activeClass);
+      tabUser.classList.remove(activeClass);
+      tab1.classList.add(activeClass);
+      tab2.classList.remove(activeClass);
+    } else if (params[2].split('=')[1] === 'dstv') {
+      tabRank.classList.remove(activeClass);
+      tabUser.classList.add(activeClass);
+      tab1.classList.remove(activeClass);
+      tab2.classList.add(activeClass);
+      buttonAdd.classList.add(hiddenClass);
+      buttonEditAll.classList.add(hiddenClass);
+    }
   }
 
   const tabs = document.querySelectorAll('ul.nav-tabs > li');
@@ -574,7 +578,7 @@ window.addEventListener('load', function() {
   const tableStep3 = document.getElementById('table-step-3');
   const tableStep4 = document.getElementById('table-step-4');
 
-  addMoreRecord.addEventListener('click', function() {
+  addMoreRecord && addMoreRecord.addEventListener('click', function() {
     recordLength++;
     const rowStep2 = document.createElement('tr');
     rowStep2.innerHTML = `
@@ -703,7 +707,7 @@ window.addEventListener('load', function() {
     });
   }
 
-  checkboxAll.addEventListener('click', function(e) {
+  checkboxAll && checkboxAll.addEventListener('click', function(e) {
     if (e.target.checked) {
       if (listCheckbox.length) {
         buttonDeleteWrapper.classList.remove('d-none');
@@ -744,11 +748,11 @@ window.addEventListener('load', function() {
     });
   });
 
-  modalAddBtn.addEventListener('click', function() {
+  modalAddBtn && modalAddBtn.addEventListener('click', function() {
     openModal();
   });
 
-  modalDeleteBtn.addEventListener('click', function() {
+  modalDeleteBtn && modalDeleteBtn.addEventListener('click', function() {
     deleteList.innerHTML = '';
     modalOverlay.classList.remove(hiddenClass);
     modalDeleteAll.classList.remove(hiddenClass);
@@ -768,12 +772,12 @@ window.addEventListener('load', function() {
     });
   });
 
-  modalClose.addEventListener('click', function() {
+  modalClose && modalClose.addEventListener('click', function() {
     modalOverlay.classList.add(hiddenClass);
     modalAdd.classList.add(hiddenClass);
   });
 
-  modalNextStep2.addEventListener('click', function() {
+  modalNextStep2 && modalNextStep2.addEventListener('click', function() {
     let checkPassStep2 = 0;
     if (step === 2) {
       const contentStep2 = document.querySelector('.content-step-2');
@@ -794,7 +798,7 @@ window.addEventListener('load', function() {
     }
   });
 
-  modalNextStep3.addEventListener('click', function() {
+  modalNextStep3 && modalNextStep3.addEventListener('click', function() {
     let passStep3 = 0;
     if (step === 3) {
       const tableStep3 = document.querySelector('#table-step-3');
@@ -858,7 +862,7 @@ window.addEventListener('load', function() {
     }
   }
 
-  modalPrev.addEventListener('click', function() {
+  modalPrev && modalPrev.addEventListener('click', function() {
     document.getElementById(`step-${step}`).classList.remove('current');
     step--;
     document.getElementById(`step-${step}`).classList.remove(activeClass);
@@ -915,7 +919,7 @@ window.addEventListener('load', function() {
 
   /* Image Upload */
   const uploadImageBtn = document.querySelector('.upload-image-button');
-  uploadImageBtn.addEventListener('click', function(e) {
+  uploadImageBtn && uploadImageBtn.addEventListener('click', function(e) {
     e.preventDefault();
     uploader = wp.media({
       title: 'Thêm hình ảnh',

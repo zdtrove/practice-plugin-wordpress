@@ -9,7 +9,7 @@
 }
 
 /*------------------------------ Nav ------------------------------*/
-.nav-tabs {
+.nav-tabs-affliate {
   float: left;
   width: 100%;
   margin: 0;
@@ -17,12 +17,12 @@
   border-bottom: 1px solid transparent;
 }
 
-.nav-tabs > li {
+.nav-tabs-affliate > li {
   float: left;
   margin-bottom: -1px;
 }
 
-.nav-tabs > li > a {
+.nav-tabs-affliate > li > a {
   margin-right: 2px;
   line-height: 1.5;
   padding: 10px;
@@ -32,13 +32,13 @@
   text-decoration: none;
 }
 
-.nav-tabs > li > a:hover {
+.nav-tabs-affliate > li > a:hover {
   border-color: #eee #eee #ddd;
 }
 
-.nav-tabs > li.active > a,
-.nav-tabs > li.active > a:hover,
-.nav-tabs > li.active > a:focus {
+.nav-tabs-affliate > li.active > a,
+.nav-tabs-affliate > li.active > a:hover,
+.nav-tabs-affliate > li.active > a:focus {
   color: #555;
   cursor: default;
   background-color: white;
@@ -46,18 +46,18 @@
   font-weight: bold;
 }
 
-.tab-content > .tab-pane {
+.tab-content > .tab-pane-affliate {
   float: left;
   width: 100%;
   display: none;
   overflow: auto;
 }
 
-.tab-content > .tab-pane > table {
+.tab-content > .tab-pane-affliate > table {
   min-width: 600px;
 }
 
-.tab-content > .tab-pane.active {
+.tab-content > .tab-pane-affliate.active {
   display: block;
   padding: 10px;
   background-color: white;
