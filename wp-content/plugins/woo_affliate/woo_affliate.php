@@ -58,16 +58,7 @@ function plugin_setup_db()
     if (!function_exists('dbDelta')) {
       require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     }
-    $table_name = $wpdb->prefix . 'users'; // Assuming the table has a prefix
-
-    // Check if the column exists
-    if ($wpdb->get_var("SHOW COLUMNS FROM $table_name LIKE 'user_parent'") !== 'user_parent') {
-      $charset_collate = $wpdb->get_charset_collate();
-      // If the column doesn't exist, add it
-      $sql = "ALTER TABLE $table_name ADD COLUMN user_parent INT";
-      $wpdb->query($sql);
-    }
-
+  
 
 
     $ptbd_table_name = $wpdb->prefix . 'woo_history_user_commission';
@@ -80,6 +71,9 @@ function plugin_setup_db()
           order_id INT NULL,
           commission INT NOT NULL,
           minimum_spending INT  NULL,
+          date VARCHAR(255)  NULL,
+          month VARCHAR(255)  NULL,
+          year VARCHAR(255)  NULL,
           status INT DEFAULT 1, 
           create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP  ,
 
