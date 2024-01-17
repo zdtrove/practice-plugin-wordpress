@@ -63,7 +63,7 @@ function plugin_setup_db()
 
     $ptbd_table_name = $wpdb->prefix . 'woo_history_user_commission';
     if ($wpdb->get_var("SHOW TABLES LIKE '" . $ptbd_table_name . "'") != $ptbd_table_name) {
-
+      dbDelta("SET GLOBAL TIME_ZONE = '+07:00';");
       $sql  = 'CREATE TABLE ' . $ptbd_table_name . '(
           id BIGINT AUTO_INCREMENT,
           user_id BIGINT NOT NULL,
@@ -92,3 +92,21 @@ function active_plugin()
 }
 
 register_activation_hook(__FILE__, 'active_plugin');
+
+
+function aff_update_wc_order_status_function($order_id, $order) {
+  // Check if the order type is 'shop_order'
+
+  if ($order->get_type() === 'shop_order') {
+      global $wpdb;
+      $prefix = $wpdb->prefix;
+      $history = $wpdb->get_results("SELECT * FROM ".$prefix."woo_history_user_commission WHERE (order_id = '".$order_id."' AND status = '3')");
+      if($history){
+          $id= $history[0]->id;
+          $wpdb->query($wpdb->prepare("UPDATE ".$prefix."woo_history_user_commission SET status=1 WHERE id=$id"));
+      }
+      // Your custom code to update something based on the WooCommerce order status change
+
+  }
+}
+add_action('woocommerce_order_status_completed', 'aff_update_wc_order_status_function', 10, 4);
