@@ -32,6 +32,23 @@ function changeUrl(tabId) {
   }
 }
 
+let checkSelect = 0;
+
+function handleSubmit() {
+  const arraySelect = ['dateFrom', 'monthFrom', 'yearFrom', 'dateTo', 'monthTo', 'yearTo'];
+  const arrayTest = [];
+  arraySelect.forEach((item) => {
+    arrayTest.push(document.querySelector(`select[name="${item}"]`).value);
+  });
+  const check = arrayTest.every((item) => item !== '');
+
+  if (check) {
+    document.querySelector('.submitFilter').removeAttribute('disabled');
+  } else {
+    document.querySelector('.submitFilter').setAttribute('disabled', '');
+  }
+}
+
 window.addEventListener('load', function() {
   /* Common */
   const removeMessageBtn = document.getElementById('remove-message');

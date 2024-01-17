@@ -204,21 +204,21 @@
         <input type="hidden" name="paged" value="1"/>
         <input type="hidden" name="tab" value="setting4"/>
         <b>Từ ngày</b>
-        <select name="dateFrom">
+        <select name="dateFrom" onchange="handleSubmit()">
           <option value="" disabled selected>Chọn ngày</option>
           <?php
             for ($i = 1; $i <= 31; $i++) { ?>
               <option <?php echo isset($_GET['dateFrom']) && $_GET['dateFrom'] == $i ? 'selected' : '' ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
           <?php }?>
         </select>
-        <select name="monthFrom">
+        <select name="monthFrom" onchange="handleSubmit()">
           <option value="" disabled selected>Chọn tháng</option>
           <?php
             for ($i = 1; $i <= 12; $i++) { ?>
               <option <?php echo isset($_GET['monthFrom']) && $_GET['monthFrom'] == $i ? 'selected' : '' ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
           <?php }?>
         </select>
-        <select name="yearFrom">
+        <select name="yearFrom" onchange="handleSubmit()">
           <option value="" disabled selected>Chọn năm</option>
           <?php
             $currentYear = date("Y");
@@ -227,21 +227,21 @@
           <?php }?>
         </select>
         &nbsp;&nbsp;&nbsp;<b>Đến ngày</b>
-        <select name="dateTo">
+        <select name="dateTo" onchange="handleSubmit()">
           <option value="" disabled selected>Chọn ngày</option>
           <?php
             for ($i = 1; $i <= 31; $i++) { ?>
               <option <?php echo isset($_GET['dateTo']) && $_GET['dateTo'] == $i ? 'selected' : '' ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
           <?php }?>
         </select>
-        <select name="monthTo">
+        <select name="monthTo" onchange="handleSubmit()">
           <option value="" disabled selected>Chọn tháng</option>
           <?php
             for ($i = 1; $i <= 12; $i++) { ?>
               <option <?php echo isset($_GET['monthTo']) && $_GET['monthTo'] == $i ? 'selected' : '' ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
           <?php }?>
         </select>
-        <select name="yearTo">
+        <select name="yearTo" onchange="handleSubmit()">
           <option value="" disabled selected>Chọn năm</option>
           <?php
             $currentYear = date("Y");
@@ -249,7 +249,7 @@
               <option <?php echo isset($_GET['yearTo']) && $_GET['yearTo'] == $i ? 'selected' : '' ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
           <?php }?>
         </select>
-        <button type="submit" name="userFilter" class="button button-primary">Lọc</button>
+        <button type="submit" name="userFilter" class="button button-primary submitFilter" disabled>Lọc</button>
       </form>
       <br />
       <table class="wp-list-table widefat fixed striped table-view-list users" style="min-width: 600px;">
