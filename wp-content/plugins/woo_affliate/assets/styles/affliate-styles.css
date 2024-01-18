@@ -1,3 +1,8 @@
+:root {
+  --primary: #2271B1;
+  --secondary: #E91E63;
+}
+
 .d-none {
   display: none !important;
 }
@@ -54,7 +59,7 @@
 }
 
 .tab-content > .tab-pane-affliate > table {
-  min-width: 600px;
+  min-width: 1280px;
 }
 
 .tab-content > .tab-pane-affliate.active {
@@ -157,4 +162,26 @@
   font-weight: bold;
   margin: unset;
   cursor: pointer;
+}
+
+/*------------------------------ Pagination ------------------------------*/
+.pagination {
+  display: flex;
+  justify-content: end;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.pagination a {
+  max-width: 30px;
+  min-height: 30px !important;
+  max-height: 30px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination a.active {
+  color: white !important;
+  background-color: var(--primary) !important;
 }

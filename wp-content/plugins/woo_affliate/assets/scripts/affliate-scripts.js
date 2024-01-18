@@ -68,43 +68,26 @@ window.addEventListener('load', function() {
   const tabSetting3Content = document.getElementById('tab-setting-3-content');
   const tabSetting4Content = document.getElementById('tab-setting-4-content');
 
+  function clickChangeTab(tabIndex) {
+    const listTab = [tabSetting1, tabSetting2, tabSetting3, tabSetting4];
+    const listContentTab = [tabSetting1Content, tabSetting2Content, tabSetting3Content, tabSetting4Content];
+    listTab.forEach((tab, index) => {
+      Number(tabIndex) === Number(index + 1) ? tab.classList.add(_activeClass) : tab.classList.remove(_activeClass);
+    });
+    listContentTab.forEach((tabContent, index) => {
+      Number(tabIndex) === Number(index + 1) ? tabContent.classList.add(_activeClass) : tabContent.classList.remove(_activeClass);
+    });
+  }
+
   if (tabSetting1) {
     if (_params.length === 1 || _params[2].split('=')[1] === 'setting1') {
-      tabSetting1.classList.add(_activeClass);
-      tabSetting2.classList.remove(_activeClass);
-      tabSetting3.classList.remove(_activeClass);
-      tabSetting4.classList.remove(_activeClass);
-      tabSetting1Content.classList.add(_activeClass);
-      tabSetting2Content.classList.remove(_activeClass);
-      tabSetting3Content.classList.remove(_activeClass);
-      tabSetting4Content.classList.remove(_activeClass);
+      clickChangeTab(1);
     } else if (_params[2].split('=')[1] === 'setting2') {
-      tabSetting1.classList.remove(_activeClass);
-      tabSetting2.classList.add(_activeClass);
-      tabSetting3.classList.remove(_activeClass);
-      tabSetting4.classList.remove(_activeClass);
-      tabSetting1Content.classList.remove(_activeClass);
-      tabSetting2Content.classList.add(_activeClass);
-      tabSetting3Content.classList.remove(_activeClass);
-      tabSetting4Content.classList.remove(_activeClass);
+      clickChangeTab(2);
     } else if (_params[2].split('=')[1] === 'setting3') {
-      tabSetting1.classList.remove(_activeClass);
-      tabSetting2.classList.remove(_activeClass);
-      tabSetting3.classList.add(_activeClass);
-      tabSetting4.classList.remove(_activeClass);
-      tabSetting1Content.classList.remove(_activeClass);
-      tabSetting2Content.classList.remove(_activeClass);
-      tabSetting3Content.classList.add(_activeClass);
-      tabSetting4Content.classList.remove(_activeClass);
+      clickChangeTab(3);
     } else if (_params[2].split('=')[1] === 'setting4') {
-      tabSetting1.classList.remove(_activeClass);
-      tabSetting2.classList.remove(_activeClass);
-      tabSetting3.classList.remove(_activeClass);
-      tabSetting4.classList.add(_activeClass);
-      tabSetting1Content.classList.remove(_activeClass);
-      tabSetting2Content.classList.remove(_activeClass);
-      tabSetting3Content.classList.remove(_activeClass);
-      tabSetting4Content.classList.add(_activeClass);
+      clickChangeTab(4);
     }
   }
   

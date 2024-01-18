@@ -74,6 +74,7 @@ function plugin_setup_db()
           date VARCHAR(255)  NULL,
           month VARCHAR(255)  NULL,
           year VARCHAR(255)  NULL,
+          payment_method TEXT  NULL,
           status INT DEFAULT 1, 
           create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP  ,
 

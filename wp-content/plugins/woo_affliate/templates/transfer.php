@@ -1,27 +1,35 @@
 <?php
-    $userCommissions = $wpdb->get_results( 'SELECT * FROM ' . $tableUserCommission . ' ORDER BY id ASC', ARRAY_A );
-    $userCommissionsStatus4 = [];
-    
-    foreach ( $userCommissions as $userCommission ) {
-      if ($userCommission['status'] == $status['USE_POINT_IN_PROCESS']) {
-        $temp = $userCommission;
-        $temp['display_name'] = get_user_meta($userCommission['user_id'], 'nickname', true);
-        $temp['woo_aff_name'] = json_decode($userCommission['payment_method'])->name;
-        $temp['woo_aff_stk'] = json_decode($userCommission['payment_method'])->stk;
-        $temp['woo_aff_bankname'] = json_decode($userCommission['payment_method'])->bankname;
-        array_push($userCommissionsStatus4, $temp);
+  $userCommissions = $wpdb->get_results( 'SELECT * FROM ' . $tableUserCommission . ' ORDER BY id ASC', ARRAY_A );
+  $userCommissionsStatus4 = [];
+  
+  foreach ( $userCommissions as $userCommission ) {
+    if ($userCommission['status'] == $status['USE_POINT_IN_PROCESS']) {
+      $temp = $userCommission;
+      $paymentMethod = json_decode($userCommission['payment_method'], true);
+      $temp['display_name'] = get_user_meta($userCommission['user_id'], 'nickname', true);
+      if (is_array($paymentMethod) && count($paymentMethod) > 0) {
+        $temp['woo_aff_name'] = $paymentMethod['name'];
+        $temp['woo_aff_stk'] = $paymentMethod['stk'];
+        $temp['woo_aff_bankname'] = $paymentMethod['bankname'];
+      } else {
+        $temp['woo_aff_name'] = '';
+        $temp['woo_aff_stk'] = '';
+        $temp['woo_aff_bankname'] = '';
       }
+      
+      array_push($userCommissionsStatus4, $temp);
     }
+  }
 
-    $currentPage = (! empty( $_GET['paged'] )) && ($_GET['tab'] == 'setting3') ? (int) $_GET['paged'] : 1;
-    $total = count( $userCommissionsStatus4 );
-    $perPage = 10;
-    $totalPages = ceil($total/ $perPage);
-    $currentPage = max($currentPage, 1);
-    $currentPage = min($currentPage, $totalPages);
-    $offset = ($currentPage - 1) * $perPage;
-    if ($offset < 0) $offset = 0;
-    $userCommissionsStatus4 = array_slice($userCommissionsStatus4, $offset, $perPage);
+  $currentPage = (! empty( $_GET['paged'] )) && ($_GET['tab'] == 'setting3') ? (int) $_GET['paged'] : 1;
+  $total = count( $userCommissionsStatus4 );
+  $perPage = 10;
+  $totalPages = ceil($total/ $perPage);
+  $currentPage = max($currentPage, 1);
+  $currentPage = min($currentPage, $totalPages);
+  $offset = ($currentPage - 1) * $perPage;
+  if ($offset < 0) $offset = 0;
+  $userCommissionsStatus4 = array_slice($userCommissionsStatus4, $offset, $perPage);
 ?>
 
 <table class="wp-list-table widefat fixed striped table-view-list users">
@@ -48,8 +56,8 @@
         <td>
           <form action="?page=hoa-hong&paged=1&tab=setting3" method="POST">
             <select name="status">
-              <option value="4">4</option>
-              <option value="2">2</option>
+              <option value="4">Chờ đối soát</option>
+              <option value="2">Xác nhận</option>
             </select>
             <input hidden name="userCommissionId" value="<?php echo $userCommissionStatus4['id'] ?>" />
             <button type="submit" name="updateStatus" class="button">Cập nhật</button>
