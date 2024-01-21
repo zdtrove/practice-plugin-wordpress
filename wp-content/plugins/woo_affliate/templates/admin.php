@@ -21,7 +21,7 @@
     $usersDisplay = $users;
   }
 
-  $currentPage = (! empty( $_GET['paged'] )) && ($_GET['tab'] == 'setting4') ? (int) $_GET['paged'] : 1;
+  $currentPage = (! empty( $_GET['paged'] )) && ($_GET['tab'] == 'setting1') ? (int) $_GET['paged'] : 1;
   $total = count( $usersDisplay );
   $perPage = 10;
   $totalPages = ceil($total/ $perPage);
@@ -76,6 +76,7 @@
     </div>
     <div id="tab-setting-2-content" class="tab-pane-affliate">
       <form action="?page=hoa-hong&paged=1&tab=setting2" method="POST">
+        <h4>Cài đặt cấp 1</h4>
         <input type="number" max="100000000" class="regular-text" name="woo_aff_setting" value="<?php echo get_option('woo_aff_setting'); ?>" />
         <button type="submit" class="button button-primary" name="saveSetting">Lưu lại</button>
       </form>

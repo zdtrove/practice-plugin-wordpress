@@ -84,44 +84,28 @@
         if (isset($_GET['userFilter'])) {
           $queryUserCommission .= " WHERE STR_TO_DATE(CONCAT_WS('/', `date`, `month`, `year`), '%d/%m/%Y') BETWEEN '" . $_GET['yearFrom'] . '-' . $_GET['monthFrom'] . '-' . $_GET['dateFrom'] . "'" . " AND '" . $_GET['yearTo'] . '-' . $_GET['monthTo'] . '-' . $_GET['dateTo'] . "'";
         }
-
-        $userCommissions = $wpdb->get_results( $queryUserCommission . ' ORDER BY id ASC', ARRAY_A );
-
-        $commissions = [];
-        foreach ($userCommissions as $commission1) {
-          if ($userFilter['ID'] === $commission1['user_id']) {
-            array_push(
-              $commissions,
-              array(
-                'id' => $commission1['user_id'],
-                'status' => $commission1['status'],
-                'commission' => $commission1['commission'],
-                'total_order' => $commission1['total_order']
-              ));
-          }
-        }
-    
-        $result = array();
-        foreach ($commissions as $commission2) {
-          $result[$commission2['id']][] = $commission2;
-        }
-    
-        $totalOrder = 0;
-        foreach ($result as $key => $value) {
-          foreach ($value as $val2) {
-            if ($val2['status'] == $status['PURCHASE']) {
-              $totalOrder++;
-            }
-          }
-        }
     
         $totalRevenue = 0;
+        $totalOrder = 0;
         foreach ($users as $userChild) {
           $checkUserParent = get_user_meta($userChild['ID'], 'user_parent', true);
           if ($userFilter['ID'] === $checkUserParent) {
             foreach ($userCommissions as $commission4) {
               if ($commission4['user_id'] === $userChild['ID'] && $commission4['status'] == $status['PURCHASE']) {
                 $totalRevenue += $commission4['total_order'];
+                $totalOrder++;
+              }
+            }
+            foreach ($users as $userChildLevel2) {
+              $checkUserParentLevel2 = get_user_meta($userChildLevel2['ID'], 'user_parent', true);
+              if ($userChild['ID'] === $checkUserParentLevel2) {
+                foreach ($userCommissions as $commission5) {
+                  if ($commission5['user_id'] === $userChildLevel2['ID'] && $commission5['status'] == $status['PURCHASE']) {
+                    $childCommissions += $commission5['commission'];
+                    $totalRevenue += $commission5['total_order'];
+                    $totalOrder++;
+                  }
+                }
               }
             }
           }

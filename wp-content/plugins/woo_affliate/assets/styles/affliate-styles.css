@@ -164,6 +164,18 @@
   cursor: pointer;
 }
 
+.modal .modal-header p {
+  margin: unset;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.modal .modal-content {
+  padding: 20px;
+  padding-top: 0;
+}
+
 /*------------------------------ Pagination ------------------------------*/
 .pagination {
   display: flex;

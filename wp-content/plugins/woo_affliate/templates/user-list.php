@@ -25,7 +25,6 @@
     <?php foreach ( $usersDisplay as $keyUser => $user ) { 
       $waitingReview = $wpdb->get_results('SELECT SUM(commission) as waitingReview FROM ' . $tableUserCommission . ' WHERE user_id = ' . $user['ID'] . ' AND status = ' . $status['USE_POINT_IN_PROCESS']);
       $actuallyReceive = $wpdb->get_results('SELECT SUM(commission) as actuallyReceive FROM ' . $tableUserCommission . ' WHERE user_id = ' . $user['ID'] . ' AND status = ' . $status['USE_POINT']);
-      
       $commissions = [];
       foreach ($userCommissions as $commission1) {
         if ($user['ID'] === $commission1['user_id']) {
@@ -40,19 +39,14 @@
         }
       }
   
-  
       $result = array();
       foreach ($commissions as $commission2) {
         $result[$commission2['id']][] = $commission2;
       }
   
-      $totalOrder = 0;
       $commissionParent = 0;
       foreach ($result as $key => $value) {
         foreach ($value as $val2) {
-          if ($val2['status'] == $status['PURCHASE']) {
-            $totalOrder++;
-          }
           if ($val2['status'] == $status['USE_POINT'] || $val2['status'] == $status['USE_POINT_IN_PROCESS']) {
             $commissionParent += $val2['commission'];
           }
@@ -61,6 +55,7 @@
   
       $childCommissions = 0;
       $totalRevenue = 0;
+      $totalOrder = 0;
       foreach ($users as $userChild) {
         $checkUserParent = get_user_meta($userChild['ID'], 'user_parent', true);
         if ($user['ID'] === $checkUserParent) {
@@ -68,6 +63,19 @@
             if ($commission4['user_id'] === $userChild['ID'] && $commission4['status'] == $status['PURCHASE']) {
               $childCommissions += $commission4['commission'];
               $totalRevenue += $commission4['total_order'];
+              $totalOrder++;
+            }
+          }
+          foreach ($users as $userChildLevel2) {
+            $checkUserParentLevel2 = get_user_meta($userChildLevel2['ID'], 'user_parent', true);
+            if ($userChild['ID'] === $checkUserParentLevel2) {
+              foreach ($userCommissions as $commission5) {
+                if ($commission5['user_id'] === $userChildLevel2['ID'] && $commission5['status'] == $status['PURCHASE']) {
+                  $childCommissions += $commission5['commission'];
+                  $totalRevenue += $commission5['total_order'];
+                  $totalOrder++;
+                }
+              }
             }
           }
         }
