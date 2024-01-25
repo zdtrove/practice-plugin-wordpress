@@ -70,6 +70,7 @@ function plugin_setup_db()
           total_order INT NOT NULL,
           order_id INT NULL,
           commission INT NOT NULL,
+          commission_level2 INT NOT NULL,
           minimum_spending INT  NULL,
           date VARCHAR(255)  NULL,
           month VARCHAR(255)  NULL,

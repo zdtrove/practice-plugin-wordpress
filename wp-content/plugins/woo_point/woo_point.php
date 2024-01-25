@@ -86,6 +86,8 @@ function pluginprefix_setup_db(){
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         }
         $ptbd_table_name = $wpdb->prefix . 'woo_rank';
+        dbDelta("SET GLOBAL TIME_ZONE = '+07:00';");
+
         if ($wpdb->get_var("SHOW TABLES LIKE '". $ptbd_table_name ."'"  ) != $ptbd_table_name ) {
 
             $sql  = 'CREATE TABLE '.$ptbd_table_name.'(

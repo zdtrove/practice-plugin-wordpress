@@ -4,6 +4,7 @@
     foreach ($users as $user1) {
       $checkParent =  get_user_meta($user1['ID'], 'user_parent', true);
       if ($checkParent && $checkParent == $user['ID']) {
+        $user1['level'] ='Cấp 1';
         array_push($childUser, $user1);
       }
     }
@@ -14,6 +15,8 @@
         if ($checkParent && $checkParent == $childUserLevel2['ID']) {
           $tempChild = $user2;
           $tempChild['isLevel2'] = 1;
+          $tempChild['level'] ='Cấp 2';
+
           array_push($childUser, $tempChild);
         }
       }
@@ -29,9 +32,11 @@
         <table class="wp-list-table widefat fixed striped table-view-list users">
           <thead>
             <tr>
+              <th>Level</th>
               <th>Tên cấp dưới</th>
               <th>Tổng hoa hồng <span class="d-none"><br /> sum (commision status 1 (<b style="color: red;">USER CON</b>))</span></th>
               <th>Tổng doanh thu <span class="d-none"><br /> sum (total_order status 1 (<b style="color: red;">USER CON</b>))</span></th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -50,9 +55,13 @@
                 $childRevenue = $wpdb->get_results( 'SELECT sum(total_order) as childRevenue FROM ' . $tableUserCommission . ' WHERE user_id = ' . $child['ID'] . ' AND status = ' . $status['PURCHASE'] . ' ORDER BY id ASC' );
             ?>
               <tr>
+                <td><?php echo $child['level'] ; ?></td>
                 <td><?php echo $child['user_nicename'] . ' - ' . $child['user_login']; ?></td>
                 <td><?php echo $childCommissions[0]->childCommissions; ?></td>
                 <td><?php echo $childRevenue[0]->childRevenue; ?></td>
+                <td>
+                  <button class="button">Hiển thị cấp dưới</button>
+                </td>
               </tr>
           <?php } }?>
           </tbody>

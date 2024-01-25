@@ -1,7 +1,7 @@
 <?php
   $currentPage = (! empty( $_GET['paged'] )) && ($_GET['tab'] == 'dsxh') ? (int) $_GET['paged'] : 1;
   $total = count( $ranks );
-  $perPage = 10;
+  $perPage = 2;
   $totalPages = ceil($total/ $perPage);
   $currentPage = max($currentPage, 1);
   $currentPage = min($currentPage, $totalPages);
@@ -13,6 +13,7 @@
 <table class="wp-list-table widefat fixed striped table-view-list users">
   <thead>
     <tr>
+      <th>Số thứ tự</th>
       <td class="manage-column column-cb check-column">
         <input type="checkbox" id="checkAllRank" />
       </td>
@@ -26,6 +27,7 @@
   <tbody>
     <?php foreach ( $ranks as $key => $value ) { ?>
       <tr>
+        <td><?php echo $key + 1; ?></td>
         <th class="check-column">
           <input type="checkbox" value="<?php echo $value['id'] . '-' . $value['name']; ?>" name="checkRank" />
         </th>

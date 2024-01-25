@@ -101,7 +101,6 @@
               if ($userChild['ID'] === $checkUserParentLevel2) {
                 foreach ($userCommissions as $commission5) {
                   if ($commission5['user_id'] === $userChildLevel2['ID'] && $commission5['status'] == $status['PURCHASE']) {
-                    $childCommissions += $commission5['commission'];
                     $totalRevenue += $commission5['total_order'];
                     $totalOrder++;
                   }

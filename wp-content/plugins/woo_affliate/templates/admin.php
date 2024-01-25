@@ -41,6 +41,16 @@
     $successMessage = 'Lưu cài đặt thành công';
   }
 
+  if (isset($_POST['saveSettingLevel2'])) {
+    $wpAffliateLevel2 = get_option('woo_aff_setting_cap2');
+    if ($wpAffliateLevel2) {
+      update_option('woo_aff_setting_cap2',$_POST['woo_aff_setting_cap2']);
+    } else {
+      add_option('woo_aff_setting_cap2',$_POST['woo_aff_setting_cap2']);
+    }
+    $successMessage = 'Lưu cài đặt thành công';
+  }
+
   if (isset($_POST['updateStatus'])) {
     $update = $wpdb->update($tableUserCommission, ['status' => $_POST['status']], ['id' => $_POST['userCommissionId']]);
     $successMessage = 'Cập nhật trạng thái thành công';
@@ -64,7 +74,7 @@
       <a href="#tab-setting-2-content">Cài đặt tỉ lệ hoa hồng</a>
     </li>
     <li id="tabSetting3" onclick="changeUrl(3)">
-      <a href="#tab-setting-3-content">Danh sách chuyển tiền</a>
+      <a href="#tab-setting-3-content">Yêu cầu rút</a>
     </li>
     <li id="tabSetting4" onclick="changeUrl(4)">
       <a href="#tab-setting-4-content">Thống kê doanh thu</a>
@@ -79,6 +89,11 @@
         <h4>Cài đặt cấp 1</h4>
         <input type="number" max="100000000" class="regular-text" name="woo_aff_setting" value="<?php echo get_option('woo_aff_setting'); ?>" />
         <button type="submit" class="button button-primary" name="saveSetting">Lưu lại</button>
+      </form>
+      <form action="?page=hoa-hong&paged=1&tab=setting2" method="POST">
+        <h4>Cài đặt cấp 2</h4>
+        <input type="number" max="100000000" class="regular-text" name="woo_aff_setting_cap2" value="<?php echo get_option('woo_aff_setting_cap2'); ?>" />
+        <button type="submit" class="button button-primary" name="saveSettingLevel2">Lưu lại</button>
       </form>
     </div>
     <div id="tab-setting-3-content" class="tab-pane-affliate">

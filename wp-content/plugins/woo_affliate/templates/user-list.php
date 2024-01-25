@@ -1,11 +1,17 @@
 <br />
-<form action="?page=hoa-hong&paged=1&tab=setting1" method="GET">
-  <input type="hidden" name="page" value="hoa-hong"/>
-  <input type="hidden" name="paged" value="1"/>
-  <input type="hidden" name="tab" value="setting1"/>
-  <input type="text" maxlength="48" class="regular-text" placeholder="Điền tên user muốn tìm" name="username" value="<?php echo isset($_GET['username']) ? $_GET['username'] : ''; ?>" />
-  <button type="submit" name="searchUser" class="button button-primary">Tìm kiếm</button>
-</form>
+<div class="flex-center">
+  <form action="?page=hoa-hong&paged=1&tab=setting1" method="GET">
+    <input type="hidden" name="page" value="hoa-hong"/>
+    <input type="hidden" name="paged" value="1"/>
+    <input type="hidden" name="tab" value="setting1"/>
+    <input type="text" maxlength="48" class="regular-text" placeholder="Điền tên user muốn tìm" name="username" value="<?php echo isset($_GET['username']) ? $_GET['username'] : ''; ?>" />
+    <button type="submit" name="searchUser" class="button button-primary">Tìm kiếm</button>
+  </form>
+  <form action="?page=hoa-hong&paged=1&tab=setting1" method="GET">
+    <button type="submit" name="topHoaHong" class="button button-primary">Top Hoa Hồng</button>
+    <button type="submit" name="topGioiThieu" class="button button-primary">Top Giới thiệu</button>
+  </form>
+</div>
 <br />
 <table class="wp-list-table widefat fixed striped table-view-list users">
   <thead>

@@ -182,7 +182,7 @@ function openEditModal(id) {
       const requireInputStep2 = contentStep2.querySelectorAll('.require-field');
 
       requireInputStep2.forEach((input) => {
-        if (input.value === '') {
+        if (input.value === '' || input.value < 0) {
           input.nextElementSibling.classList.remove(hiddenClass);
         } else {
           checkPassStep2++;
@@ -204,7 +204,7 @@ function openEditModal(id) {
       const limitInput = contentStep3.querySelector('.is-limit-input');
       
       requireInputStep3.forEach((input) => {
-        if (input.value === '' || input.value == 0) {
+        if (input.value === '' || input.value < 0) {
           input.nextElementSibling.classList.remove(hiddenClass);
         } else {
           checkPassStep3++;
@@ -327,7 +327,7 @@ function openEditAllModal() {
       const requireInputStep1 = contentStep1.querySelectorAll('.require-field');
 
       requireInputStep1.forEach((input) => {
-        if (input.value === '') {
+        if (input.value === '' || input.value < 0) {
           input.nextElementSibling.classList.remove(hiddenClass);
         } else {
           checkPassStep1++;
@@ -348,7 +348,7 @@ function openEditAllModal() {
       const requireInputStep2 = contentStep2.querySelectorAll('.require-field');
 
       requireInputStep2.forEach((input) => {
-        if (input.value === '') {
+        if (input.value === '' || input.value < 0) {
           input.nextElementSibling.classList.remove(hiddenClass);
         } else {
           checkPassStep2++;
@@ -372,7 +372,7 @@ function openEditAllModal() {
       const requireInputLimitStep3 = tr.querySelector('.require-field-limit');
       const limitInput = tr.querySelector('.is-limit-input');
 
-      if (requireInputStep3.value === '') {
+      if (requireInputStep3.value === '' || requireInputStep3.value < 0) {
         requireInputStep3.nextElementSibling.classList.remove(hiddenClass);
       } else {
         requireInputStep3.nextElementSibling.classList.add(hiddenClass);
@@ -380,7 +380,7 @@ function openEditAllModal() {
       }
 
       if (limitInput.checked) {
-        if (requireInputLimitStep3.value === '' || requireInputLimitStep3.value == 0) {
+        if (requireInputLimitStep3.value === '' || requireInputLimitStep3.value < 0) {
           requireInputLimitStep3.nextElementSibling.classList.remove(hiddenClass);
         } else {
           requireInputLimitStep3.nextElementSibling.classList.add(hiddenClass);
@@ -784,7 +784,7 @@ window.addEventListener('load', function() {
       const requireInputStep2 = contentStep2.querySelectorAll('.require-field');
 
       requireInputStep2.forEach((input) => {
-        if (input.value === '') {
+        if (input.value === '' || input.value < 0) {
           input.nextElementSibling.classList.remove(hiddenClass);
         } else {
           checkPassStep2++;
@@ -809,7 +809,7 @@ window.addEventListener('load', function() {
         const requireInputLimitStep3 = tr.querySelector('.require-field-limit');
         const limitInput = tr.querySelector('.is-limit-input');
 
-        if (requireInputStep3.value === '') {
+        if (requireInputStep3.value === '' || requireInputStep3.value < 0) {
           requireInputStep3.nextElementSibling.classList.remove(hiddenClass);
         } else {
           requireInputStep3.nextElementSibling.classList.add(hiddenClass);
@@ -817,7 +817,7 @@ window.addEventListener('load', function() {
         }
 
         if (limitInput.checked) {
-          if (requireInputLimitStep3.value === '' || requireInputLimitStep3.value == 0) {
+          if (requireInputLimitStep3.value === '' || requireInputLimitStep3.value < 0) {
             requireInputLimitStep3.nextElementSibling.classList.remove(hiddenClass);
           } else {
             requireInputLimitStep3.nextElementSibling.classList.add(hiddenClass);
