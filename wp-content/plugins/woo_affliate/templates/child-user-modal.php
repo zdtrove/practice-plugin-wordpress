@@ -22,9 +22,9 @@
       }
     }
 ?>
-  <div class="modal d-none modal-lower-level-<?php echo $keyUserModal; ?>">
+  <div class="modal d-none modal-lower-level-<?php echo $user['ID']; ?>">
     <div class="modal-wrapper">
-      <p onclick="closeLowerModal(<?php echo $keyUserModal; ?>)" class="close">✕</p>
+      <p onclick="closeLowerModal('<?php echo $user['ID']; ?>')" class="close">✕</p>
       <div class="modal-header">
         <p>Cấp dưới</p>
       </div>

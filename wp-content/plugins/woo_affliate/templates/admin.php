@@ -22,8 +22,9 @@
   }
 
   $currentPage = (! empty( $_GET['paged'] )) && ($_GET['tab'] == 'setting1') ? (int) $_GET['paged'] : 1;
+  $stt = $_GET['paged'] - 1;
   $total = count( $usersDisplay );
-  $perPage = 10;
+  $perPage = 10                                                                                                                                                   ;
   $totalPages = ceil($total/ $perPage);
   $currentPage = max($currentPage, 1);
   $currentPage = min($currentPage, $totalPages);

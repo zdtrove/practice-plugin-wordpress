@@ -13,6 +13,10 @@
   gap: 5px;
 }
 
+.space-between {
+  justify-content: space-between;
+}
+
 /*------------------------------ Nav ------------------------------*/
 .nav-tabs-affliate {
   float: left;
