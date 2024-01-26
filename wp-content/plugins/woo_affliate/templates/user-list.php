@@ -198,7 +198,7 @@
         if (!isset($_GET['topCommmission']) && !isset($_GET['topIntroduce'])) {
     ?>
       <tr>
-        <td><?php echo $stt + $_GET['paged'] - 1; ?></td>
+        <td><?php echo $stt + $paged - 1; ?></td>
         <td><?php echo $user['user_nicename'] . ' - ' . $user['user_login'] ?></td>
         <td><?php echo $waitingReview[0]->waitingReview; ?></td>
         <td><?php echo $actuallyReceive[0]->actuallyReceive; ?></td>

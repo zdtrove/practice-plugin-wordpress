@@ -12,6 +12,21 @@ function openLowerModal(id) {
 function closeLowerModal(id) {
   const modalOverlay = document.querySelector('.overlay');
   const modalLowerLevel = document.querySelector(`.modal-lower-level-${id}`);
+  const lvName = document.querySelectorAll('.level-name');
+  const trLv1 = document.querySelectorAll('.parent-lv1');
+  const trLv2 = document.querySelectorAll('.child-lv2');
+
+  lvName.length && lvName.forEach((item) => {
+    item.innerHTML = 'Cấp 1';
+  });
+
+  trLv1.length && trLv1.forEach((item) => {
+    item.classList.remove(_hiddenClass);
+  });
+
+  trLv2.length && trLv2.forEach((item) => {
+    item.classList.add(_hiddenClass);
+  });
 
   modalOverlay.classList.add(_hiddenClass);
   modalLowerLevel.classList.add(_hiddenClass);
@@ -47,6 +62,91 @@ function handleSubmit() {
   } else {
     document.querySelector('.submitFilter').setAttribute('disabled', '');
   }
+}
+
+function showLevel2(userId, childId) {
+  const modalLv1 = document.querySelector(`.modal-lower-level-${userId}`);
+  const lvName = modalLv1.querySelector('.level-name');
+  const trLv1 = modalLv1.querySelectorAll('.parent-lv1');
+  const trLv2 = document.querySelectorAll(`.child-lv2-${childId}`);
+
+  lvName.innerHTML = 'Cấp 2';
+  trLv1.forEach((item) => {
+    item.classList.add(_hiddenClass);
+  });
+  trLv2.forEach((item) => {
+    item.classList.remove(_hiddenClass);
+  });
+}
+
+function hideLevel2(userId, childId) {
+  const modalLv1 = document.querySelector(`.modal-lower-level-${userId}`);
+  const lvName = modalLv1.querySelector('.level-name');
+  const trLv1 = modalLv1.querySelectorAll('.parent-lv1');
+  const trLv2 = document.querySelectorAll(`.child-lv2-${childId}`);
+
+  lvName.innerHTML = 'Cấp 1';
+  trLv1.forEach((item) => {
+    item.classList.remove(_hiddenClass);
+  });
+  trLv2.forEach((item) => {
+    item.classList.add(_hiddenClass);
+  });
+}
+
+function showTopCommission(id) {
+  const modalLv1 = document.querySelector(`.modal-lower-level-${id}`);
+  const tdCommission = modalLv1.querySelectorAll('.tdCommission');
+  const lvName = modalLv1.querySelector('.level-name');
+
+  lvName.innerHTML = 'Cấp 1';
+
+  let max = Number(tdCommission[0].innerHTML);
+  let maxTd = tdCommission[0];
+  tdCommission.forEach((item) => {
+    if (Number(item.innerHTML) >= max) {
+      max = Number(item.innerHTML);
+      maxTd = item;
+    }
+  });
+
+  const trLv1 = modalLv1.querySelectorAll('.parent-lv1');
+  trLv1.forEach((item) => {
+    item.classList.add(_hiddenClass);
+  });
+  maxTd.parentElement.classList.remove(_hiddenClass);
+
+  const childLv2 = modalLv1.querySelectorAll('.child-lv2');
+  childLv2.forEach((item) => {
+    item.classList.add(_hiddenClass);
+  });
+}
+
+function showTopIntroduce(id) {
+  const modalLv1 = document.querySelector(`.modal-lower-level-${id}`);
+  const tdIntroduce = modalLv1.querySelectorAll('.parent-lv1');
+  let max = Number(tdIntroduce[0].getAttribute('data-number-lv2'));
+  let maxTd = tdIntroduce[0];
+  const lvName = modalLv1.querySelector('.level-name');
+
+  lvName.innerHTML = 'Cấp 1';
+
+  tdIntroduce.forEach((item) => {
+    if (Number(item.getAttribute('data-number-lv2')) >= max) {
+      max = Number(item.getAttribute('data-number-lv2'));
+      maxTd = item;
+    }
+  });
+
+  tdIntroduce.forEach((item) => {
+    item.classList.add(_hiddenClass);
+  });
+  maxTd.classList.remove(_hiddenClass);
+
+  const childLv2 = modalLv1.querySelectorAll('.child-lv2');
+  childLv2.forEach((item) => {
+    item.classList.add(_hiddenClass);
+  });
 }
 
 window.addEventListener('load', function() {
