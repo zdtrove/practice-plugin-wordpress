@@ -106,11 +106,11 @@
   <div class="flex-center">
     <div>
       <p style="margin-top: 0; margin-bottom: 2px;"><b>Thành viên</b></p>
-      <input type="number" class="button" value="<?php echo count($users); ?>" />
+      <input type="text" readonly class="button" style="cursor: default;" value="<?php echo count($users); ?>" />
     </div>
     <div>
       <p style="margin-top: 0; margin-bottom: 2px;"><b>Tổng hoa hồng</b></p>
-      <input type="number" class="button" value="<?php echo $totalCommission; ?>" />
+      <input type="text" readonly class="button" style="cursor: default;" value="<?php echo $totalCommission; ?>" />
     </div>
   </div>
 </div>

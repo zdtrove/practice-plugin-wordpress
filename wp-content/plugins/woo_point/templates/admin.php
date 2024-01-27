@@ -7,10 +7,7 @@
   $tableSetting = $wpdb->prefix . 'woo_setting';
   $tableHistory = $wpdb->prefix . 'woo_history_user_point';
 
-  $users = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' ORDER BY id ASC', ARRAY_A );
-  $ranks = $wpdb->get_results( 'SELECT * FROM ' . $tableRank . ' ORDER BY id ASC', ARRAY_A );
   $settings = $wpdb->get_results( 'SELECT * FROM ' . $tableSetting . ' ORDER BY id ASC', ARRAY_A );
-  $userHistoryPoint = $wpdb->get_results( 'SELECT * FROM ' . $tableHistory . ' ORDER BY id ASC', ARRAY_A);
 
   if (isset($_POST['addRanking'])) {
     for ($i = 0; $i < count($_POST['name']); $i++) {
@@ -87,6 +84,11 @@
     }
     $successMessage = 'Xóa hạng thành viên thành công';
   }
+
+  $users = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' ORDER BY id ASC', ARRAY_A );
+  $ranks = $wpdb->get_results( 'SELECT * FROM ' . $tableRank . ' ORDER BY id ASC', ARRAY_A );
+  $settings = $wpdb->get_results( 'SELECT * FROM ' . $tableSetting . ' ORDER BY id ASC', ARRAY_A );
+  $userHistoryPoint = $wpdb->get_results( 'SELECT * FROM ' . $tableHistory . ' ORDER BY id ASC', ARRAY_A);
 ?>
 
 <div class="wrap">
