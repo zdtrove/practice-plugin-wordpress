@@ -204,3 +204,43 @@ if ( ! function_exists( 'twentytwentyfour_pattern_categories' ) ) :
 endif;
 
 add_action( 'init', 'twentytwentyfour_pattern_categories' );
+
+// Display Extra Fields on General Tab Section
+add_action( 'woocommerce_product_options_general_product_data', 'woo_add_custom_general_fields' );
+function woo_add_custom_general_fields() {
+    global $post;
+
+    // Set HERE the product attribute taxonomy
+    $taxonomy = 'category';
+
+    // Get the selected value  <== <== (updated)
+    $value = get_post_meta( $post->ID, '_select', true );
+    if( empty( $value ) ) $value = '';
+		$options['1'] = "Mắt biếc"; // default value
+		$options['2'] = "Cuộc chiến cuối cùng"; // default value
+		$options['3'] = "Iron man"; // default value
+
+    echo '<div class="options_group">';
+
+    woocommerce_wp_select( array(
+        'id'      => '_select',
+        'label'   => __( 'Chọn tên phim', 'woocommerce' ),
+        'options' =>  $options, //this is where I am having trouble
+        'value'   => $value,
+    ) );
+
+    echo '</div>';
+}
+
+// Save Fields
+add_action( 'woocommerce_process_product_meta', 'woo_add_custom_general_fields_save' );
+function woo_add_custom_general_fields_save( $post_id ){
+
+// Select
+    $woocommerce_select = $_POST['_select'];
+    if( !empty( $woocommerce_select ) )
+        update_post_meta( $post_id, '_select', esc_attr( $woocommerce_select ) );
+    else {
+        update_post_meta( $post_id, '_select',  '' );
+    }
+}
