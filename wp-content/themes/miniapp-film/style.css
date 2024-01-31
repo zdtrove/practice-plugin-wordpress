@@ -1,4 +1,8 @@
 .flex-center {
-    display: flex !important;
-    align-items: center;
+  display: flex !important;
+  align-items: center;
+}
+
+.poster-wrapper img {
+  max-width: 100%;
 }

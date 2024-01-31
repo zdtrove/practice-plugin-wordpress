@@ -14,7 +14,8 @@ function setup_db()
     $sql = 'CREATE TABLE ' . $tableName . '(
         id BIGINT AUTO_INCREMENT,
         category_id INT NULL,
-        film_names VARCHAR(255) NULL,
+        film_name VARCHAR(255) NULL,
+        film_poster VARCHAR(255) NULL,
         create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(id))';
     dbDelta($sql);
@@ -81,3 +82,9 @@ function remove_notice() {
 }
   
 add_action('admin_menu','remove_notice');
+
+function load_media_files() {
+  wp_enqueue_media();
+}
+
+add_action('admin_enqueue_scripts', 'load_media_files');
