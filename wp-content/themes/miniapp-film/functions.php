@@ -12,12 +12,13 @@ function setup_db()
   if ($wpdb->get_var("SHOW TABLES LIKE '" . $tableName . "'") != $tableName) {
     dbDelta("SET GLOBAL TIME_ZONE = '+07:00';");
     $sql = 'CREATE TABLE ' . $tableName . '(
-        id BIGINT AUTO_INCREMENT,
-        category_id INT NULL,
-        film_name VARCHAR(255) NULL,
-        film_poster VARCHAR(255) NULL,
-        create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY(id))';
+      id BIGINT AUTO_INCREMENT,
+      film_name VARCHAR(255) NULL,
+      film_poster VARCHAR(255) NULL,
+      category_id INT NULL,
+      category_name VARCHAR(255) NULL,
+      create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY(id))';
     dbDelta($sql);
   }
 }

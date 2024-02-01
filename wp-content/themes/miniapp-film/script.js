@@ -1,3 +1,19 @@
+const hiddenClass = 'd-none';
+
+function openEditModal(id) {
+  const modalOverlay = document.getElementById('overlay');
+  const modal = document.getElementById(`modal-edit-film-${id}`);
+  modalOverlay.classList.remove(hiddenClass);
+  modal.classList.remove(hiddenClass);
+}
+
+function hideModal(id) {
+  const modalOverlay = document.getElementById('overlay');
+  const modal = document.getElementById(id);
+  modalOverlay.classList.add(hiddenClass);
+  modal.classList.add(hiddenClass);
+}
+
 window.addEventListener('load', function() {
   const uploadImageBtn = document.querySelector('.upload-poster-button');
   uploadImageBtn && uploadImageBtn.addEventListener('click', function(e) {

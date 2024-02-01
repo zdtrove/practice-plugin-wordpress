@@ -2,18 +2,7 @@
   global $wpdb;
   $tableFilms = $wpdb->prefix . 'films';
 
-  if (isset($_POST['addFilm'])) {
-    $arrayInsert = array(
-      'category_id' => $_POST['category_id'],
-      'film_name' => $_POST['film_name'],
-      'film_poster' => $_POST['film_poster'],
-    );
-
-    $wpdb->insert($tableFilms, $arrayInsert);
-  }
-
-  $films = $wpdb->get_results( 'SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC', ARRAY_A );
-  $categories = get_categories(array('hide_empty' => 0 ));
+  $categories = get_categories(array('hide_empty' => 0));
 
   function getCategoryName($categories, $id) {
     foreach ($categories as $category) {
@@ -22,6 +11,19 @@
       }
     }
   }
+
+  if (isset($_POST['addFilm'])) {
+    $arrayInsert = array(
+      'category_id' => $_POST['category_id'],
+      'category_name' => getCategoryName($categories, $_POST['category_id']),
+      'film_name' => $_POST['film_name'],
+      'film_poster' => $_POST['film_poster'],
+    );
+
+    $wpdb->insert($tableFilms, $arrayInsert);
+  }
+
+  $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC', ARRAY_A);
 ?>
 
 <div class="wrap">
@@ -87,13 +89,76 @@
           <td style="max-width: 50px;">
             <img src="<?php echo $film['film_poster'] ?>" alt="" width="50px"/>
           </td>
-          <td><?php echo getCategoryName($categories, $film['category_id']) ?></td>
-          <td>
-            <button class="button">Chỉnh sửa</button>
+          <td><?php echo $film['category_name']; ?></td>
+          <td style="display: flex; gap: 5px; flex-wrap: wrap;">
+            <button onclick="openEditModal('<?php echo $film['id']; ?>')" class="button">Chỉnh sửa</button>
             <button class="button">Thêm video phim</button>
           </td>
         </tr>
       <?php } ?>
     </tbody>
   </table>
+  <div id="overlay" class="overlay d-none"></div>
+  <?php foreach ( $films as $key => $film ) { ?>
+    <div id="modal-edit-film-<?php echo $film['id']; ?>" class="modal d-none">
+      <div class="modal-wrapper">
+        <p onclick="hideModal('modal-edit-film-<?php echo $film['id']; ?>')" class="close">✕</p>
+        <div class="modal-header">
+          <p>Chỉnh sửa phim</p>
+        </div>
+        <form action="" method="POST">
+          <div class="modal-content">
+            <div class="step-content content-step-2-edit">
+              <div class="step-content-content" style="overflow-x:auto;">
+                <table class="wp-list-table widefat striped table-view-list">
+                  <thead>
+                    <tr>
+                      <th>Tên phim</th>
+                      <th>Poster phim</th>
+                      <th>Category</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>Tên phim</p>
+                        <input class="rank-name require-field" type="text" name="film_name" placeholder="Vui lòng nhập tên phim" value="<?php echo $film['film_name']; ?>" />
+                      </td>
+                      <td class="flex-center">
+                        <button type="button" class="upload-poster-button button flex-center">
+                          <span class="dashicons dashicons-admin-media"></span>
+                          <span>Đổi hình</span>
+                        </button>
+                        <input type="text" hidden name="film_poster" value="<?php echo $film['film_poster']; ?>" />
+                        <div class="poster-wrapper" style="width: 50px; height: auto; margin-left: 10px;">
+                          <?php
+                            if ($film['film_poster']) {
+                              echo '<img src="' . $film['film_poster'] . '" alt="" style="width: 50px; height: auto;" />';
+                            }
+                          ?>
+                        </div>
+                      </td>
+                      <td>
+                        <p>Category</p>
+                        <select name="category_id">
+                          <?php foreach ($categories as $category) { 
+                              if ($category->cat_name != 'Uncategorized') {
+                            ?>
+                            <option <?php echo $category->term_id == $film['category_id'] ? 'selected' : '' ?> value="<?php echo $category->term_id; ?>"><?php echo $category->cat_name; ?></option>
+                          <?php } } ?>
+                        </select>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="submit" id="button-submit-edit-film-<?php echo $film['id']; ?>" class="button button-primary" name="editFilm">Cập nhật</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  <?php } ?>
 </div>
