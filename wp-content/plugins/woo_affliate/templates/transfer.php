@@ -11,13 +11,18 @@
   if (isset($_GET['daThanhToan'])) {
     $conditionSetting3 = $status['USE_POINT'];
   }
+
+  if (isset($_GET['huyThanhToan'])) {
+    $conditionSetting3 = $status['CANCEL'];
+  }
   
   foreach ( $userCommissions as $userCommission ) {
+    $userInfo = get_userdata($userCommission['user_id']);
     if ($conditionSetting3) {
       if ($userCommission['status'] == $conditionSetting3) {
         $temp = $userCommission;
         $paymentMethod = json_decode($userCommission['payment_method'], true);
-        $temp['display_name'] = get_user_meta($userCommission['user_id'], 'nickname', true);
+        $temp['display_name'] = $userInfo->user_nicename . ' - ' . $userInfo->user_login;
         if (is_array($paymentMethod) && count($paymentMethod) > 0) {
           $temp['woo_aff_name'] = $paymentMethod['name'];
           $temp['woo_aff_stk'] = $paymentMethod['stk'];
@@ -31,10 +36,10 @@
         array_push($userCommissionsStatus4, $temp);
       }
     } else {
-      if ($userCommission['status'] == $status['USE_POINT_IN_PROCESS'] || $userCommission['status'] == $status['USE_POINT']) {
+      if ($userCommission['status'] == $status['USE_POINT_IN_PROCESS'] || $userCommission['status'] == $status['USE_POINT'] || $userCommission['status'] == $status['CANCEL']) {
         $temp = $userCommission;
         $paymentMethod = json_decode($userCommission['payment_method'], true);
-        $temp['display_name'] = get_user_meta($userCommission['user_id'], 'nickname', true);
+        $temp['display_name'] = $userInfo->user_nicename . ' - ' . $userInfo->user_login;
         if (is_array($paymentMethod) && count($paymentMethod) > 0) {
           $temp['woo_aff_name'] = $paymentMethod['name'];
           $temp['woo_aff_stk'] = $paymentMethod['stk'];
@@ -75,6 +80,12 @@
     <button type="submit" name="daThanhToan" class="button button-primary">Đã thanh toán</button>
   </form>
   <form action="" method="GET">
+    <input type="hidden" name="page" value="hoa-hong" />
+    <input type="hidden" name="paged" value="1" />
+    <input type="hidden" name="tab" value="setting3" />
+    <button type="submit" name="huyThanhToan" class="button button-primary">Huỷ</button>
+  </form>
+  <form action="" method="GET">
     <input type="hidden" name="page" value="hoa-hong"/>
     <input type="hidden" name="paged" value="1" />
     <input type="hidden" name="tab" value="setting3" />
@@ -111,14 +122,17 @@
           ?>
             <form action="?page=hoa-hong&paged=1&tab=setting3" method="POST">
               <select name="status">
-                <option value="4">Chờ đối soát</option>
-                <option value="2">Xác nhận</option>
+                <option value="<?php echo $status['USE_POINT_IN_PROCESS'] ; ?>">Chờ đối soát</option>
+                <option value="<?php echo $status['USE_POINT'] ; ?>">Xác nhận</option>
+                <option value="<?php echo $status['CANCEL'] ; ?>">Huỷ</option>
               </select>
               <input hidden name="userCommissionId" value="<?php echo $userCommissionStatus4['id'] ?>" />
               <button type="submit" name="updateStatus" class="button">Cập nhật</button>
             </form>
-            <?php } else { ?>
+            <?php } else if ($userCommissionStatus4['status'] == $status['USE_POINT']) { ?>
               <p>Đã thanh toán</p>
+            <?php } else { ?>
+              <p>Đã huỷ</p>
             <?php } ?>
         </td>
       </tr>

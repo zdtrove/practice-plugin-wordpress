@@ -7,15 +7,16 @@
   $status = [
     'PURCHASE' => 1,
     'USE_POINT' => 2,
+    'CANCEL' => 5,
     'USE_POINT_IN_PROCESS' => 4,
   ];
 
   $usersDisplay = [];
-  $users = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' ORDER BY id ASC', ARRAY_A );
+  $users = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' WHERE user_login != "77777777" ORDER BY id ASC', ARRAY_A );
   $userCommissions = $wpdb->get_results( 'SELECT * FROM ' . $tableUserCommission . ' ORDER BY id ASC', ARRAY_A );
 
   if (isset($_GET['searchUser']) && isset($_GET['username'])) {
-    $usersSearch = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' WHERE user_login LIKE "%' . $_GET['username'] . '%" OR user_nicename LIKE "%' . $_GET['username'] . '%" ORDER BY id ASC', ARRAY_A );
+    $usersSearch = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' WHERE user_login != "77777777" && (user_login LIKE "%' . $_GET['username'] . '%" OR user_nicename LIKE "%' . $_GET['username'] . '%" ) ORDER BY id ASC', ARRAY_A );
     $usersDisplay = $usersSearch;
   } else {
     $usersDisplay = $users;

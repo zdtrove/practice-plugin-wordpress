@@ -89,3 +89,9 @@ function load_media_files() {
 }
 
 add_action('admin_enqueue_scripts', 'load_media_files');
+
+function filter_site_upload_size_limit() {
+  return 1024 * 512000;
+}
+
+add_filter( 'upload_size_limit', 'filter_site_upload_size_limit', 20 );
