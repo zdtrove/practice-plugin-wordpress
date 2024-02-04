@@ -1,5 +1,6 @@
 const __hiddenClass = 'd-none';
-let ids2 = [];
+let _ids = [];
+let idsEpisode = [];
 
 function openEditModal(id) {
   const modalOverlay = document.getElementById('overlay');
@@ -9,8 +10,7 @@ function openEditModal(id) {
   modalOverlay.classList.remove(__hiddenClass);
   modal.classList.remove(__hiddenClass);
 
-  !ids2.includes(id) && uploadImageBtn && uploadImageBtn.addEventListener('click', function(e) {
-    console.log('aaa');
+  !_ids.includes(id) && uploadImageBtn && uploadImageBtn.addEventListener('click', function(e) {
     e.preventDefault();
     uploader = wp.media({
       title: 'Đổi poster',
@@ -27,11 +27,39 @@ function openEditModal(id) {
       const wrapper = modal.querySelector('.poster-wrapper');
       wrapper.innerHTML = '';
       wrapper.appendChild(img);
-    })
-    .open();
+    }).open();
   });
 
-  ids2.push(id);
+  _ids.push(id);
+}
+
+function openEpisodeModal(id) {
+  const modalOverlay = document.getElementById('overlay');
+  const modal = document.getElementById(`modal-list-episode-${id}`);
+  const uploadImageBtn = modal.querySelectorAll('.upload-video-button');
+
+  modalOverlay.classList.remove(__hiddenClass);
+  modal.classList.remove(__hiddenClass);
+
+  if (!idsEpisode.includes(id) && uploadImageBtn.length) {
+    uploadImageBtn.forEach((item) => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        uploader = wp.media({
+          title: 'Đổi video',
+          button: {
+            text: 'Sử dụng video này'
+          },
+          multiple: false
+        }).on('select', function() {
+          const attachment = uploader.state().get('selection').first().toJSON();
+          item.nextElementSibling.innerHTML = attachment.url;
+          item.parentElement.nextElementSibling.querySelector('.video-url').value = attachment.url;
+        }).open();
+      });
+    })
+  }
+  idsEpisode.push(id);
 }
 
 function hideModal(id) {
@@ -42,9 +70,17 @@ function hideModal(id) {
 }
 
 window.addEventListener('load', function() {
+  const buttonAddFilm = document.querySelector('.button-add-film');
+  const modalAddFilm = document.querySelector('.modal-add-film');
+  const modalOverlay = document.getElementById('overlay');
   const uploadImageBtn = document.querySelector('.upload-poster-button');
+
+  buttonAddFilm && buttonAddFilm.addEventListener('click', function() {
+    modalOverlay.classList.remove(__hiddenClass);
+    modalAddFilm.classList.remove(__hiddenClass);
+  });
+
   uploadImageBtn && uploadImageBtn.addEventListener('click', function(e) {
-    console.log('dlkfdlkfdlkf');
     e.preventDefault();
     uploader = wp.media({
       title: 'Thêm hình ảnh',
@@ -61,7 +97,6 @@ window.addEventListener('load', function() {
       const wrapper = tdRecord.querySelector('.poster-wrapper');
       wrapper.innerHTML = '';
       wrapper.appendChild(img);
-    })
-    .open();
+    }).open();
   });
 });
