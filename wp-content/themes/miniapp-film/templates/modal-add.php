@@ -44,27 +44,9 @@
             </td>
           </tr>
           <tr>
-            <th>Giá combo 5 tập</th>
+            <th>Chiếc khấu</th>
             <td>
-              <input type="number" name="combo_5" />
-            </td>
-          </tr>
-          <tr>
-            <th>Giá combo 10 tập</th>
-            <td>
-              <input type="number" name="combo_10" />
-            </td>
-          </tr>
-          <tr>
-            <th>Giá combo 15 tập</th>
-            <td>
-              <input type="number" name="combo_15" />
-            </td>
-          </tr>
-          <tr>
-            <th>Giá combo 20 tập</th>
-            <td>
-              <input type="number" name="combo_20" />
+              <input type="number" name="discount" />
             </td>
           </tr>
         </table>

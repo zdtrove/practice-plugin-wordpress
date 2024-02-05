@@ -1,6 +1,16 @@
 const __hiddenClass = 'd-none';
+const __activeClass = 'active';
 let _ids = [];
 let idsEpisode = [];
+
+function changeUrl(tabId) {
+  if (tabId == 1) {
+    window.history.pushState('', '', '?page=danh-sach-phim&paged=1&tab=setting1');
+  }
+  if (tabId == 2) {
+    window.history.pushState('', '', '?page=danh-sach-phim&paged=1&tab=setting2');
+  }
+}
 
 function openEditModal(id) {
   const modalOverlay = document.getElementById('overlay');
@@ -70,6 +80,50 @@ function hideModal(id) {
 }
 
 window.addEventListener('load', function() {
+  /* Tabs */
+  const __sPageURL = window.location.search.substring(1);
+  const __params = __sPageURL.split('&');
+  
+  const _tabSetting1 = document.getElementById('tabSetting1');
+  const _tabSetting2 = document.getElementById('tabSetting2');
+  const _tabSetting1Content = document.getElementById('tab-setting-1-content');
+  const _tabSetting2Content = document.getElementById('tab-setting-2-content');
+
+  function clickChangeTab(tabIndex) {
+    const listTab = [_tabSetting1, _tabSetting2];
+    const listContentTab = [_tabSetting1Content, _tabSetting2Content];
+    listTab.forEach((tab, index) => {
+      Number(tabIndex) === Number(index + 1) ? tab.classList.add(__activeClass) : tab.classList.remove(__activeClass);
+    });
+    listContentTab.forEach((tabContent, index) => {
+      Number(tabIndex) === Number(index + 1) ? tabContent.classList.add(__activeClass) : tabContent.classList.remove(__activeClass);
+    });
+  }
+
+  if (_tabSetting1) {
+    if (__params.length === 1 || __params[2].split('=')[1] === 'setting1') {
+      clickChangeTab(1);
+    } else if (__params[2].split('=')[1] === 'setting2') {
+      clickChangeTab(2);
+    }
+  }
+  
+  const _tabs = document.querySelectorAll('ul.nav-tabs-film > li');
+  for (i = 0; i < _tabs.length; i++) {
+    _tabs[i].addEventListener('click', _switchTab);
+  }
+
+  function _switchTab(event) {
+    event.preventDefault();
+    document.querySelector('ul.nav-tabs-film li.active').classList.remove(__activeClass);
+    document.querySelector('.tab-pane-film.active').classList.remove(__activeClass);
+    const clickedTab = event.currentTarget;
+    const anchor = event.target;
+    const activePaneID = anchor.getAttribute('href');
+    clickedTab.classList.add(__activeClass);
+    document.querySelector(activePaneID).classList.add(__activeClass);
+  }
+
   const buttonAddFilm = document.querySelector('.button-add-film');
   const modalAddFilm = document.querySelector('.modal-add-film');
   const modalOverlay = document.getElementById('overlay');

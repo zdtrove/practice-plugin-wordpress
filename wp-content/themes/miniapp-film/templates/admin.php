@@ -1,8 +1,10 @@
 <?php
 global $wpdb;
 $tableFilms = $wpdb->prefix . 'films';
+$tableUser = $wpdb->prefix . 'users';
 
-$categories = get_categories(array('hide_empty' => 0));
+$categories = get_categories(array('hide_empty' => 0, 'taxonomy' => 'product_cat'));
+$users = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' ORDER BY id ASC', ARRAY_A );
 
 function getCategoryName($categories, $id)
 {
@@ -19,10 +21,7 @@ if (isset($_POST['addFilm'])) {
     'category_name' => getCategoryName($categories, $_POST['category_id']),
     'film_name' => $_POST['film_name'],
     'film_poster' => $_POST['film_poster'],
-    'combo_5' => $_POST['combo_5'],
-    'combo_10' => $_POST['combo_10'],
-    'combo_15' => $_POST['combo_15'],
-    'combo_20' => $_POST['combo_20'],
+    'discount' => $_POST['discount'],
   );
 
   $wpdb->insert($tableFilms, $arrayInsert);
@@ -34,10 +33,7 @@ if (isset($_POST['editFilm'])) {
     'category_name' => getCategoryName($categories, $_POST['category_id']),
     'film_name' => $_POST['film_name'],
     'film_poster' => $_POST['film_poster'],
-    'combo_5' => $_POST['combo_5'],
-    'combo_10' => $_POST['combo_10'],
-    'combo_15' => $_POST['combo_15'],
-    'combo_20' => $_POST['combo_20'],
+    'discount' => $_POST['discount'],
   );
 
   $wpdb->update($tableFilms, $arrayUpdate, array('id' => $_POST['filmId']));
@@ -51,41 +47,23 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC',
 ?>
 
 <div class="wrap">
-  <h1>Quản lý phim</h1>
-  <hr />
-  <br />
-  <div>
-    <button class="button button-primary button-add-film">
-      <span>Thêm phim</span>
-    </button>
+  <ul class="nav-tabs-film">
+    <li id="tabSetting1" class="active" onclick="changeUrl(1)">
+      <a href="#tab-setting-1-content">Quản lý phim</a>
+    </li>
+    <li id="tabSetting2" onclick="changeUrl(2)">
+      <a href="#tab-setting-2-content">Quản lý user</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div id="tab-setting-1-content" class="tab-pane-film active">
+      <?php require_once(dirname(__FILE__) . '/film-list.php'); ?>
+    </div>
+    <div id="tab-setting-2-content" class="tab-pane-film">
+    <?php require_once(dirname(__FILE__) . '/user-list.php'); ?>
+    </div>
   </div>
-  <br />
   <?php require_once(dirname(__FILE__) . '/modal-add.php'); ?>
-  <table class="wp-list-table widefat fixed striped table-view-list">
-    <thead>
-      <tr>
-        <th>Tên phim</th>
-        <th>Poster phim</th>
-        <th>Category</th>
-        <th>Hành động</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($films as $film) { ?>
-        <tr>
-          <td><?php echo $film['film_name']; ?></td>
-          <td style="max-width: 50px;">
-            <img src="<?php echo $film['film_poster'] ?>" alt="" width="50px" />
-          </td>
-          <td><?php echo $film['category_name']; ?></td>
-          <td style="display: flex; gap: 5px; flex-wrap: wrap;">
-            <button onclick="openEditModal('<?php echo $film['id']; ?>')" class="button">Chỉnh sửa</button>
-            <button onclick="openEpisodeModal('<?php echo $film['id']; ?>')" class="button">Thêm video phim</button>
-          </td>
-        </tr>
-      <?php } ?>
-    </tbody>
-  </table>
   <div id="overlay" class="overlay d-none"></div>
   <?php foreach ($films as $key => $film) {
     $args = array(
@@ -110,11 +88,8 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC',
                   <tr>
                     <th>Tên phim</th>
                     <th>Poster phim</th>
+                    <th>Chiết khấu</th>
                     <th>Category</th>
-                    <th>Giá combo 5 tập</th>
-                    <th>Giá combo 10 tập</th>
-                    <th>Giá combo 15 tập</th>
-                    <th>Giá combo 20 tập</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -138,6 +113,10 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC',
                       </div>
                     </td>
                     <td>
+                      <p>Chiết khấu</p>
+                      <input type="number" name="discount" value="<?php echo $film['discount']; ?>" />
+                    </td>
+                    <td>
                       <p>Category</p>
                       <select name="category_id">
                         <?php foreach ($categories as $category) {
@@ -147,18 +126,6 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC',
                         <?php }
                         } ?>
                       </select>
-                    </td>
-                    <td>
-                      <input style="width: 100px;" name="combo_5" type="number" value="<?php echo $film['combo_5']; ?>" />
-                    </td>
-                    <td>
-                      <input style="width: 100px;" name="combo_10" type="number" value="<?php echo $film['combo_10']; ?>" />
-                    </td>
-                    <td>
-                      <input style="width: 100px;" name="combo_15" type="number" value="<?php echo $film['combo_15']; ?>" />
-                    </td>
-                    <td>
-                      <input style="width: 100px;" name="combo_20" type="number" value="<?php echo $film['combo_20']; ?>" />
                     </td>
                   </tr>
                 </tbody>
