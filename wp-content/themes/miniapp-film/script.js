@@ -79,7 +79,34 @@ function hideModal(id) {
   modal.classList.add(__hiddenClass);
 }
 
+function submitForm(formId) {
+  const form = document.getElementById(formId);
+  const requireInput = form.querySelectorAll('.require-field');
+
+  requireInput.forEach((input) => {
+    if (input.value === '') {
+      input.nextElementSibling.classList.remove(__hiddenClass);
+    } else {
+      input.nextElementSibling.classList.add(__hiddenClass);
+      form.submit();
+    }
+  });
+}
+
 window.addEventListener('load', function() {
+  /* Common */
+  const removeItem = document.querySelectorAll('.page-title-action');
+  removeItem.forEach((item) => {
+    if (item.innerHTML == 'Import' || item.innerHTML == 'Export') {
+      item.classList.add(__hiddenClass);
+    }
+  });
+
+  const _removeMessageBtn = document.getElementById('remove-message');
+  _removeMessageBtn && _removeMessageBtn.addEventListener('click', function() {
+    document.getElementById('message').classList.add(__hiddenClass);
+  });
+
   /* Tabs */
   const __sPageURL = window.location.search.substring(1);
   const __params = __sPageURL.split('&');

@@ -2,6 +2,7 @@
 global $wpdb;
 $tableFilms = $wpdb->prefix . 'films';
 $tableUser = $wpdb->prefix . 'users';
+$successMessage = '';
 
 $categories = get_categories(array('hide_empty' => 0, 'taxonomy' => 'product_cat'));
 $users = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' ORDER BY id ASC', ARRAY_A );
@@ -25,6 +26,7 @@ if (isset($_POST['addFilm'])) {
   );
 
   $wpdb->insert($tableFilms, $arrayInsert);
+  $successMessage = 'Thêm phim thành công';
 }
 
 if (isset($_POST['editFilm'])) {
@@ -43,10 +45,17 @@ if (isset($_POST['updateEpisode'])) {
   update_post_meta($_POST['filmId'], '_film_episode', $_POST['_film_video']);
 }
 
-$films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC', ARRAY_A);
+$filmsDisplay = [];
+$films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC', ARRAY_A);
 ?>
 
 <div class="wrap">
+  <?php if ($successMessage) { ?>
+    <div id="message" class="success-message">
+      <p><?php echo $successMessage; ?></p>
+      <button id="remove-message" type="button"></button>
+    </div>
+  <?php } ?>
   <ul class="nav-tabs-film">
     <li id="tabSetting1" class="active" onclick="changeUrl(1)">
       <a href="#tab-setting-1-content">Quản lý phim</a>
@@ -63,7 +72,7 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC',
     <?php require_once(dirname(__FILE__) . '/user-list.php'); ?>
     </div>
   </div>
-  <?php require_once(dirname(__FILE__) . '/modal-add.php'); ?>
+  <?php require_once(dirname(__FILE__) . '/modal-add-film.php'); ?>
   <div id="overlay" class="overlay d-none"></div>
   <?php foreach ($films as $key => $film) {
     $args = array(
@@ -80,7 +89,7 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC',
         <div class="modal-header">
           <p>Chỉnh sửa phim</p>
         </div>
-        <form action="" method="POST">
+        <form id="form-edit-film-<?php echo $film['id']; ?>" action="" method="POST">
           <div class="modal-content">
             <div style="overflow-x:auto;">
               <table class="wp-list-table widefat striped table-view-list">
@@ -96,7 +105,8 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC',
                   <tr>
                     <td>
                       <p>Tên phim</p>
-                      <input type="text" name="film_name" placeholder="Vui lòng nhập tên phim" value="<?php echo $film['film_name']; ?>" />
+                      <input type="text" class="require-field" name="film_name" placeholder="Vui lòng nhập tên phim" value="<?php echo $film['film_name']; ?>" />
+                      <p class="required d-none">Đây là trường bắt buộc</p>
                     </td>
                     <td>
                       <button type="button" class="upload-poster-button button flex-center">
@@ -113,7 +123,6 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC',
                       </div>
                     </td>
                     <td>
-                      <p>Chiết khấu</p>
                       <input type="number" name="discount" value="<?php echo $film['discount']; ?>" />
                     </td>
                     <td>
@@ -134,7 +143,8 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id ASC',
           </div>
           <div class="modal-actions">
             <input hidden type="text" name="filmId" value="<?php echo $film['id']; ?>" />
-            <button type="submit" id="button-submit-edit-film-<?php echo $film['id']; ?>" class="button button-primary" name="editFilm">Cập nhật</button>
+            <input hidden type="text" name="editFilm" value="<?php echo $film['id']; ?>" />
+            <button onclick="submitForm('form-edit-film-<?php echo $film['id']; ?>')" type="button" class="button button-primary">Cập nhật</button>
           </div>
         </form>
       </div>

@@ -164,3 +164,11 @@ function tw_disable_create_new_post() {
   $wp_post_types['product']->labels->all_items = 'Tất cả tập phim';
   $wp_post_types['product']->labels->menu_name = 'Tập phim';
 }
+
+add_filter('woocommerce_product_tabs', 'woo_remove_product_tabs', 98);
+
+function woo_remove_product_tabs($tabs) {
+    unset($tabs['reviews']);    // Remove the reviews tab
+    $tabs['description']['title'] = __('Additional Information');  // Rename the description tab        
+    return $tabs;
+}

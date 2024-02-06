@@ -4,7 +4,7 @@
     <div class="modal-header">
       <p>Thêm phim</p>
     </div>
-    <form action="" method="POST">
+    <form id="formAddFilm" action="" method="POST">
       <div class="modal-content">
         <table class="form-table">
           <tr>
@@ -12,7 +12,8 @@
               <label>Tên phim</label>
             </th>
             <td>
-              <input name="film_name" type="text" class="regular-text">
+              <input name="film_name" type="text" class="regular-text require-field">
+              <p class="required d-none">Đây là trường bắt buộc</p>
             </td>
           </tr>
           <tr id="tr-add-film">
@@ -52,7 +53,8 @@
         </table>
       </div>
       <div class="modal-actions">
-        <button name="addFilm" class="button button-primary">
+        <input hidden name="addFilm" />
+        <button onclick="submitForm('formAddFilm')" type="button" class="button button-primary">
           <span>Thêm phim</span>
         </button>       
       </div>
