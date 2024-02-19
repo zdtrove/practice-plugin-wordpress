@@ -39,6 +39,7 @@ if (isset($_POST['editFilm'])) {
   );
 
   $wpdb->update($tableFilms, $arrayUpdate, array('id' => $_POST['filmId']));
+  $successMessage = 'Chỉnh sửa phim thành công';
 }
 
 if (isset($_POST['updateEpisode'])) {
@@ -58,6 +59,8 @@ if (isset($_POST['deleteFilm'])) {
   foreach ($episodeListDelete as $postDelete) {
     wp_delete_post($postDelete->ID);
   }
+
+  $successMessage = 'Xoá phim thành công';
 }
 
 $filmsDisplay = [];

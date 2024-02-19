@@ -159,10 +159,12 @@ add_action('init', 'rename_product');
 function rename_product()
 {
   global $wp_post_types;
-  $wp_post_types['product']->labels->name = 'Tập phim';
-  $wp_post_types['product']->labels->add_new = 'Thêm tập phim';
-  $wp_post_types['product']->labels->all_items = 'Tất cả tập phim';
-  $wp_post_types['product']->labels->menu_name = 'Tập phim';
+  if (class_exists('WooCommerce')) {
+    $wp_post_types['product']->labels->name = 'Tập phim';
+    $wp_post_types['product']->labels->add_new = 'Thêm tập phim';
+    $wp_post_types['product']->labels->all_items = 'Tất cả tập phim';
+    $wp_post_types['product']->labels->menu_name = 'Tập phim';
+  }
 }
 
 add_filter('post_row_actions', 'remove_product_list_action', 15, 2);
