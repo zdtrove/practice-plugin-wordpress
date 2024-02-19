@@ -67,10 +67,6 @@
   width: 20px;
 }
 
-.subsubsub {
-  display: none;
-}
-
 .poster-wrapper img {
   max-width: 100%;
 }
@@ -102,7 +98,6 @@
 .modal-delete {
   width: 40%;
   min-width: 300px;
-  min-height: 200px;
   left: 30%;
   top: 80px;
   bottom: unset;

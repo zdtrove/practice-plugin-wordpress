@@ -45,6 +45,21 @@ if (isset($_POST['updateEpisode'])) {
   update_post_meta($_POST['filmId'], '_film_episode', $_POST['_film_video']);
 }
 
+if (isset($_POST['deleteFilm'])) {
+  $wpdb->delete($tableFilms, array('id' => $_POST['filmId']));
+  $args = array(
+    'meta_key' => '_film_selected',
+    'meta_value' => $_POST['filmId'],
+    'post_type' => 'product',
+    'post_status' => 'any',
+  );
+  $episodeListDelete = get_posts($args);
+  
+  foreach ($episodeListDelete as $postDelete) {
+    wp_delete_post($postDelete->ID);
+  }
+}
+
 $filmsDisplay = [];
 $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC', ARRAY_A);
 ?>
@@ -123,7 +138,7 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                       </div>
                     </td>
                     <td>
-                      <input type="number" name="discount" value="<?php echo $film['discount']; ?>" />
+                      <input type="number" name="discount" value="<?php echo $film['discount']; ?>" min="0" oninput="this.value = Math.abs(this.value)" />
                     </td>
                     <td>
                       <p>Category</p>
@@ -179,7 +194,7 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                         </button>
                         <p style="margin-left: 15px;"><?php echo $episode->_film_episode; ?></p>
                       </td>
-                      <td class="parent-td">
+                      <td>
                         <form>
                           <input hidden type="text" name="filmId" value="<?php echo $episode->ID; ?>" />
                           <input hidden type="text" class="video-url" name="_film_video" />
@@ -191,6 +206,24 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                 </tbody>
               </table>
             </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="modal-delete-film-<?php echo $film['id']; ?>" class="film-modal modal-delete d-none">
+      <div class="modal-wrapper">
+        <p onclick="hideModal('modal-delete-film-<?php echo $film['id']; ?>')" class="close">✕</p>
+        <div class="modal-header">
+          <p>Xóa phim</p>
+        </div>
+        <form action="" method="POST">
+          <div class="modal-content">
+            Bạn có muốn xóa phim <b><?php echo $film['film_name']; ?></b> và tất cả các tập phim?
+          </div>
+          <div class="modal-actions">
+            <input hidden type="text" name="filmId" value="<?php echo $film['id']; ?>" />
+            <button name="deleteFilm" class="button button-primary">Xóa</button>
+            <button onclick="hideModal('modal-delete-film-<?php echo $film['id']; ?>')" type="button" class="button">Hủy</button>
           </div>
         </form>
       </div>

@@ -72,6 +72,14 @@ function openEpisodeModal(id) {
   idsEpisode.push(id);
 }
 
+function openDeleteModal(id) {
+  const modalOverlay = document.getElementById('overlay');
+  const modal = document.getElementById(`modal-delete-film-${id}`);
+
+  modalOverlay.classList.remove(__hiddenClass);
+  modal.classList.remove(__hiddenClass);
+}
+
 function hideModal(id) {
   const modalOverlay = document.getElementById('overlay');
   const modal = document.getElementById(id);

@@ -4,7 +4,7 @@
   $paged = isset($_GET['paged']) ? $_GET['paged'] : 1;
   $stt = $paged - 1;
   $total = count( $filmsDisplay );
-  $perPage = 2;                                                                                                                                                   ;
+  $perPage = 10;                                                                                                                                                   ;
   $totalPages = ceil($total/ $perPage);
   $currentPage = max($currentPage, 1);
   $currentPage = min($currentPage, $totalPages);
@@ -41,6 +41,7 @@
         </td>
         <td><?php echo $film['category_name']; ?></td>
         <td style="display: flex; gap: 5px; flex-wrap: wrap;">
+          <button onclick="openDeleteModal('<?php echo $film['id']; ?>')" class="button">Xóa</button>
           <button onclick="openEditModal('<?php echo $film['id']; ?>')" class="button">Chỉnh sửa</button>
           <button onclick="openEpisodeModal('<?php echo $film['id']; ?>')" class="button">Thêm video phim</button>
         </td>

@@ -47,7 +47,7 @@
           <tr>
             <th>Chiếc khấu</th>
             <td>
-              <input type="number" name="discount" />
+              <input type="number" name="discount" min="0" oninput="this.value = Math.abs(this.value)" />
             </td>
           </tr>
         </table>

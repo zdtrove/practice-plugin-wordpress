@@ -3,7 +3,7 @@
   $paged = isset($_GET['paged']) ? $_GET['paged'] : 1;
   $stt = $paged - 1;
   $total = count( $users );
-  $perPage = 2;                                                                                                                                                   ;
+  $perPage = 10;                                                                                                                                                   ;
   $totalPages = ceil($total/ $perPage);
   $currentPage = max($currentPage, 1);
   $currentPage = min($currentPage, $totalPages);
@@ -24,7 +24,7 @@
       $meta = get_user_meta($user['ID'], '_episode_list');
     ?>
       <tr>
-        <td><?php echo $user['user_nicename']; ?></td>
+        <td><?php echo $user['user_nicename'] . ' - ' . $user['user_login']; ?></td>
         <td>
           <?php
             if (count($meta) > 0) {
