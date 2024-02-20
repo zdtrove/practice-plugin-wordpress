@@ -63,8 +63,30 @@ function openEpisodeModal(id) {
           multiple: false
         }).on('select', function() {
           const attachment = uploader.state().get('selection').first().toJSON();
+          const filmLengthArr = attachment.fileLengthHumanReadable.split(', ');
+          let filmLength = '';
+          if (filmLengthArr.length === 3) {
+            filmLengthArr.forEach((item, index) => {
+              if (index === 0) {
+                filmLength += item.split(' ')[0] + 'h';
+              }
+              if (index === 1) {
+                filmLength += item.split(' ')[0] + 'm';
+              }
+            });
+          } else if (filmLengthArr.length === 2) {
+            filmLengthArr.forEach((item, index) => {
+              if (index === 0) {
+                filmLength += item.split(' ')[0] + 'm';
+              }
+              if (index === 1) {
+                filmLength += item.split(' ')[0] + 's';
+              }
+            });
+          }
           item.nextElementSibling.innerHTML = attachment.url;
-          item.parentElement.nextElementSibling.querySelector('.video-url').value = attachment.url;
+          item.parentElement.nextElementSibling.nextElementSibling.querySelector('.video-url').value = attachment.url;
+          item.parentElement.nextElementSibling.nextElementSibling.querySelector('.video-length').value = filmLength;
         }).open();
       });
     })

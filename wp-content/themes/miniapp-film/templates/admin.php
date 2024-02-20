@@ -43,7 +43,10 @@ if (isset($_POST['editFilm'])) {
 }
 
 if (isset($_POST['updateEpisode'])) {
-  update_post_meta($_POST['filmId'], '_film_episode', $_POST['_film_video']);
+  update_post_meta($_POST['filmId'], '_film_episode', $_POST['_film_episode']);
+  update_post_meta($_POST['filmId'], '_film_length', $_POST['_film_length']);
+
+  $successMessage = 'Chỉnh sửa tập phim thành công';
 }
 
 if (isset($_POST['deleteFilm'])) {
@@ -173,44 +176,47 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
         <div class="modal-header">
           <p>Thêm video cho tập phim</p>
         </div>
-        <form action="" method="POST">
-          <div class="modal-content">
-            <div style="overflow-x:auto;">
-              <table class="wp-list-table widefat striped table-view-list">
-                <thead>
+        <div class="modal-content">
+          <div style="overflow-x:auto;">
+            <table class="wp-list-table widefat striped table-view-list">
+              <thead>
+                <tr>
+                  <th>Tập phim</th>
+                  <th>Video</th>
+                  <th>Độ dài phim</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($episodeList as $episode) { ?>
                   <tr>
-                    <th>Tập phim</th>
-                    <th>Video</th>
-                    <th>Hành động</th>
+                    <td>
+                      <p><?php echo $episode->post_title; ?></p>
+                    </td>
+                    <td class="flex-center td-video-<?php echo $episode->ID; ?>">
+                      <button type="button" class="upload-video-button button flex-center">
+                        <span class="dashicons dashicons-admin-media"></span>
+                        <span>Tải video</span>
+                      </button>
+                      <p style="margin-left: 15px;"><?php echo $episode->_film_episode; ?></p>
+                    </td>
+                    <td>
+                      <p><?php echo $episode->_film_length; ?></p>
+                    </td>
+                    <td>
+                      <form action="" method="POST">
+                        <input hidden type="text" name="filmId" value="<?php echo $episode->ID; ?>" />
+                        <input hidden type="text" class="video-url" name="_film_episode" value="<?php echo $episode->_film_episode; ?>" />
+                        <input hidden type="text" class="video-length" name="_film_length" value="<?php echo $episode->_film_length; ?>" />
+                        <button type="submit" class="button button-primary" name="updateEpisode">Cập nhật</button>
+                      </form>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($episodeList as $episode) { ?>
-                    <tr>
-                      <td>
-                        <p><?php echo $episode->post_title; ?></p>
-                      </td>
-                      <td class="flex-center td-video-<?php echo $episode->ID; ?>">
-                        <button type="button" class="upload-video-button button flex-center">
-                          <span class="dashicons dashicons-admin-media"></span>
-                          <span>Tải video</span>
-                        </button>
-                        <p style="margin-left: 15px;"><?php echo $episode->_film_episode; ?></p>
-                      </td>
-                      <td>
-                        <form>
-                          <input hidden type="text" name="filmId" value="<?php echo $episode->ID; ?>" />
-                          <input hidden type="text" class="video-url" name="_film_video" />
-                          <button type="submit" class="button button-primary" name="updateEpisode">Cập nhật</button>
-                        </form>
-                      </td>
-                    </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
-            </div>
+                <?php } ?>
+              </tbody>
+            </table>
           </div>
-        </form>
+        </div>
       </div>
     </div>
     <div id="modal-delete-film-<?php echo $film['id']; ?>" class="film-modal modal-delete d-none">
