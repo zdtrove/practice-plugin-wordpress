@@ -10,6 +10,7 @@
   $offset = ($currentPage - 1) * $perPage;
   if ($offset < 0) $offset = 0;
   $users = array_slice($users, $offset, $perPage);
+  $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC', ARRAY_A);
 ?>
 
 <table class="wp-list-table widefat fixed striped table-view-list users">
@@ -17,11 +18,13 @@
     <tr>
       <th>Tên</th>
       <th>Tập phim đã mua</th>
+      <th>Danh sách phim yêu thích</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach ($users as $user) {
       $meta = get_user_meta($user['ID'], '_episode_list');
+      $favorite = get_user_meta($user['ID'], '_favorite_list');
     ?>
       <tr>
         <td><?php echo $user['user_nicename'] . ' - ' . $user['user_login']; ?></td>
@@ -45,6 +48,17 @@
               <?php }
             }
           ?>
+        </td>
+        <td>
+            <?php
+              if (count($favorite) > 0) {
+                foreach ($favorite[0] as $key => $value) {?>
+                  <p>
+                    <?php echo $films[$value]['film_name']; ?>
+                  </p>
+                <?php }
+              }
+            ?>
         </td>
       </tr>
     <?php } ?>
