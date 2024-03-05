@@ -41,6 +41,9 @@
                     foreach ($films as $film) {
                       if ($film['id'] == $filmId) {
                         echo $film['film_name'];
+                        if (!empty($film['film_season'])) {
+                          echo ' - Phần ' . $film['film_season'];
+                        }
                       }
                     }
                   ?>
@@ -54,7 +57,12 @@
               if (count($favorite) > 0) {
                 foreach ($favorite[0] as $key => $value) {?>
                   <p>
-                    <?php echo $films[$value]['film_name']; ?>
+                    <?php
+                      echo $films[$value]['film_name'];
+                      if (!empty($films[$value]['film_season'])) {
+                        echo ' - Phần ' . $films[$value]['film_season'];
+                      }
+                    ?>
                   </p>
                 <?php }
               }

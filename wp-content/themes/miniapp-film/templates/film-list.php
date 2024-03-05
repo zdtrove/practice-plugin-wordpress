@@ -23,6 +23,7 @@
   <thead>
     <tr>
       <th>Tên phim</th>
+      <th>Phần phim</th>
       <th>Poster phim</th>
       <th>Chiết khấu</th>
       <th>Category</th>
@@ -33,6 +34,7 @@
     <?php foreach ($filmsDisplay as $film) { ?>
       <tr>
         <td><?php echo $film['film_name']; ?></td>
+        <td><?php echo $film['film_season']; ?></td>
         <td style="max-width: 50px;">
           <img src="<?php echo $film['film_poster'] ?>" alt="" width="50px" />
         </td>

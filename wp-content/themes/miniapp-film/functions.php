@@ -16,6 +16,7 @@ function setup_db()
       id BIGINT AUTO_INCREMENT,
       film_name VARCHAR(255) NULL,
       film_poster VARCHAR(255) NULL,
+      film_season VARCHAR(255) NULL,
       discount INT NULL,
       category_id INT NULL,
       category_name VARCHAR(255) NULL,
@@ -128,6 +129,9 @@ function add_column_product_list($column, $postid)
     foreach ($films as $film) {
       if ($film['id'] == $idFilm) {
         echo $film['film_name'];
+        if (!empty($film['film_season'])) {
+          echo ' - Phần ' . $film['film_season'];
+        }
       }
     }
   }
@@ -195,11 +199,17 @@ function cs_get_filter_options()
   ]];
 
   foreach ($films as $film) {
-    $options = [...$options, [
+    $addOption = [
       'name' => $film['film_name'],
       'value' => $film['id'],
       'selected' => (isset($_GET['_film_selected']) && $_GET['_film_selected'] == $film['id']) ? 'selected="selected"' : '',
-    ]];
+    ];
+
+    if (!empty($film['film_season'])) {
+      $addOption['name'] .= ' - Phần ' . $film['film_season'];
+    }
+
+    $options = [...$options, $addOption];
   }
 
   $output = '';
@@ -259,3 +269,31 @@ function post_remove() {
 add_action('admin_menu', 'post_remove');
 
 add_filter( 'woocommerce_admin_disabled', '__return_true' );
+
+function remove_tab($tabs){
+  unset($tabs['linked_product']);
+  unset($tabs['inventory']);
+  unset($tabs['shipping']);
+  unset($tabs['attribute']);
+  unset($tabs['advanced']);
+  unset($tabs['variations']);
+  return($tabs);
+}
+add_filter('woocommerce_product_data_tabs', 'remove_tab', 10, 1);
+
+add_filter( 'woocommerce_allow_marketplace_suggestions', '__return_false' );
+
+add_filter( 'product_type_selector', 'remove_product_types' );
+
+function remove_product_types($types){
+  unset($types['grouped']);
+  unset($types['external']);
+  unset($types['variable']);
+  return $types;
+}
+
+function CM_woocommerce_account_menu_items_callback($items) {
+  unset( $items['downloads'] );
+  return $items;
+}
+add_filter('woocommerce_account_menu_items', 'CM_woocommerce_account_menu_items_callback', 10, 1);

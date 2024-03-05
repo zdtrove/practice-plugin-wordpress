@@ -216,3 +216,15 @@
   color: white !important;
   background-color: var(--primary) !important;
 }
+
+.show_if_simple.tips {
+  display: none !important;
+}
+
+.woocommerce-product-description {
+  display: none;
+}
+
+#edit-slug-box {
+  display: none;
+}

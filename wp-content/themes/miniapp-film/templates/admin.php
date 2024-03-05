@@ -22,6 +22,7 @@ if (isset($_POST['addFilm'])) {
     'category_name' => getCategoryName($categories, $_POST['category_id']),
     'film_name' => $_POST['film_name'],
     'film_poster' => $_POST['film_poster'],
+    'film_season' => $_POST['film_season'],
     'discount' => $_POST['discount'],
   );
 
@@ -35,6 +36,7 @@ if (isset($_POST['editFilm'])) {
     'category_name' => getCategoryName($categories, $_POST['category_id']),
     'film_name' => $_POST['film_name'],
     'film_poster' => $_POST['film_poster'],
+    'film_season' => $_POST['film_season'],
     'discount' => $_POST['discount'],
   );
 
@@ -117,6 +119,7 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                 <thead>
                   <tr>
                     <th>Tên phim</th>
+                    <th>Phần phim</th>
                     <th>Poster phim</th>
                     <th>Chiết khấu</th>
                     <th>Category</th>
@@ -125,9 +128,11 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                 <tbody>
                   <tr>
                     <td>
-                      <p>Tên phim</p>
                       <input type="text" class="require-field" name="film_name" placeholder="Vui lòng nhập tên phim" value="<?php echo $film['film_name']; ?>" />
                       <p class="required d-none">Đây là trường bắt buộc</p>
+                    </td>
+                    <td>
+                      <input type="text" name="film_season" placeholder="Vui lòng nhập phần phim" value="<?php echo $film['film_season']; ?>" />
                     </td>
                     <td>
                       <button type="button" class="upload-poster-button button flex-center">
