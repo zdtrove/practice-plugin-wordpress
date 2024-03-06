@@ -297,3 +297,8 @@ function CM_woocommerce_account_menu_items_callback($items) {
   return $items;
 }
 add_filter('woocommerce_account_menu_items', 'CM_woocommerce_account_menu_items_callback', 10, 1);
+
+add_filter( 'login_url', 'customLogin', 10, 2 );
+function customLogin( $login_url) {
+  return str_replace('wp-login.php', 'dangnhap', $login_url);
+}
