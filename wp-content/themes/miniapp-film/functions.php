@@ -262,7 +262,6 @@ function post_remove() {
   remove_menu_page('tools.php');
   remove_menu_page('themes.php');
   remove_menu_page('plugins.php');
-  remove_menu_page('users.php');
   remove_menu_page('options-general.php');
 }
 
@@ -302,3 +301,56 @@ add_filter( 'login_url', 'customLogin', 10, 2 );
 function customLogin( $login_url) {
   return str_replace('wp-login.php', 'dangnhap', $login_url);
 }
+
+function my_login_logo() { ?>
+  <style type="text/css">
+    .wp-login-lost-password, #backtoblog {
+      display: none;
+    }
+    #login h1 a, .login h1 a {
+      background-image: url('https://movie.ntvco.com/wp-content/uploads/2024/03/logogimy2.png');
+      background-size: 145px;
+      width: 145px;
+    }
+    #login {
+      width: 500px !important;
+      padding: 8% 0 0 !important;
+    }
+    #loginform {
+      padding: 30px 60px;
+      border-radius: 10px;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    }
+    #loginform input {
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      outline: none;
+      padding: 5px 10px;
+      padding-bottom: 6px;
+      font-size: 16px;
+    }
+    #loginform #wp-submit {
+      padding: 0px 15px;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    #loginform .wp-hide-pw {
+      color: #fe6900;
+      outline: none;
+      border: unset;
+    }
+    #loginform .wp-hide-pw:focus {
+      border-color: unset;
+      box-shadow: unset;
+    }
+    #loginform label {
+      font-weight: bold;
+    }
+    #loginform #wp-submit {
+      background-color: #fe6900;
+      border-color: #fe6900;
+      font-weight: bold;
+    }
+  </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'my_login_logo' );
