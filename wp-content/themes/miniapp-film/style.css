@@ -214,7 +214,8 @@
 
 .pagination a.active {
   color: white !important;
-  background-color: var(--primary) !important;
+  background-color: #fe6900 !important;
+  border-color: #fe6900 !important;
 }
 
 .show_if_simple.tips {
@@ -226,5 +227,14 @@
 }
 
 #edit-slug-box {
+  display: none;
+}
+
+.button-primary {
+  background-color: #fe6900 !important;
+  border-color: #fe6900 !important;
+}
+
+#footer-thankyou, #footer-upgrade {
   display: none;
 }

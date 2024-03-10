@@ -18,8 +18,9 @@ function getCategoryName($categories, $id)
 
 if (isset($_POST['addFilm'])) {
   $arrayInsert = array(
-    'category_id' => $_POST['category_id'],
-    'category_name' => getCategoryName($categories, $_POST['category_id']),
+    'category_ids' => json_encode($_POST['category_ids']),
+    // 'category_name' => getCategoryName($categories, $_POST['category_id']),
+    'category_name' => 'to do',
     'film_name' => $_POST['film_name'],
     'film_poster' => $_POST['film_poster'],
     'film_season' => $_POST['film_season'],
@@ -153,14 +154,15 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                     </td>
                     <td>
                       <p>Category</p>
-                      <select name="category_id">
-                        <?php foreach ($categories as $category) {
-                          if ($category->cat_name != 'Uncategorized') {
-                        ?>
-                            <option <?php echo $category->term_id == $film['category_id'] ? 'selected' : '' ?> value="<?php echo $category->term_id; ?>"><?php echo $category->cat_name; ?></option>
-                        <?php }
-                        } ?>
-                      </select>
+                      <div style="display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 15px;">
+                      <?php foreach ($categories as $category) {
+                        if ($category->cat_name != 'Uncategorized') {
+                      ?>
+                        <div>
+                          <input type="checkbox" name="category_ids[]" value="<?php echo $category->term_id; ?>" <?php echo in_array($category->term_id, json_decode($film['category_ids'])) ? 'checked' : ''; ?> /> <?php echo $category->cat_name; ?>
+                        </div>
+                      <?php } } ?>
+                      </div>
                     </td>
                   </tr>
                 </tbody>

@@ -18,7 +18,7 @@ function setup_db()
       film_poster VARCHAR(255) NULL,
       film_season VARCHAR(255) NULL,
       discount INT NULL,
-      category_id INT NULL,
+      category_ids VARCHAR(255) NULL,
       category_name VARCHAR(255) NULL,
       create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY(id))';
@@ -354,3 +354,9 @@ function my_login_logo() { ?>
   </style>
 <?php }
 add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+function custom_login_redirect() {
+  return home_url() . '/wp-admin/admin.php?page=danh-sach-phim/';
+}
+  
+add_filter('login_redirect', 'custom_login_redirect');
