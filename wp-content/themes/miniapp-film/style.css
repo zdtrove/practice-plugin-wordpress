@@ -247,13 +247,13 @@
 .wp-menu-image.svg {
   background-image: unset !important;
   font-family: dashicons;
-  padding-top: 4px;
 }
 
 .wp-menu-image.svg::before {
   content: "\f111";
   font-size: 20px;
-  padding-top: 5px;
+  display: block;
+  padding-top: 4px;
 }
 
 .woocommerce-layout__header {
@@ -277,10 +277,10 @@
 }
 
 #adminmenu {
-  margin-top: -11px !important;
+  margin-top: 0;
 }
 
-#adminmenuwrap, #adminmenu {
+#adminmenuwrap, #adminmenu, #adminmenuback {
   background: #d63638;
 }
 
@@ -303,4 +303,16 @@
 
 #adminmenu li a:focus div.wp-menu-image:before, #adminmenu li.opensub div.wp-menu-image:before, #adminmenu li:hover div.wp-menu-image:before {
   color: white !important;
+}
+
+#adminmenu li.menu-top {
+  border-bottom: 1px solid white;
+}
+
+#adminmenu .toplevel_page_woocommerce {
+  border-top: 1px solid white;
+}
+
+.wp-menu-separator {
+  display: none;
 }
