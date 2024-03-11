@@ -75,8 +75,8 @@ function pageTemplate()
 add_action('admin_enqueue_scripts', 'themeslug_enqueue_style');
 function themeslug_enqueue_style()
 {
-  wp_enqueue_style('admin_css', get_template_directory_uri()  . '/style.css');
-  wp_enqueue_script('admin_js', get_template_directory_uri()  . '/script.js');
+  wp_enqueue_style('admin_css', get_template_directory_uri()  . '/style.css?v=' . time());
+  wp_enqueue_script('admin_js', get_template_directory_uri()  . '/script.js?v=' . time());
 }
 
 add_action('admin_menu', 'remove_notice');
