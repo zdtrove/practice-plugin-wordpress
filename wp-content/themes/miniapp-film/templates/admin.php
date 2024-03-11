@@ -104,6 +104,7 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
       'meta_value' => $film['id'],
       'post_type' => 'product',
       'post_status' => 'any',
+      'numberposts' => -1,
     );
     $episodeList = get_posts($args);
   ?>

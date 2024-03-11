@@ -399,3 +399,16 @@ function plt_hide_woocommerce_menus() {
 }
 
 add_action('admin_menu', 'plt_hide_woocommerce_menus', 100);
+
+function custom_login_title( $login_title ) {
+  return str_replace(array( ' &lsaquo;', ' &#8212; WordPress'), array( ' &lsaquo;', ' '),$login_title );
+}
+
+add_filter('login_title', 'custom_login_title' );
+
+add_filter('admin_title', 'my_admin_title', 10, 2);
+
+function my_admin_title($admin_title, $title)
+{
+  return get_bloginfo('name').' &bull; '.$title;
+}
