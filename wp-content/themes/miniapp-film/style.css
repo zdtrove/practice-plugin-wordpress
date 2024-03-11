@@ -238,3 +238,69 @@
 #footer-thankyou, #footer-upgrade {
   display: none;
 }
+
+#adminmenu #toplevel_page_woocommerce .menu-icon-generic div.wp-menu-image::before {
+  font-family: 'WooCommerce' !important;
+  content: '\e03d';
+}
+
+.wp-menu-image.svg {
+  background-image: unset !important;
+  font-family: dashicons;
+  padding-top: 4px;
+}
+
+.wp-menu-image.svg::before {
+  content: "\f111";
+  font-size: 20px;
+  padding-top: 5px;
+}
+
+.woocommerce-layout__header {
+  display: none;
+}
+
+#wpbody {
+  margin-top: 0 !important;
+}
+
+#wp-admin-bar-root-default {
+  display: none;
+}
+
+#adminmenuback {
+  background-color: unset;
+}
+
+#wpadminbar {
+  background: #d63638;
+}
+
+#adminmenu {
+  margin-top: -11px !important;
+}
+
+#adminmenuwrap, #adminmenu {
+  background: #d63638;
+}
+
+.wp-submenu {
+  background-color: #d63638 !important;
+}
+
+#adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head, #adminmenu .wp-menu-arrow, #adminmenu .wp-menu-arrow div, #adminmenu li.current a.menu-top, #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu {
+  background: #fe6900 !important;
+}
+
+#adminmenu li.menu-top:hover, #adminmenu li.opensub>a.menu-top, #adminmenu li>a.menu-top:focus {
+  background: #fe6900 !important;
+  color: white !important;
+}
+
+#adminmenu li.wp-has-submenu.wp-not-current-submenu.opensub:hover:after, #adminmenu li.wp-has-submenu.wp-not-current-submenu:focus-within:after {
+  border-right-color: #d63638 !important;
+}
+
+#adminmenu li a:focus div.wp-menu-image:before, #adminmenu li.opensub div.wp-menu-image:before, #adminmenu li:hover div.wp-menu-image:before {
+  color: white !important;
+}
