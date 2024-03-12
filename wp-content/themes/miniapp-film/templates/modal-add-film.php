@@ -57,6 +57,19 @@
               <input type="number" name="discount" min="0" oninput="this.value = Math.abs(this.value)" />
             </td>
           </tr>
+          <tr>
+            <th>Chọn phim cha</th>
+            <td>
+              <select name="film_parent">
+                <option value="" selected>Chọn phim cha</option>
+                <?php
+                  foreach ($films as $film) { ?>
+                    <option value="<?php echo $film['id']; ?>"><?php echo $film['film_name']; ?><?php echo !empty($film['film_season']) ? ' - Phần ' . $film['film_season'] : ''; ?></option>
+                  <?php }
+                ?>
+              </select>
+            </td>
+          </tr>
         </table>
       </div>
       <div class="modal-actions">

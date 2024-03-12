@@ -13,6 +13,7 @@ if (isset($_POST['addFilm'])) {
     'film_name' => $_POST['film_name'],
     'film_poster' => $_POST['film_poster'],
     'film_season' => $_POST['film_season'],
+    'film_parent' => $_POST['film_parent'],
     'discount' => $_POST['discount'],
   );
 
@@ -26,6 +27,7 @@ if (isset($_POST['editFilm'])) {
     'film_name' => $_POST['film_name'],
     'film_poster' => $_POST['film_poster'],
     'film_season' => $_POST['film_season'],
+    'film_parent' => $_POST['film_parent'],
     'discount' => $_POST['discount'],
   );
 
@@ -112,6 +114,7 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                     <th>Phần phim</th>
                     <th>Poster phim</th>
                     <th>Chiết khấu</th>
+                    <th>Phim cha</th>
                     <th>Categories</th>
                   </tr>
                 </thead>
@@ -142,7 +145,16 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                       <input type="number" name="discount" value="<?php echo $film['discount']; ?>" min="0" oninput="this.value = Math.abs(this.value)" />
                     </td>
                     <td>
-                      <p>Category</p>
+                    <select name="film_parent">
+                      <option value="" <?php echo empty($film['film_season']) ? 'selected' : ''; ?>>Chọn phim cha</option>
+                      <?php
+                        foreach ($films as $filmParent) { ?>
+                          <option <?php echo $film['film_parent'] == $filmParent['id'] ? 'selected' : '' ?> value="<?php echo $filmParent['id']; ?>"><?php echo $filmParent['film_name']; ?><?php echo !empty($filmParent['film_season']) ? ' - Phần ' . $filmParent['film_season'] : ''; ?></option>
+                        <?php }
+                      ?>
+                    </select>
+                    </td>
+                    <td>
                       <div style="display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 15px;">
                         <?php foreach ($categories as $category) {
                           if ($category->cat_name != 'Uncategorized') {
