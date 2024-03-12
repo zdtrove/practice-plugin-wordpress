@@ -18,8 +18,7 @@ function setup_db()
       film_poster VARCHAR(255) NULL,
       film_season VARCHAR(255) NULL,
       discount INT NULL,
-      category_id INT NULL,
-      category_name VARCHAR(255) NULL,
+      category_ids VARCHAR(255) NULL,
       create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY(id))';
     dbDelta($sql);

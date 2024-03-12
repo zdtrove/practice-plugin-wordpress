@@ -26,7 +26,6 @@
       <th>Phần phim</th>
       <th>Poster phim</th>
       <th>Chiết khấu</th>
-      <th>Category</th>
       <th>Hành động</th>
     </tr>
   </thead>
@@ -41,7 +40,6 @@
         <td>
           <p><?php echo $film['discount']; ?></p>
         </td>
-        <td><?php echo $film['category_name']; ?></td>
         <td style="display: flex; gap: 5px; flex-wrap: wrap;">
           <button onclick="openDeleteModal('<?php echo $film['id']; ?>')" class="button">Xóa</button>
           <button onclick="openEditModal('<?php echo $film['id']; ?>')" class="button">Chỉnh sửa</button>

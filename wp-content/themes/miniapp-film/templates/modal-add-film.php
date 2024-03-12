@@ -34,14 +34,15 @@
               <label>Category</label>
             </th>
             <td>
-              <select name="category_id">
+              <div style="display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 15px;">
                 <?php foreach ($categories as $category) {
                   if ($category->cat_name != 'Uncategorized') {
                 ?>
-                <option value="<?php echo $category->term_id; ?>"><?php echo $category->cat_name; ?></option>
-                <?php }
-                } ?>
-              </select>
+                <div>
+                    <input type="checkbox" name="category_ids[]" value="<?php echo $category->term_id; ?>" /> <?php echo $category->cat_name; ?>
+                  </div>
+                <?php } } ?>
+              </div>
             </td>
           </tr>
           <tr>

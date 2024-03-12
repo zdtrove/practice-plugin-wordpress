@@ -283,11 +283,11 @@
 #adminmenu {
   margin-top: 0;
   margin: unset;
-  width: 150px;
+  width: 155px;
 }
 
 #adminmenuwrap {
-  width: 150px;
+  width: 155px;
 }
 
 #adminmenuwrap, #adminmenu, #adminmenuback {
@@ -357,7 +357,7 @@
 }
 
 .wp-submenu {
-  width: 150px !important;
+  width: 155px !important;
 }
 
 #wpadminbar .ab-empty-item, #wpadminbar a.ab-item, #wpadminbar>#wp-toolbar span.ab-label, #wpadminbar>#wp-toolbar span.noticon {
