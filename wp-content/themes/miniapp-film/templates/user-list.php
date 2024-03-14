@@ -17,61 +17,81 @@
   <thead>
     <tr>
       <th>Tên</th>
-      <th>Tập phim đã mua</th>
-      <th>Danh sách phim yêu thích</th>
+      <th>Hành động</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach ($users as $user) {
       $meta = get_user_meta($user['ID'], '_episode_list');
-      $favorite = get_user_meta($user['ID'], '_favorite_list');
     ?>
       <tr>
         <td><?php echo $user['user_nicename'] . ' - ' . $user['user_login']; ?></td>
         <td>
-          <?php
-            if (count($meta) > 0) {
-              foreach ($meta[0] as $key => $value) {
-                $post = get_post($value);
-                $filmId = get_post_meta($post->ID, '_film_selected', true);
-              ?>
-                <p>
-                  <?php echo $post->post_title; ?> - 
-                  <?php
-                    foreach ($films as $film) {
-                      if ($film['id'] == $filmId) {
-                        echo $film['film_name'];
-                        if (!empty($film['film_season'])) {
-                          echo ' - Phần ' . $film['film_season'];
-                        }
-                      }
-                    }
-                  ?>
-                </p>
-              <?php }
-            }
-          ?>
-        </td>
-        <td>
-            <?php
-              if (count($favorite) > 0) {
-                foreach ($favorite[0] as $key => $value) {?>
-                  <p>
-                    <?php
-                      echo $films[$value]['film_name'];
-                      if (!empty($films[$value]['film_season'])) {
-                        echo ' - Phần ' . $films[$value]['film_season'];
-                      }
-                    ?>
-                  </p>
-                <?php }
-              }
-            ?>
+          <button onclick="openBuyFilmModal('<?php echo $user['ID']; ?>')" class="button">Hiện tập phim đã mua</button>
         </td>
       </tr>
     <?php } ?>
   </tbody>
 </table>
+<?php foreach ($users as $user) {
+    $meta = get_user_meta($user['ID'], '_episode_list');
+  ?>
+    <div id="modal-list-favorite-film-<?php echo $user['ID']; ?>" class="film-modal d-none">
+      <div class="modal-wrapper">
+        <p onclick="hideModal('modal-list-favorite-film-<?php echo $user['ID']; ?>')" class="close">✕</p>
+        <div class="modal-header">
+          <p>Danh sách tập phim đã mua</p>
+        </div>
+        <div class="modal-content">
+          <div style="overflow-x:auto;">
+            <table class="wp-list-table widefat striped table-view-list">
+              <thead>
+                <tr>
+                  <th>Tập phim đã mua</th>
+                  <th>Phim</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <?php
+                    if (count($meta) > 0) {
+                      foreach ($meta[0] as $key => $value) {
+                        $post = get_post($value);
+                        $filmId = get_post_meta($post->ID, '_film_selected', true);
+                      ?>
+                      <tr>
+                        <td>
+                            <?php echo $post->post_title; ?>
+                          </td>
+                          <td>
+                            <?php
+                              foreach ($films as $film) {
+                                if ($film['id'] == $filmId) {
+                                  echo $film['film_name'];
+                                  if (!empty($film['film_season'])) {
+                                    echo ' - Phần ' . $film['film_season'];
+                                  }
+                                }
+                              }
+                            ?>
+                          </td>
+                        </tr>
+                      <?php }
+                    } else { ?>
+                      <tr>
+                        <td>
+                          <p>Chưa có tập phim đã mua</p>
+                        </td>
+                        <td></td>
+                      </tr>
+                   <?php }
+                  ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php } ?>
 <ul class="pagination">
   <?php
     if ( (! empty( $_GET['paged'] )) && ($_GET['tab'] == 'setting2') ) $pg = $_GET['paged'];

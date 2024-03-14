@@ -94,6 +94,14 @@ function openEpisodeModal(id) {
   idsEpisode.push(id);
 }
 
+function openBuyFilmModal(id) {
+  const modalOverlay = document.getElementById('overlay');
+  const modal = document.getElementById(`modal-list-favorite-film-${id}`);
+
+  modalOverlay.classList.remove(__hiddenClass);
+  modal.classList.remove(__hiddenClass);
+}
+
 function openDeleteModal(id) {
   const modalOverlay = document.getElementById('overlay');
   const modal = document.getElementById(`modal-delete-film-${id}`);

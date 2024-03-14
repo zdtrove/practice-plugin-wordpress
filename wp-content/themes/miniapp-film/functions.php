@@ -354,7 +354,7 @@ function my_login_logo() { ?>
     }
   </style>
 <?php }
-add_action( 'login_enqueue_scripts', 'my_login_logo' );
+add_action('login_enqueue_scripts', 'my_login_logo');
 
 function custom_login_redirect() {
   return home_url() . '/wp-admin/admin.php?page=danh-sach-phim/';
@@ -363,23 +363,24 @@ function custom_login_redirect() {
 add_filter('login_redirect', 'custom_login_redirect');
 
 /* Rename WooCommerce menu */
-add_action( 'admin_menu', 'rename_woocoomerce', 999 );
-function rename_woocoomerce()
-{
+add_action('admin_menu', 'rename_woocoomerce', 999);
+function rename_woocoomerce() {
   global $menu;
-  $woo = rename_woocommerce( 'WooCommerce', $menu );
+  $woo = rename_woocommerce('WooCommerce', $menu);
+
   if( !$woo )
     return;
     $menu[$woo][0] = 'Orders';
   }
+
   function rename_woocommerce($needle, $haystack) {
     foreach($haystack as $key => $value) {
     $current_key = $key;
     if (
       $needle === $value
       OR (
-        is_array( $value )
-        && rename_woocommerce( $needle, $value ) !== false
+        is_array($value)
+        && rename_woocommerce($needle, $value) !== false
       )
     ) {
       return $current_key;
@@ -401,15 +402,14 @@ function plt_hide_woocommerce_menus() {
 
 add_action('admin_menu', 'plt_hide_woocommerce_menus', 100);
 
-function custom_login_title( $login_title ) {
-  return str_replace(array( ' &lsaquo;', ' &#8212; WordPress'), array( ' &lsaquo;', ' '),$login_title );
+function custom_login_title($login_title) {
+  return str_replace(array(' &lsaquo;', ' &#8212; WordPress'), array(' &lsaquo;', ' '), $login_title);
 }
 
-add_filter('login_title', 'custom_login_title' );
+add_filter('login_title', 'custom_login_title');
 
 add_filter('admin_title', 'my_admin_title', 10, 2);
 
-function my_admin_title($admin_title, $title)
-{
+function my_admin_title($admin_title, $title) {
   return get_bloginfo('name').' &bull; '.$title;
 }
