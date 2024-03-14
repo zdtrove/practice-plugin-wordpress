@@ -18,6 +18,7 @@ function setup_db()
       film_poster VARCHAR(255) NULL,
       film_season VARCHAR(255) NULL,
       film_parent INT NULL,
+      film_description TEXT NULL,
       discount INT NULL,
       category_ids VARCHAR(255) NULL,
       create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

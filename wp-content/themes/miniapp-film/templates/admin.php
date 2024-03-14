@@ -14,6 +14,7 @@ if (isset($_POST['addFilm'])) {
     'film_poster' => $_POST['film_poster'],
     'film_season' => $_POST['film_season'],
     'film_parent' => $_POST['film_parent'],
+    'film_description' => $_POST['film_description'],
     'discount' => $_POST['discount'],
   );
 
@@ -28,6 +29,7 @@ if (isset($_POST['editFilm'])) {
     'film_poster' => $_POST['film_poster'],
     'film_season' => $_POST['film_season'],
     'film_parent' => $_POST['film_parent'],
+    'film_description' => $_POST['film_description'],
     'discount' => $_POST['discount'],
   );
 
@@ -113,6 +115,7 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                     <th>Tên phim</th>
                     <th>Phần phim</th>
                     <th>Poster phim</th>
+                    <th>Mô tả phim</th>
                     <th>Chiết khấu</th>
                     <th>Phim cha</th>
                     <th>Categories</th>
@@ -125,7 +128,9 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                       <p class="required d-none">Đây là trường bắt buộc</p>
                     </td>
                     <td>
-                      <input type="text" name="film_season" placeholder="Vui lòng nhập phần phim" value="<?php echo $film['film_season']; ?>" />
+                      <div style="width: 80px;">
+                        <input style="width: 100%;" min="1" oninput="this.value = Math.abs(this.value)" type="number" name="film_season" value="<?php echo $film['film_season']; ?>" />
+                      </div>
                     </td>
                     <td>
                       <button type="button" class="upload-poster-button button flex-center">
@@ -135,15 +140,22 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                       <input class="poster-url" type="text" hidden name="film_poster" value="<?php echo $film['film_poster']; ?>" />
                       <div class="poster-wrapper" style="width: 50px; height: auto; margin-top: 10px;">
                         <?php
-                        if ($film['film_poster']) {
-                          echo '<img src="' . $film['film_poster'] . '" alt="" style="width: 50px; height: auto;" />';
-                        }
+                          if ($film['film_poster']) {
+                            echo '<img src="' . $film['film_poster'] . '" alt="" style="width: 50px; height: auto;" />';
+                          }
                         ?>
                       </div>
                     </td>
                     <td>
-                      <input type="number" name="discount" value="<?php echo $film['discount']; ?>" min="0" oninput="this.value = Math.abs(this.value)" />
+                      <div style="width: 250px;">
+                        <textarea style="width: 100%;" name="film_description" rows="5" cols="30"><?php echo $film['film_description']; ?></textarea>
+                      </div>
                     </td>
+                    <td>
+                      <div style="width: 80px;">
+                        <input style="width: 100%;" type="number" name="discount" value="<?php echo $film['discount']; ?>" min="0" oninput="this.value = Math.abs(this.value)" />
+                      </div>
+                      </td>
                     <td>
                     <select name="film_parent">
                       <option value="" <?php echo empty($film['film_season']) ? 'selected' : ''; ?>>Chọn phim cha</option>

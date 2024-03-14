@@ -58,6 +58,12 @@
             </td>
           </tr>
           <tr>
+            <th>Mô tả phim</th>
+            <td>
+              <textarea name="film_description" rows="5" cols="50"></textarea>
+            </td>
+          </tr>
+          <tr>
             <th>Chọn phim cha</th>
             <td>
               <select name="film_parent">
