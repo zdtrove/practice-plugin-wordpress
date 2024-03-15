@@ -61,6 +61,16 @@ if (isset($_POST['deleteFilm'])) {
   $successMessage = 'Xoá phim thành công';
 }
 
+if (isset($_POST['saveSetting'])) {
+  $filmTrialTime = get_option('film_trial_time');
+  if ($filmTrialTime) {
+    update_option('film_trial_time',$_POST['film_trial_time']);
+  } else {
+    add_option('film_trial_time',$_POST['film_trial_time']);
+  }
+  $successMessage = 'Lưu cài đặt thành công';
+}
+
 $filmsDisplay = [];
 $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC', ARRAY_A);
 ?>
@@ -79,13 +89,31 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
     <li id="tabSetting2" onclick="changeUrl(2)">
       <a href="#tab-setting-2-content">Quản lý user</a>
     </li>
+    <li id="tabSetting3" onclick="changeUrl(3)">
+      <a href="#tab-setting-3-content">Cấu hình thời gian xem thử phim</a>
+    </li>
+    <li id="tabSetting4" onclick="changeUrl(4)">
+      <a href="#tab-setting-4-content">Quản lý giao dịch</a>
+    </li>
   </ul>
   <div class="tab-content">
     <div id="tab-setting-1-content" class="tab-pane-film active">
       <?php require_once(dirname(__FILE__) . '/film-list.php'); ?>
     </div>
     <div id="tab-setting-2-content" class="tab-pane-film">
-    <?php require_once(dirname(__FILE__) . '/user-list.php'); ?>
+      <?php require_once(dirname(__FILE__) . '/user-list.php'); ?>
+    </div>
+    <div id="tab-setting-3-content" class="tab-pane-film">
+      <form action="?page=danh-sach-phim&paged=1&tab=setting3" method="POST">
+        <h4>Nhập thời gian xem thử phim (giây)</h4>
+        <input type="number" max="100" class="regular-text" name="film_trial_time" value="<?php echo get_option('film_trial_time'); ?>"  oninput="this.value = Math.abs(this.value)" />
+        <button type="submit" class="button button-primary" name="saveSetting">Lưu lại</button>
+      </form>
+    </div>
+    <div id="tab-setting-4-content" class="tab-pane-film">
+      <form action="?page=danh-sach-phim&paged=1&tab=setting4" method="POST">
+        <h4>Quản lý giao dịch</h4>
+      </form>
     </div>
   </div>
   <?php require_once(dirname(__FILE__) . '/modal-add-film.php'); ?>
