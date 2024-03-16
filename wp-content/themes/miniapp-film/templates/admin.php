@@ -9,7 +9,6 @@ $users = $wpdb->get_results( 'SELECT * FROM ' . $tableUser . ' ORDER BY id ASC',
 
 if (isset($_POST['addFilm'])) {
   $arrayInsert = array(
-    'category_ids' => json_encode($_POST['category_ids']),
     'film_name' => $_POST['film_name'],
     'film_poster' => $_POST['film_poster'],
     'film_season' => $_POST['film_season'],
@@ -17,6 +16,7 @@ if (isset($_POST['addFilm'])) {
     'film_description' => $_POST['film_description'],
     'discount' => $_POST['discount'],
   );
+  $arrayInsert['category_ids'] = isset($_POST['category_ids']) ? json_encode($_POST['category_ids']) : [];
 
   $wpdb->insert($tableFilms, $arrayInsert);
   $successMessage = 'Thêm phim thành công';
@@ -24,7 +24,6 @@ if (isset($_POST['addFilm'])) {
 
 if (isset($_POST['editFilm'])) {
   $arrayUpdate = array(
-    'category_ids' => json_encode($_POST['category_ids']),
     'film_name' => $_POST['film_name'],
     'film_poster' => $_POST['film_poster'],
     'film_season' => $_POST['film_season'],
@@ -32,6 +31,7 @@ if (isset($_POST['editFilm'])) {
     'film_description' => $_POST['film_description'],
     'discount' => $_POST['discount'],
   );
+  $arrayUpdate['category_ids'] = isset($_POST['category_ids']) ? json_encode($_POST['category_ids']) : [];
 
   $wpdb->update($tableFilms, $arrayUpdate, array('id' => $_POST['filmId']));
   $successMessage = 'Chỉnh sửa phim thành công';
@@ -136,7 +136,7 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
         </div>
         <form id="form-edit-film-<?php echo $film['id']; ?>" action="" method="POST">
           <div class="modal-content">
-            <div style="overflow-x:auto;">
+            <div style="overflow-x:auto;max-height:500px;">
               <table class="wp-list-table widefat striped table-view-list">
                 <thead>
                   <tr>
@@ -200,7 +200,7 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
                           if ($category->cat_name != 'Uncategorized') {
                         ?>
                           <div>
-                            <input type="checkbox" name="category_ids[]" value="<?php echo $category->term_id; ?>" <?php echo in_array($category->term_id, json_decode($film['category_ids'])) ? 'checked' : ''; ?> /> <?php echo $category->cat_name; ?>
+                            <input type="checkbox" name="category_ids[]" value="<?php echo $category->term_id; ?>" <?php echo is_array(json_decode($film['category_ids'])) && in_array($category->term_id, json_decode($film['category_ids'])) ? 'checked' : ''; ?> /> <?php echo $category->cat_name; ?>
                           </div>
                         <?php } } ?>
                       </div>
@@ -225,7 +225,7 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
           <p>Thêm video cho tập phim</p>
         </div>
         <div class="modal-content">
-          <div style="overflow-x:auto;">
+          <div style="overflow-x:auto;max-height:500px;">
             <table class="wp-list-table widefat striped table-view-list">
               <thead>
                 <tr>
