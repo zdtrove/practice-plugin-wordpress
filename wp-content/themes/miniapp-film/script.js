@@ -13,9 +13,6 @@ function changeUrl(tabId) {
   if (tabId == 3) {
     window.history.pushState('', '', '?page=danh-sach-phim&paged=1&tab=setting3');
   }
-  if (tabId == 4) {
-    window.history.pushState('', '', '?page=danh-sach-phim&paged=1&tab=setting4');
-  }
 }
 
 function openEditModal(id) {
@@ -158,15 +155,13 @@ window.addEventListener('load', function() {
   const _tabSetting1 = document.getElementById('tabSetting1');
   const _tabSetting2 = document.getElementById('tabSetting2');
   const _tabSetting3 = document.getElementById('tabSetting3');
-  const _tabSetting4 = document.getElementById('tabSetting4');
   const _tabSetting1Content = document.getElementById('tab-setting-1-content');
   const _tabSetting2Content = document.getElementById('tab-setting-2-content');
   const _tabSetting3Content = document.getElementById('tab-setting-3-content');
-  const _tabSetting4Content = document.getElementById('tab-setting-4-content');
 
   function clickChangeTab(tabIndex) {
-    const listTab = [_tabSetting1, _tabSetting2, _tabSetting3, _tabSetting4];
-    const listContentTab = [_tabSetting1Content, _tabSetting2Content, _tabSetting3Content, _tabSetting4Content];
+    const listTab = [_tabSetting1, _tabSetting2, _tabSetting3];
+    const listContentTab = [_tabSetting1Content, _tabSetting2Content, _tabSetting3Content];
     listTab.forEach((tab, index) => {
       Number(tabIndex) === Number(index + 1) ? tab.classList.add(__activeClass) : tab.classList.remove(__activeClass);
     });
@@ -182,8 +177,6 @@ window.addEventListener('load', function() {
       clickChangeTab(2);
     } else if (__params[2].split('=')[1] === 'setting3') {
       clickChangeTab(3);
-    } else if (__params[2].split('=')[1] === 'setting4') {
-      clickChangeTab(4);
     }
   }
   

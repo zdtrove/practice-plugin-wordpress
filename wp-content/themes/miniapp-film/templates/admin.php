@@ -92,9 +92,6 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
     <li id="tabSetting3" onclick="changeUrl(3)">
       <a href="#tab-setting-3-content">Cấu hình thời gian xem thử phim</a>
     </li>
-    <li id="tabSetting4" onclick="changeUrl(4)">
-      <a href="#tab-setting-4-content">Quản lý giao dịch</a>
-    </li>
   </ul>
   <div class="tab-content">
     <div id="tab-setting-1-content" class="tab-pane-film active">
@@ -108,11 +105,6 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
         <h4>Nhập thời gian xem thử phim (giây)</h4>
         <input type="number" max="100" class="regular-text" name="film_trial_time" value="<?php echo get_option('film_trial_time'); ?>"  oninput="this.value = Math.abs(this.value)" />
         <button type="submit" class="button button-primary" name="saveSetting">Lưu lại</button>
-      </form>
-    </div>
-    <div id="tab-setting-4-content" class="tab-pane-film">
-      <form action="?page=danh-sach-phim&paged=1&tab=setting4" method="POST">
-        <h4>Quản lý giao dịch</h4>
       </form>
     </div>
   </div>
