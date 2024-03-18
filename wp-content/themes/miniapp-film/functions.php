@@ -413,3 +413,16 @@ add_filter('admin_title', 'my_admin_title', 10, 2);
 function my_admin_title($admin_title, $title) {
   return get_bloginfo('name').' &bull; '.$title;
 }
+
+add_action( 'woocommerce_admin_order_totals_after_discount', 'add_discount_order', 10, 1);
+function add_discount_order( $order_id ) {
+	$order = wc_get_order( $order_id );
+  $discount = $order->get_meta('discount');
+  if ($discount) {
+    ?><tr>
+    <td class="label">Discount:</td>
+    <td width="1%"></td>
+    <td style="font-weight: bold;"><?php echo $order->get_meta('discount'); ?> <span class="woocommerce-Price-currencySymbol">₫</span></td>
+    </tr>
+  <?php }
+}
