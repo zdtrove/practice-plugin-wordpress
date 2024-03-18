@@ -422,7 +422,7 @@ function add_discount_order( $order_id ) {
     ?><tr>
     <td class="label">Discount:</td>
     <td width="1%"></td>
-    <td style="font-weight: bold;"><?php echo $order->get_meta('discount'); ?> <span class="woocommerce-Price-currencySymbol">₫</span></td>
+    <td style="font-weight: bold;"><?php echo number_format($discount, 0, ',', '.'); ?> <span class="woocommerce-Price-currencySymbol">₫</span></td>
     </tr>
   <?php }
 }
