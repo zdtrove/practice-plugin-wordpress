@@ -393,7 +393,7 @@ function plt_hide_woocommerce_menus() {
 	remove_menu_page('wc-admin&path=/wc-pay-welcome-page');
 	remove_submenu_page('woocommerce', 'wc-admin');
 	remove_submenu_page('woocommerce', 'wc-admin&path=/customers');
-	remove_submenu_page('woocommerce', 'wc-reports');
+	// remove_submenu_page('woocommerce', 'wc-reports');
 	remove_submenu_page('woocommerce', 'wc-admin&path=/extensions');
 	remove_submenu_page('woocommerce', 'wc-addons');
 	remove_submenu_page('woocommerce-marketing', 'admin.php?page=wc-admin&path=/marketing');

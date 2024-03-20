@@ -367,3 +367,7 @@
 #coupon-root {
   display: none;
 }
+
+.wrap.woocommerce div.error, .wrap.woocommerce div.updated {
+  display: none;
+}
