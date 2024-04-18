@@ -41,7 +41,7 @@ class MiniappFilm
     add_action('pre_get_posts', array($this, 'cs_products_filter_query'));
     add_filter('bulk_actions-edit-product', array($this, 'remove_from_bulk_actions'));
     add_action('admin_menu', array($this, 'post_remove'));
-    add_filter('woocommerce_admin_disabled', '__return_true');
+    // add_filter('woocommerce_admin_disabled', '__return_true');
     add_filter('woocommerce_product_data_tabs', array($this, 'remove_tab'), 10, 1);
     add_filter('woocommerce_allow_marketplace_suggestions', '__return_false');
     add_filter('product_type_selector', array($this, 'remove_product_types'));
@@ -397,15 +397,25 @@ class MiniappFilm
 
   function plt_hide_woocommerce_menus() {
     remove_menu_page('wc-admin&path=/wc-pay-welcome-page');
-    remove_submenu_page('woocommerce', 'wc-admin');
+    remove_submenu_page('woocommerce', 'wc-settings');
     remove_submenu_page('woocommerce', 'wc-admin&path=/customers');
-    // remove_submenu_page('woocommerce', 'wc-reports');
+    remove_submenu_page('woocommerce', 'wc-reports');
     remove_submenu_page('woocommerce', 'wc-admin&path=/extensions');
     remove_submenu_page('woocommerce', 'wc-addons');
     remove_submenu_page('woocommerce-marketing', 'admin.php?page=wc-admin&path=/marketing');
     remove_submenu_page('woocommerce', 'wc-status');
+    remove_submenu_page('wc-admin&path=/analytics/overview', 'wc-admin&path=/analytics/overview');
+    remove_submenu_page('wc-admin&path=/analytics/overview', 'wc-admin&path=/analytics/products');
+    remove_submenu_page('wc-admin&path=/analytics/overview', 'wc-admin&path=/analytics/revenue');
+    remove_submenu_page('wc-admin&path=/analytics/overview', 'wc-admin&path=/analytics/variations');
+    remove_submenu_page('wc-admin&path=/analytics/overview', 'wc-admin&path=/analytics/categories');
+    remove_submenu_page('wc-admin&path=/analytics/overview', 'wc-admin&path=/analytics/coupons');
+    remove_submenu_page('wc-admin&path=/analytics/overview', 'wc-admin&path=/analytics/taxes');
+    remove_submenu_page('wc-admin&path=/analytics/overview', 'wc-admin&path=/analytics/downloads');
+    remove_submenu_page('wc-admin&path=/analytics/overview', 'wc-admin&path=/analytics/stock');
+    remove_submenu_page('wc-admin&path=/analytics/overview', 'wc-admin&path=/analytics/settings');
   }
-
+  
   function custom_login_title($login_title) {
     return str_replace(array(' &lsaquo;', ' &#8212; WordPress'), array(' &lsaquo;', ' '), $login_title);
   }
