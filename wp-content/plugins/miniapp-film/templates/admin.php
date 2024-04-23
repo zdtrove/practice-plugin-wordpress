@@ -38,8 +38,14 @@ if (isset($_POST['editFilm'])) {
 }
 
 if (isset($_POST['updateEpisode'])) {
-  update_post_meta($_POST['filmId'], '_film_episode', $_POST['_film_episode']);
-  update_post_meta($_POST['filmId'], '_film_length', $_POST['_film_length']);
+  if (count($_POST['_film_episode']) > 0) {
+    foreach ($_POST['_film_episode'] as $keyFilmEpisode => $filmEpisode) {
+      if ($filmEpisode) {
+        update_post_meta($_POST['episodeId'][$keyFilmEpisode], '_film_episode', $filmEpisode);
+        update_post_meta($_POST['episodeId'][$keyFilmEpisode], '_film_length', $_POST['_film_length'][$keyFilmEpisode]);
+      }
+    }
+  }
 
   $successMessage = 'Chỉnh sửa tập phim thành công';
 }
@@ -216,47 +222,46 @@ $films = $wpdb->get_results('SELECT * FROM ' . $tableFilms . ' ORDER BY id DESC'
         <div class="modal-header">
           <p>Thêm video cho tập phim</p>
         </div>
-        <div class="modal-content">
-          <div style="overflow-x:auto;max-height:500px;">
-            <table class="wp-list-table widefat striped table-view-list">
-              <thead>
-                <tr>
-                  <th>Tập phim</th>
-                  <th>Video</th>
-                  <th>Độ dài phim</th>
-                  <th>Hành động</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($episodeList as $episode) { ?>
+        <form action="" method="POST">
+          <div class="modal-content">
+            <div style="overflow-x:auto;max-height:500px;">
+              <table class="wp-list-table widefat striped table-view-list">
+                <thead>
                   <tr>
-                    <td>
-                      <p><?php echo $episode->post_title; ?></p>
-                    </td>
-                    <td class="flex-center td-video-<?php echo $episode->ID; ?>">
-                      <button type="button" class="upload-video-button button flex-center">
-                        <span class="dashicons dashicons-admin-media"></span>
-                        <span>Tải video</span>
-                      </button>
-                      <p style="margin-left: 15px;"><?php echo $episode->_film_episode; ?></p>
-                    </td>
-                    <td>
-                      <p><?php echo $episode->_film_length; ?></p>
-                    </td>
-                    <td>
-                      <form action="" method="POST">
-                        <input hidden type="text" name="filmId" value="<?php echo $episode->ID; ?>" />
-                        <input hidden type="text" class="video-url" name="_film_episode" value="<?php echo $episode->_film_episode; ?>" />
-                        <input hidden type="text" class="video-length" name="_film_length" value="<?php echo $episode->_film_length; ?>" />
-                        <button type="submit" class="button button-primary" name="updateEpisode">Cập nhật</button>
-                      </form>
-                    </td>
+                    <th>Tập phim</th>
+                    <th>Video</th>
+                    <th>Độ dài phim</th>
                   </tr>
-                <?php } ?>
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  <?php foreach ($episodeList as $episode) { ?>
+                    <tr>
+                      <td>
+                        <p><?php echo $episode->post_title; ?></p>
+                      </td>
+                      <td class="flex-center td-video-<?php echo $episode->ID; ?>">
+                        <button type="button" class="upload-video-button button flex-center">
+                          <span class="dashicons dashicons-admin-media"></span>
+                          <span>Tải video</span>
+                        </button>
+                        <p style="margin-left: 15px;"><?php echo $episode->_film_episode; ?></p>
+                      </td>
+                      <td>
+                        <p><?php echo $episode->_film_length; ?></p>
+                        <input hidden type="text" name="episodeId[]" value="<?php echo $episode->ID; ?>" />
+                        <input hidden type="text" class="video-url" name="_film_episode[]" value="<?php echo $episode->_film_episode; ?>" />
+                        <input hidden type="text" class="video-length" name="_film_length[]" value="<?php echo $episode->_film_length; ?>" />
+                      </td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+          <div style="width: 100%; text-align: center">
+            <button type="submit" class="button button-primary" name="updateEpisode">Cập nhật</button>
+          </div>
+        </form>
       </div>
     </div>
     <div id="modal-delete-film-<?php echo $film['id']; ?>" class="film-modal modal-delete d-none">

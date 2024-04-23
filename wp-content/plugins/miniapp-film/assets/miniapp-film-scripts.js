@@ -88,8 +88,8 @@ function openEpisodeModal(id) {
             });
           }
           item.nextElementSibling.innerHTML = attachment.url;
-          item.parentElement.nextElementSibling.nextElementSibling.querySelector('.video-url').value = attachment.url;
-          item.parentElement.nextElementSibling.nextElementSibling.querySelector('.video-length').value = filmLength;
+          item.parentElement.nextElementSibling.querySelector('.video-url').value = attachment.url;
+          item.parentElement.nextElementSibling.querySelector('.video-length').value = filmLength;
         }).open();
       });
     })
