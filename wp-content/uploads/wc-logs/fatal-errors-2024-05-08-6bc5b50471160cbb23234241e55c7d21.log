@@ -1,0 +1,68 @@
+2024-05-08T12:38:03+00:00 CRITICAL Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, array callback must have exactly two members in C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php:324
+Stack trace:
+#0 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#1 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#2 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\includes\admin\meta-boxes\views\html-order-items.php(183): do_action('woocommerce_adm...', 191)
+#3 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\includes\admin\meta-boxes\class-wc-meta-box-order-items.php(40): include('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\practice-plugin-wordpress\wp-admin\includes\template.php(1456): WC_Meta_Box_Order_Items::output(NULL, Array)
+#5 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\Edit.php(486): do_meta_boxes(Object(WP_Screen), 'normal', Object(Automattic\WooCommerce\Admin\Overrides\Order))
+#6 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\Edit.php(395): Automattic\WooCommerce\Internal\Admin\Orders\Edit->render_meta_boxes()
+#7 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\PageController.php(293): Automattic\WooCommerce\Internal\Admin\Orders\Edit->display()
+#8 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(324): Automattic\WooCommerce\Internal\Admin\Orders\PageController->output('')
+#9 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#10 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#11 C:\xampp\htdocs\practice-plugin-wordpress\wp-admin\admin.php(259): do_action('woocommerce_pag...')
+#12 {main}
+  thrown in C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php on line 324
+
+2024-05-08T12:38:03+00:00 CRITICAL Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, array callback must have exactly two members in C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php:324
+Stack trace:
+#0 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#1 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#2 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\includes\admin\meta-boxes\views\html-order-items.php(183): do_action('woocommerce_adm...', 192)
+#3 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\includes\admin\meta-boxes\class-wc-meta-box-order-items.php(40): include('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\practice-plugin-wordpress\wp-admin\includes\template.php(1456): WC_Meta_Box_Order_Items::output(NULL, Array)
+#5 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\Edit.php(486): do_meta_boxes(Object(WP_Screen), 'normal', Object(Automattic\WooCommerce\Admin\Overrides\Order))
+#6 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\Edit.php(395): Automattic\WooCommerce\Internal\Admin\Orders\Edit->render_meta_boxes()
+#7 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\PageController.php(293): Automattic\WooCommerce\Internal\Admin\Orders\Edit->display()
+#8 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(324): Automattic\WooCommerce\Internal\Admin\Orders\PageController->output('')
+#9 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#10 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#11 C:\xampp\htdocs\practice-plugin-wordpress\wp-admin\admin.php(259): do_action('woocommerce_pag...')
+#12 {main}
+  thrown in C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php on line 324
+
+2024-05-08T12:39:10+00:00 CRITICAL Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, array callback must have exactly two members in C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php:324
+Stack trace:
+#0 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#1 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#2 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\includes\admin\meta-boxes\views\html-order-items.php(183): do_action('woocommerce_adm...', 192)
+#3 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\includes\admin\meta-boxes\class-wc-meta-box-order-items.php(40): include('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\practice-plugin-wordpress\wp-admin\includes\template.php(1456): WC_Meta_Box_Order_Items::output(NULL, Array)
+#5 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\Edit.php(486): do_meta_boxes(Object(WP_Screen), 'normal', Object(Automattic\WooCommerce\Admin\Overrides\Order))
+#6 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\Edit.php(395): Automattic\WooCommerce\Internal\Admin\Orders\Edit->render_meta_boxes()
+#7 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\PageController.php(293): Automattic\WooCommerce\Internal\Admin\Orders\Edit->display()
+#8 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(324): Automattic\WooCommerce\Internal\Admin\Orders\PageController->output('')
+#9 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#10 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#11 C:\xampp\htdocs\practice-plugin-wordpress\wp-admin\admin.php(259): do_action('woocommerce_pag...')
+#12 {main}
+  thrown in C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php on line 324
+
+2024-05-08T12:39:47+00:00 CRITICAL Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, array callback must have exactly two members in C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php:324
+Stack trace:
+#0 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#1 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#2 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\includes\admin\meta-boxes\views\html-order-items.php(183): do_action('woocommerce_adm...', 192)
+#3 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\includes\admin\meta-boxes\class-wc-meta-box-order-items.php(40): include('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\practice-plugin-wordpress\wp-admin\includes\template.php(1456): WC_Meta_Box_Order_Items::output(NULL, Array)
+#5 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\Edit.php(486): do_meta_boxes(Object(WP_Screen), 'normal', Object(Automattic\WooCommerce\Admin\Overrides\Order))
+#6 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\Edit.php(395): Automattic\WooCommerce\Internal\Admin\Orders\Edit->render_meta_boxes()
+#7 C:\xampp\htdocs\practice-plugin-wordpress\wp-content\plugins\woocommerce\src\Internal\Admin\Orders\PageController.php(293): Automattic\WooCommerce\Internal\Admin\Orders\Edit->display()
+#8 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(324): Automattic\WooCommerce\Internal\Admin\Orders\PageController->output('')
+#9 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#10 C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#11 C:\xampp\htdocs\practice-plugin-wordpress\wp-admin\admin.php(259): do_action('woocommerce_pag...')
+#12 {main}
+  thrown in C:\xampp\htdocs\practice-plugin-wordpress\wp-includes\class-wp-hook.php on line 324
+

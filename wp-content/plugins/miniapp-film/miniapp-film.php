@@ -53,7 +53,7 @@ class MiniappFilm
     add_action('admin_menu', array($this, 'plt_hide_woocommerce_menus'), 100);
     add_filter('login_title', array($this, 'custom_login_title'));
     add_filter('admin_title', array($this, 'my_admin_title'), 10, 2);
-    add_action( 'woocommerce_admin_order_totals_after_discount', array($this, 'add_discount_order', 10, 1));
+    add_action('woocommerce_admin_order_totals_after_discount', array($this, 'add_discount_order'), 10, 1);
   }
 
   function themeslug_enqueue_style()
